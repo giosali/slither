@@ -19,7 +19,9 @@ target_compile_features(${CMAKE_PROJECT_NAME} PRIVATE cxx_std_20)
 # https://stackoverflow.com/a/29316084/18831815
 find_package(PkgConfig)
 pkg_check_modules(LIBINPUT REQUIRED libinput)
+pkg_check_modules(LIBUDEV REQUIRED libudev)
 
 target_link_libraries(${CMAKE_PROJECT_NAME}
     ${LIBINPUT_LIBRARIES}
+    ${LIBUDEV_LIBRARIES}
 )
