@@ -16,8 +16,10 @@ add_executable(${CMAKE_PROJECT_NAME}
 
 target_compile_features(${CMAKE_PROJECT_NAME} PRIVATE cxx_std_20)
 
-find_package(Libinput)
+# https://stackoverflow.com/a/29316084/18831815
+find_package(PkgConfig)
+pkg_check_modules(LIBINPUT REQUIRED libinput)
+
 target_link_libraries(${CMAKE_PROJECT_NAME}
-    PRIVATE
-        Libinput::Libinput
+    ${LIBINPUT_LIBRARIES}
 )
