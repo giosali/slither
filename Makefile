@@ -8,4 +8,4 @@ build: clean
 	@cmake --build build
 
 run:
-	@./build/$(NAME)
+	@sudo ./build/$(NAME)
