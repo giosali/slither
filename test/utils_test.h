@@ -1,9 +1,11 @@
-#include "../src/utils.cpp"
+#ifndef UTILS_TEST_H
+#define UTILS_TEST_H
 
 #include <format>
 #include <string>
 #include <string_view>
 
+#include "../src/utils.h"
 #include "ut.hpp"
 
 boost::ut::suite<"utils"> utils = [] {
@@ -45,3 +47,5 @@ boost::ut::suite<"utils"> utils = [] {
     };
   };
 };
+
+#endif  // UTILS_TEST_H
