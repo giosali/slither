@@ -3,7 +3,7 @@ NAME=slither
 clean:
 	@rm -rf build
 
-build: clean
+build:
 	@cmake -B build -S .
 	@cmake --build build
 
