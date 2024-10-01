@@ -32,5 +32,5 @@
 *.app
 
 # Directories
-build/
-test_build/
+out/
+out_test/

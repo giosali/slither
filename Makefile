@@ -1,16 +1,18 @@
 NAME=slither
+OUTPUT_NAME=out
 
 clean:
-	@rm -rf build
+	@rm -rf $(OUTPUT_NAME)
+	@rm -rf $(OUTPUT_NAME)_test
 
 build:
-	@cmake -B build -S .
-	@cmake --build build
+	@cmake -B $(OUTPUT_NAME) -S .
+	@cmake --build $(OUTPUT_NAME)
 
 run:
-	@sudo ./build/$(NAME)
+	@sudo ./$(OUTPUT_NAME)/$(NAME)
 
 tests:
-	@cmake -B test_build -S ./test/
-	@cmake --build test_build
-	./test_build/$(NAME)_test
+	@cmake -B $(OUTPUT_NAME)_test -S ./test/
+	@cmake --build $(OUTPUT_NAME)_test
+	./$(OUTPUT_NAME)_test/$(NAME)_test
