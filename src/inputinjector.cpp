@@ -1,0 +1,48 @@
+#include "inputinjector.h"
+
+#include <stdexcept>
+
+#include "utils.h"
+
+InputInjector::InputInjector() : dev_{libevdev_new()} {
+  libevdev_set_name(dev_, "slither device");
+
+  auto err = libevdev_enable_event_type(dev_, EV_KEY);
+  if (err != 0) {
+    auto what = Utils::FormatExceptionMessage(
+      "Enabling event type on new libevdev device",
+      "Unable to enable EV_KEY event");
+    throw std::runtime_error{what};
+  }
+
+  // TODO: read key event codes from a configuration file and enable them here
+  // via libevdev_enable_event_code(dev_, EV_KEY, {KEY_A}, nullptr).
+
+  err = libevdev_uinput_create_from_device(dev_, LIBEVDEV_UINPUT_OPEN_MANAGED,
+                                           &uinput_dev_);
+  if (err != 0) {
+    auto what = Utils::FormatExceptionMessage(
+      "Creating a uinput device from the newly created libevdev device",
+      "The program does not have permission to open /dev/uinput in read/write "
+      "mode",
+      "The program must either be run with 'sudo' or the user must be a member "
+      "of the input group");
+    throw std::runtime_error{what};
+  }
+}
+
+InputInjector::~InputInjector() {
+  // The uinput device must be destroyed before freeing the libevdev device.
+  libevdev_uinput_destroy(uinput_dev_);
+  libevdev_free(dev_);
+}
+
+void InputInjector::Inject(unsigned int code) {
+  // Presses key.
+  auto err = libevdev_uinput_write_event(uinput_dev_, EV_KEY, code, 1);
+  err = libevdev_uinput_write_event(uinput_dev_, EV_SYN, SYN_REPORT, 0);
+
+  // Releases key.
+  err = libevdev_uinput_write_event(uinput_dev_, EV_KEY, code, 0);
+  err = libevdev_uinput_write_event(uinput_dev_, EV_SYN, SYN_REPORT, 0);
+}
