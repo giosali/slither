@@ -8,6 +8,10 @@ project(slither VERSION 0.1.0 LANGUAGES CXX)
 
 set(PROJECT_SOURCES
     src/main.cpp
+    src/swipemonitor.cpp
+    src/swipemonitor.h
+    src/utils.cpp
+    src/utils.h
 )
 
 add_executable(${CMAKE_PROJECT_NAME}
