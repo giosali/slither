@@ -11,6 +11,6 @@ run:
 	@sudo ./build/$(NAME)
 
 tests:
-	@g++ ./test/main.cpp -std=c++20 -o ./test/a.out
-	@./test/a.out
-	@rm ./test/a.out
+	@cmake -B test_build -S ./test/
+	@cmake --build test_build
+	./test_build/$(NAME)_test
