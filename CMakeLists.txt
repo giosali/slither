@@ -9,6 +9,7 @@ project(slither VERSION 0.1.0 LANGUAGES CXX)
 set(PROJECT_SOURCES
     src/gesturewatcher.cpp
     src/gesturewatcher.h
+    src/json.hpp
     src/main.cpp
     src/swipeparser.cpp
     src/swipeparser.h
