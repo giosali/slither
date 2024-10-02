@@ -3,7 +3,7 @@
 
 #include <libinput.h>
 
-#include "swipetracker.h"
+#include "swipeparser.h"
 
 class GestureWatcher {
  public:
@@ -19,7 +19,7 @@ class GestureWatcher {
 
   libinput_interface interface_;
   libinput* li_;
-  SwipeTracker swipe_tracker_;
+  SwipeParser swipe_parser_;
 };
 
 #endif  // GESTUREWATCHER_H

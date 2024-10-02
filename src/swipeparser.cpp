@@ -1,28 +1,26 @@
-#include "swipetracker.h"
+#include "swipeparser.h"
 
 #include <cmath>
 
-SwipeTracker::SwipeTracker()
+SwipeParser::SwipeParser()
     : is_gesture_valid_{false}, sx_{0}, sy_{0}, time_{0} {}
 
-void SwipeTracker::Begin() {
+void SwipeParser::Begin() {
   is_gesture_valid_ = false;
   sx_ = 0;
   sy_ = 0;
   time_ = 0;
 }
 
-void SwipeTracker::End(uint32_t time) {
+void SwipeParser::End(uint32_t time) {
   is_gesture_valid_ = time - time_ <= kTimeLimit;
 }
 
-SwipeTracker::Direction SwipeTracker::GetDirection() const {
-  return direction_;
-}
+SwipeParser::Direction SwipeParser::GetDirection() const { return direction_; }
 
-bool SwipeTracker::IsGestureValid() const { return is_gesture_valid_; }
+bool SwipeParser::IsGestureValid() const { return is_gesture_valid_; }
 
-void SwipeTracker::Update(double dx, double dy, uint32_t time) {
+void SwipeParser::Update(double dx, double dy, uint32_t time) {
   sx_ += dx;
   sy_ += dy;
 

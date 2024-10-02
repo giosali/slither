@@ -10,8 +10,8 @@ set(PROJECT_SOURCES
     src/gesturewatcher.cpp
     src/gesturewatcher.h
     src/main.cpp
-    src/swipetracker.cpp
-    src/swipetracker.h
+    src/swipeparser.cpp
+    src/swipeparser.h
     src/utils.cpp
     src/utils.h
 )

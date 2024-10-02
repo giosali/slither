@@ -13,7 +13,7 @@
 #include "utils.h"
 
 GestureWatcher::GestureWatcher()
-    : interface_{OpenRestricted, CloseRestricted}, swipe_tracker_{} {
+    : interface_{OpenRestricted, CloseRestricted}, swipe_parser_{} {
   auto udev = udev_new();
   if (udev == nullptr) {
     auto what = Utils::FormatExceptionMessage(
@@ -58,23 +58,23 @@ void GestureWatcher::Enable() {
       auto event_type = libinput_event_get_type(event);
       switch (event_type) {
         case LIBINPUT_EVENT_GESTURE_SWIPE_BEGIN:
-          swipe_tracker_.Begin();
+          swipe_parser_.Begin();
           break;
         case LIBINPUT_EVENT_GESTURE_SWIPE_UPDATE: {
           auto gesture_event = libinput_event_get_gesture_event(event);
           auto dx = libinput_event_gesture_get_dx_unaccelerated(gesture_event);
           auto dy = libinput_event_gesture_get_dy_unaccelerated(gesture_event);
           auto time = libinput_event_gesture_get_time(gesture_event);
-          swipe_tracker_.Update(dx, dy, time);
+          swipe_parser_.Update(dx, dy, time);
           break;
         }
         case LIBINPUT_EVENT_GESTURE_SWIPE_END: {
           auto gesture_event = libinput_event_get_gesture_event(event);
           auto time = libinput_event_gesture_get_time(gesture_event);
-          swipe_tracker_.End(time);
+          swipe_parser_.End(time);
 
-          if (swipe_tracker_.IsGestureValid()) {
-            auto direction = swipe_tracker_.GetDirection();
+          if (swipe_parser_.IsGestureValid()) {
+            auto direction = swipe_parser_.GetDirection();
             // TODO: handle gesture based on direction.
           }
 

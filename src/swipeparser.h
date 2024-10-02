@@ -1,14 +1,14 @@
-#ifndef SWIPETRACKER_H
-#define SWIPETRACKER_H
+#ifndef SWIPEPARSER_H
+#define SWIPEPARSER_H
 
 #include <cstdint>
 
 // https://wayland.freedesktop.org/libinput/doc/latest/normalization-of-relative-motion.html
-class SwipeTracker {
+class SwipeParser {
  public:
   enum class Direction { Up, Right, Down, Left };
 
-  SwipeTracker();
+  SwipeParser();
 
   void Begin();
   void End(uint32_t time);
@@ -27,4 +27,4 @@ class SwipeTracker {
   uint32_t time_;
 };
 
-#endif
+#endif  // SWIPEPARSER_H
