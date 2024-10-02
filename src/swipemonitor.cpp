@@ -45,7 +45,7 @@ void SwipeMonitor::Enable() {
   auto fd = libinput_get_fd(li_);
   auto fds = std::array<pollfd, 1>{{fd, POLLIN, 0}};
   while (poll(fds.data(), fds.size(), -1) != -1) {
-    do {
+    while (true) {
       libinput_dispatch(li_);
       auto event = libinput_get_event(li_);
 
@@ -83,7 +83,7 @@ void SwipeMonitor::Enable() {
       }
 
       libinput_event_destroy(event);
-    } while (true);
+    }
   }
 }
 
