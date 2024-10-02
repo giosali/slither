@@ -1,6 +1,6 @@
-#include "swipemonitor.h"
+#include "gesturewatcher.h"
 
 int main() {
-  auto swipe_monitor = SwipeMonitor{};
-  swipe_monitor.Enable();
+  auto gesture_watcher = GestureWatcher{};
+  gesture_watcher.Enable();
 }

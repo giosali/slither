@@ -1,4 +1,4 @@
-#include "swipemonitor.h"
+#include "gesturewatcher.h"
 
 #include <fcntl.h>
 #include <libudev.h>
@@ -12,7 +12,7 @@
 
 #include "utils.h"
 
-SwipeMonitor::SwipeMonitor()
+GestureWatcher::GestureWatcher()
     : interface_{OpenRestricted, CloseRestricted}, swipe_tracker_{} {
   auto udev = udev_new();
   if (udev == nullptr) {
@@ -39,9 +39,9 @@ SwipeMonitor::SwipeMonitor()
   }
 }
 
-SwipeMonitor::~SwipeMonitor() { libinput_unref(li_); }
+GestureWatcher::~GestureWatcher() { libinput_unref(li_); }
 
-void SwipeMonitor::Enable() {
+void GestureWatcher::Enable() {
   auto fd = libinput_get_fd(li_);
   auto fds = std::array<pollfd, 1>{{fd, POLLIN, 0}};
   while (poll(fds.data(), fds.size(), -1) != -1) {
@@ -87,9 +87,10 @@ void SwipeMonitor::Enable() {
   }
 }
 
-void SwipeMonitor::CloseRestricted(int fd, void* user_data) { close(fd); }
+void GestureWatcher::CloseRestricted(int fd, void* user_data) { close(fd); }
 
-int SwipeMonitor::OpenRestricted(const char* path, int flags, void* user_data) {
+int GestureWatcher::OpenRestricted(const char* path, int flags,
+                                   void* user_data) {
   auto fd = open(path, flags);
   return fd < 0 ? -errno : fd;
 }

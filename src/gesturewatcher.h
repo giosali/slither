@@ -1,15 +1,15 @@
-#ifndef SWIPEMONITOR_H
-#define SWIPEMONITOR_H
+#ifndef GESTUREWATCHER_H
+#define GESTUREWATCHER_H
 
 #include <libinput.h>
 
 #include "swipetracker.h"
 
-class SwipeMonitor {
+class GestureWatcher {
  public:
-  SwipeMonitor();
+  GestureWatcher();
 
-  ~SwipeMonitor();
+  ~GestureWatcher();
 
   void Enable();
 
@@ -22,4 +22,4 @@ class SwipeMonitor {
   SwipeTracker swipe_tracker_;
 };
 
-#endif  // SWIPEMONITOR_H
+#endif  // GESTUREWATCHER_H

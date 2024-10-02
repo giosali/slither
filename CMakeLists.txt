@@ -7,9 +7,9 @@ endif()
 project(slither VERSION 0.1.0 LANGUAGES CXX)
 
 set(PROJECT_SOURCES
+    src/gesturewatcher.cpp
+    src/gesturewatcher.h
     src/main.cpp
-    src/swipemonitor.cpp
-    src/swipemonitor.h
     src/swipetracker.cpp
     src/swipetracker.h
     src/utils.cpp
