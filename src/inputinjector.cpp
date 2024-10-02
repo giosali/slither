@@ -4,7 +4,9 @@
 
 #include "utils.h"
 
-InputInjector::InputInjector() : dev_{libevdev_new()} {
+InputInjector::InputInjector(
+  const std::vector<std::vector<int>>& key_code_groups)
+    : dev_{libevdev_new()} {
   libevdev_set_name(dev_, "slither device");
 
   auto err = libevdev_enable_event_type(dev_, EV_KEY);
@@ -15,8 +17,13 @@ InputInjector::InputInjector() : dev_{libevdev_new()} {
     throw std::runtime_error{what};
   }
 
-  // TODO: read key event codes from a configuration file and enable them here
-  // via libevdev_enable_event_code(dev_, EV_KEY, {KEY_A}, nullptr).
+  // Enables key codes to be programmatically pressed/released.
+  for (size_t i = 0; i < key_code_groups.size(); ++i) {
+    const auto key_codes = key_code_groups[i];
+    for (size_t j = 0; j < key_codes.size(); ++j) {
+      libevdev_enable_event_code(dev_, EV_KEY, key_codes[j], nullptr);
+    }
+  }
 
   err = libevdev_uinput_create_from_device(dev_, LIBEVDEV_UINPUT_OPEN_MANAGED,
                                            &uinput_dev_);

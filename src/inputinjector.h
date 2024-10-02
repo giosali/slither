@@ -4,9 +4,11 @@
 #include <libevdev/libevdev-uinput.h>
 #include <libevdev/libevdev.h>
 
+#include <vector>
+
 class InputInjector {
  public:
-  InputInjector();
+  explicit InputInjector(const std::vector<std::vector<int>>& key_code_groups);
 
   ~InputInjector();
 
