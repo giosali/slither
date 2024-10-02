@@ -10,6 +10,8 @@ set(PROJECT_SOURCES
     src/main.cpp
     src/swipemonitor.cpp
     src/swipemonitor.h
+    src/swipetracker.cpp
+    src/swipetracker.h
     src/utils.cpp
     src/utils.h
 )
