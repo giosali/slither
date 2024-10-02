@@ -3,13 +3,15 @@
 
 #include <libinput.h>
 
+#include "swipetracker.h"
+
 class SwipeMonitor {
  public:
   SwipeMonitor();
 
   ~SwipeMonitor();
 
-  void Enable() const;
+  void Enable();
 
  private:
   static void CloseRestricted(int fd, void* user_data);
@@ -17,6 +19,7 @@ class SwipeMonitor {
 
   libinput_interface interface_;
   libinput* li_;
+  SwipeTracker swipe_tracker_;
 };
 
 #endif  // SWIPEMONITOR_H

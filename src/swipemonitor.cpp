@@ -7,12 +7,13 @@
 
 #include <array>
 #include <cerrno>
-#include <iostream>
+#include <format>
 #include <stdexcept>
 
 #include "utils.h"
 
-SwipeMonitor::SwipeMonitor() : interface_{OpenRestricted, CloseRestricted} {
+SwipeMonitor::SwipeMonitor()
+    : interface_{OpenRestricted, CloseRestricted}, swipe_tracker_{} {
   auto udev = udev_new();
   if (udev == nullptr) {
     auto what = Utils::FormatExceptionMessage(
@@ -40,25 +41,45 @@ SwipeMonitor::SwipeMonitor() : interface_{OpenRestricted, CloseRestricted} {
 
 SwipeMonitor::~SwipeMonitor() { libinput_unref(li_); }
 
-void SwipeMonitor::Enable() const {
+void SwipeMonitor::Enable() {
   auto fd = libinput_get_fd(li_);
   auto fds = std::array<pollfd, 1>{{fd, POLLIN, 0}};
   while (poll(fds.data(), fds.size(), -1) != -1) {
     do {
       libinput_dispatch(li_);
       auto event = libinput_get_event(li_);
+
+      // Means that no event is available.
       if (event == nullptr) {
         libinput_event_destroy(event);
         break;
       }
 
-      auto libinput_event_type = libinput_event_get_type(event);
-      switch (libinput_event_type) {
-        case LIBINPUT_EVENT_KEYBOARD_KEY:
-          auto keyboard_event = libinput_event_get_keyboard_event(event);
-          auto key = libinput_event_keyboard_get_key(keyboard_event);
-          std::cout << "key = " << key << std::endl;
+      auto event_type = libinput_event_get_type(event);
+      switch (event_type) {
+        case LIBINPUT_EVENT_GESTURE_SWIPE_BEGIN:
+          swipe_tracker_.Begin();
           break;
+        case LIBINPUT_EVENT_GESTURE_SWIPE_UPDATE: {
+          auto gesture_event = libinput_event_get_gesture_event(event);
+          auto dx = libinput_event_gesture_get_dx_unaccelerated(gesture_event);
+          auto dy = libinput_event_gesture_get_dy_unaccelerated(gesture_event);
+          auto time = libinput_event_gesture_get_time(gesture_event);
+          swipe_tracker_.Update(dx, dy, time);
+          break;
+        }
+        case LIBINPUT_EVENT_GESTURE_SWIPE_END: {
+          auto gesture_event = libinput_event_get_gesture_event(event);
+          auto time = libinput_event_gesture_get_time(gesture_event);
+          swipe_tracker_.End(time);
+
+          if (swipe_tracker_.IsGestureValid()) {
+            auto direction = swipe_tracker_.GetDirection();
+            // TODO: handle gesture based on direction.
+          }
+
+          break;
+        }
       }
 
       libinput_event_destroy(event);
