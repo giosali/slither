@@ -1,7 +1,6 @@
 #ifndef SWIPEACTION_TEST_H
 #define SWIPEACTION_TEST_H
 
-#include <fstream>
 #include <string>
 #include <vector>
 
