@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 
+#include "../src/json.hpp"
 #include "../src/swipe.h"
 #include "../src/swipeaction.h"
 #include "ut.hpp"

@@ -9,6 +9,7 @@ project(slither_test VERSION 0.1.0 LANGUAGES CXX)
 set(PROJECT_SOURCES
     ../src/inputinjector.cpp
     ../src/inputinjector.h
+    ../src/json.hpp
     ../src/swipeaction.cpp
     ../src/swipeaction.h
     ../src/swipeparser.cpp
