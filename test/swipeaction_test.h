@@ -20,7 +20,9 @@ boost::ut::suite<"swipeaction"> swipeaction = [] {
                                 .key_codes = {1, 2}};
 
       when("I convert it to a nlohmann::json object") = [&action] {
-        nlohmann::json json = action;
+        // Don't use brace initialization with nlohmann::json.
+        // https://json.nlohmann.me/home/faq/#brace-initialization-yields-arrays
+        auto json = nlohmann::json(action);
 
         then("I expect it to return a valid JSON object") = [&json] {
           expect(json.is_object()) << json;
