@@ -11,6 +11,8 @@ set(PROJECT_SOURCES
     src/gesturewatcher.h
     src/json.hpp
     src/main.cpp
+    src/swipeaction.cpp
+    src/swipeaction.h
     src/swipeparser.cpp
     src/swipeparser.h
     src/utils.cpp
