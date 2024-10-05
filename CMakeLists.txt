@@ -15,6 +15,8 @@ set(PROJECT_SOURCES
     src/inputinjector.h
     src/json.hpp
     src/main.cpp
+    src/paths.cpp
+    src/paths.h
     src/swipeaction.cpp
     src/swipeaction.h
     src/swipeparser.cpp
