@@ -15,13 +15,6 @@ class Configuration {
   void UpdateSwipes();
 
  private:
-  static constexpr std::string_view kDirectoryName = "slither";
-  static constexpr std::string_view kFilename = "settings.json";
-  static constexpr std::string_view kHomeVariable = "HOME";
-  static constexpr std::string_view kXdgConfigVariable = "XDG_CONFIG_HOME";
-
-  std::filesystem::path GetConfigDirectory() const;
-
   std::filesystem::path path_;
   std::vector<SwipeAction> swipe_actions_;
 };

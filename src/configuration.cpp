@@ -6,10 +6,11 @@
 #include <stdexcept>
 
 #include "json.hpp"
+#include "standardpaths.h"
 #include "utils.h"
 
 Configuration::Configuration()
-    : path_{GetConfigDirectory() / kDirectoryName / kFilename},
+    : path_{StandardPaths::ConfigAppDirectory() / "settings.json"},
       swipe_actions_{} {
   // Creates the settings file if it doesn't exist.
   if (!std::filesystem::exists(path_)) {
@@ -36,26 +37,4 @@ void Configuration::UpdateSwipes() {
 
 std::vector<SwipeAction> Configuration::GetSwipeActions() const {
   return swipe_actions_;
-}
-
-std::filesystem::path Configuration::GetConfigDirectory() const {
-  auto value = std::getenv(kXdgConfigVariable.data());
-
-  // Means that $XDG_CONFIG_HOME is defined and returns it.
-  if (value != nullptr) {
-    return value;
-  }
-
-  value = std::getenv(kHomeVariable.data());
-
-  // Means that $HOME is undefined.
-  if (value == nullptr) {
-    auto what = Utils::FormatExceptionMessage(
-      "Attempting to retrieve the base directory relative to which "
-      "user-specific configuration files should be stored",
-      "The user's $HOME environment variable is null", R"(¯\_(ツ)_/¯)");
-    throw std::runtime_error{what};
-  }
-
-  return std::filesystem::path{value} / ".config";
 }
