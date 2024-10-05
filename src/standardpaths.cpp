@@ -10,9 +10,9 @@ std::filesystem::path StandardPaths::ConfigDirectory() {
 }
 
 std::filesystem::path StandardPaths::HomeDirectory() {
-  auto value = std::getenv(kXdgConfigVariable.data());
+  auto value = std::getenv("HOME");
   if (value == nullptr) {
-    value = std::getenv(kHomeVariable.data());
+    value = std::getenv("XDG_CONFIG_HOME");
 
     // Means that $HOME is undefined.
     if (value == nullptr) {
