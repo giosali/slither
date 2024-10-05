@@ -10,6 +10,36 @@ boost::ut::suite<"gesture"> gesture = [] {
   using namespace boost::ut::bdd;
   using namespace boost::ut::literals;
 
+  feature("Getters/Setters") = [] {
+    given("I have a Gesture object") = [] {
+      auto gesture = Gesture{};
+
+      when("I set a value via SetDirection") = [&gesture] {
+        auto value = Gesture::Direction::kUp;
+        gesture.SetDirection(value);
+
+        then("I expect to retrieve it through GetDirection") =
+          [&gesture, value] { expect(gesture.GetDirection() == value); };
+      };
+
+      when("I set a value via SetFingerCount") = [&gesture] {
+        auto value = 4;
+        gesture.SetFingerCount(value);
+
+        then("I expect to retrieve it through GetFingerCount") =
+          [&gesture, value] { expect(gesture.GetFingerCount() == value); };
+      };
+
+      when("I set a value via SetKeyCodes") = [&gesture] {
+        auto value = std::vector<int>{1,2};
+        gesture.SetKeyCodes(value);
+
+        then("I expect to retrieve it through GetFingerCount") =
+          [&gesture, &value] { expect(gesture.GetKeyCodes() == value); };
+      };
+    };
+  };
+
   "from_json"_test = [] {
     given("I have a valid string of JSON") = [] {
       auto json_string =
