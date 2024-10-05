@@ -1,0 +1,27 @@
+#include "standardpaths.h"
+
+#include <cstdlib>
+
+#include "utils.h"
+
+std::filesystem::path StandardPaths::HomeDirectory() {
+  auto value = std::getenv(kXdgConfigVariable.data());
+
+  // Means that $XDG_CONFIG_HOME is defined and returns it.
+  if (value != nullptr) {
+    return value;
+  }
+
+  value = std::getenv(kHomeVariable.data());
+
+  // Means that $HOME is undefined.
+  if (value == nullptr) {
+    auto what = Utils::FormatExceptionMessage(
+      "Attempting to retrieve the base directory relative to which "
+      "user-specific configuration files should be stored",
+      "The user's $HOME environment variable is null", R"(¯\_(ツ)_/¯)");
+    throw std::runtime_error{what};
+  }
+
+  return value;
+}
