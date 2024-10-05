@@ -1,0 +1,94 @@
+#ifndef GESTURE_TEST_h
+#define GESTURE_TEST_h
+
+#include "../src/gesture.h"
+#include "../src/json.hpp"
+#include "ut.hpp"
+
+boost::ut::suite<"gesture"> gesture = [] {
+  using namespace boost::ut;
+  using namespace boost::ut::bdd;
+  using namespace boost::ut::literals;
+
+  "from_json"_test = [] {
+    given("I have a valid string of JSON") = [] {
+      auto json_string =
+        "{\"direction\":0,\"fingerCount\":3,\"keyCodes\":[1,2]}";
+
+      when("I convert it to a nlohmann::json object") = [&json_string] {
+        auto json = nlohmann::json::parse(json_string);
+
+        then("I expect to be able to convert it to its corresponding object") =
+          [&json] {
+            auto gesture = json.template get<Gesture>();
+            expect(gesture.GetDirection() == Gesture::Direction::kUp);
+            expect(gesture.GetFingerCount() == 3);
+            expect(gesture.GetKeyCodes() == std::vector<int>{1, 2});
+          };
+      };
+    };
+
+    given("I have a valid string of JSON of an array of objects") = [] {
+      auto json_string =
+        "[{\"direction\":0,\"fingerCount\":3,\"keyCodes\":[1,2]},{"
+        "\"direction\":1,\"fingerCount\":4,\"keyCodes\":[3,4]}]";
+
+      when("I convert it to a nlohmann::json object") = [&json_string] {
+        auto json = nlohmann::json::parse(json_string);
+
+        then(
+          "I expect to be able to convert it to a std::vector of corresponding "
+          "objects") = [&json] {
+          auto gestures = json.template get<std::vector<Gesture>>();
+
+          expect(json.is_array() == true);
+          expect(gestures.size() == 2);
+        };
+      };
+    };
+
+    given(
+      "I have a valid string of JSON of an object with an array of objects "
+      "within") = [] {
+      auto json_string =
+        "{\"gestures\":[{\"direction\":0,\"fingerCount\":3,\"keyCodes\":[1,2]},"
+        "{"
+        "\"direction\":1,\"fingerCount\":4,\"keyCodes\":[3,4]}]}";
+
+      when("I convert it to a nlohmann::json object") = [&json_string] {
+        auto json = nlohmann::json::parse(json_string);
+
+        then(
+          "I expect to be able to index it to retrieve a std::vector of "
+          "corresponding objects") = [&json] {
+          expect(json.is_object() == true);
+
+          auto gestures =
+            json.at("gestures").template get<std::vector<Gesture>>();
+          expect(gestures.size() == 2);
+        };
+      };
+    };
+  };
+
+  "to_json"_test = [] {
+    given("I initialize a valid Gesture object") = [] {
+      auto gesture = Gesture{};
+      gesture.SetDirection(Gesture::Direction::kUp);
+      gesture.SetFingerCount(3);
+      gesture.SetKeyCodes({1, 2});
+
+      when("I convert it to a nlohmann::json object") = [&gesture] {
+        // Don't use brace initialization with nlohmann::json.
+        // https://json.nlohmann.me/home/faq/#brace-initialization-yields-arrays
+        auto json = nlohmann::json(gesture);
+
+        then("I expect it to return a valid JSON object") = [&json] {
+          expect(json.is_object()) << json;
+        };
+      };
+    };
+  };
+};
+
+#endif  // GESTURE_TEST_h

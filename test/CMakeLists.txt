@@ -7,6 +7,8 @@ endif()
 project(slither_test VERSION 0.1.0 LANGUAGES CXX)
 
 set(PROJECT_SOURCES
+    ../src/gesture.cpp
+    ../src/gesture.h
     ../src/inputinjector.cpp
     ../src/inputinjector.h
     ../src/json.hpp
@@ -18,6 +20,7 @@ set(PROJECT_SOURCES
     ../src/swipeparser.h
     ../src/utils.cpp
     ../src/utils.h
+    gesture_test.h
     inputinjector_test.h
     main.cpp
     paths_test.h
