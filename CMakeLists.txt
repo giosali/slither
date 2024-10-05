@@ -7,8 +7,6 @@ endif()
 project(slither VERSION 0.1.0 LANGUAGES CXX)
 
 set(PROJECT_SOURCES
-    src/configuration.cpp
-    src/configuration.h
     src/gesturewatcher.cpp
     src/gesturewatcher.h
     src/inputinjector.cpp
