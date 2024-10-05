@@ -9,6 +9,21 @@ boost::ut::suite<"standardpaths"> standardpaths = [] {
   using namespace boost::ut::bdd;
   using namespace boost::ut::literals;
 
+  "ConfigAppDirectory"_test = [] {
+    given("I call this function") = [] {
+      auto path = StandardPaths::ConfigAppDirectory();
+
+      then("I expect this path to end with 'slither'") = [&path] {
+        expect(path.string().ends_with("slither"));
+      };
+
+      then("I expect this path to start with ConfigDirectory") = [&path] {
+        auto config = StandardPaths::ConfigDirectory().string();
+        expect(path.string().starts_with(config));
+      };
+    };
+  };
+
   "ConfigDirectory"_test = [] {
     given("I call this function") = [] {
       auto path = StandardPaths::ConfigDirectory();
