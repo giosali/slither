@@ -18,7 +18,9 @@ set(PROJECT_SOURCES
     ../src/swipeparser.h
     ../src/utils.cpp
     ../src/utils.h
+    inputinjector_test.h
     main.cpp
+    paths_test.h
     swipeaction_test.h
     swipeparser_test.h
     ut.hpp
