@@ -1,5 +1,5 @@
-#ifndef GESTURE_TEST_h
-#define GESTURE_TEST_h
+#ifndef GESTURE_TEST_H
+#define GESTURE_TEST_H
 
 #include "../src/gesture.h"
 #include "../src/json.hpp"
@@ -31,7 +31,7 @@ boost::ut::suite<"gesture"> gesture = [] {
       };
 
       when("I set a value via SetKeyCodes") = [&gesture] {
-        auto value = std::vector<int>{1,2};
+        auto value = std::vector<int>{1, 2};
         gesture.SetKeyCodes(value);
 
         then("I expect to retrieve it through GetFingerCount") =
@@ -121,4 +121,4 @@ boost::ut::suite<"gesture"> gesture = [] {
   };
 };
 
-#endif  // GESTURE_TEST_h
+#endif  // GESTURE_TEST_H
