@@ -1,19 +1,19 @@
-#include "standardpaths.h"
+#include "paths.h"
 
 #include <cstdlib>
 #include <stdexcept>
 
 #include "utils.h"
 
-std::filesystem::path StandardPaths::ConfigAppDirectory() {
+std::filesystem::path Paths::ConfigAppDirectory() {
   return ConfigDirectory() / "slither";
 }
 
-std::filesystem::path StandardPaths::ConfigDirectory() {
+std::filesystem::path Paths::ConfigDirectory() {
   return HomeDirectory() / ".config";
 }
 
-std::filesystem::path StandardPaths::HomeDirectory() {
+std::filesystem::path Paths::HomeDirectory() {
   auto value = std::getenv("HOME");
   if (value == nullptr) {
     value = std::getenv("XDG_CONFIG_HOME");

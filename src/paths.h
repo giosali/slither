@@ -1,15 +1,15 @@
-#ifndef STANDARDPATHS_H
-#define STANDARDPATHS_H
+#ifndef PATHS_H
+#define PATHS_H
 
 #include <filesystem>
 
-class StandardPaths {
+class Paths {
  public:
-  StandardPaths() = delete;
+  Paths() = delete;
 
   static std::filesystem::path ConfigAppDirectory();
   static std::filesystem::path ConfigDirectory();
   static std::filesystem::path HomeDirectory();
 };
 
-#endif  // STANDARDPATHS_H
+#endif  // PATHS_H

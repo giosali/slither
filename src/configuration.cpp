@@ -6,12 +6,11 @@
 #include <stdexcept>
 
 #include "json.hpp"
-#include "standardpaths.h"
+#include "paths.h"
 #include "utils.h"
 
 Configuration::Configuration()
-    : path_{StandardPaths::ConfigAppDirectory() / "settings.json"},
-      swipe_actions_{} {
+    : path_{Paths::ConfigAppDirectory() / "settings.json"}, swipe_actions_{} {
   // Creates the settings file if it doesn't exist.
   if (!std::filesystem::exists(path_)) {
     // Creates any missing parent directories.

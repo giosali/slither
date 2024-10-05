@@ -1,24 +1,24 @@
-#ifndef STANDARDPATHS_TEST_H
-#define STANDARDPATHS_TEST_H
+#ifndef PATHS_TEST_H
+#define PATHS_TEST_H
 
-#include "../src/standardpaths.h"
+#include "../src/paths.h"
 #include "ut.hpp"
 
-boost::ut::suite<"standardpaths"> standardpaths = [] {
+boost::ut::suite<"paths"> paths = [] {
   using namespace boost::ut;
   using namespace boost::ut::bdd;
   using namespace boost::ut::literals;
 
   "ConfigAppDirectory"_test = [] {
     given("I call this function") = [] {
-      auto path = StandardPaths::ConfigAppDirectory();
+      auto path = Paths::ConfigAppDirectory();
 
       then("I expect this path to end with 'slither'") = [&path] {
         expect(path.string().ends_with("slither"));
       };
 
       then("I expect this path to start with ConfigDirectory") = [&path] {
-        auto config = StandardPaths::ConfigDirectory().string();
+        auto config = Paths::ConfigDirectory().string();
         expect(path.string().starts_with(config));
       };
     };
@@ -26,14 +26,14 @@ boost::ut::suite<"standardpaths"> standardpaths = [] {
 
   "ConfigDirectory"_test = [] {
     given("I call this function") = [] {
-      auto path = StandardPaths::ConfigDirectory();
+      auto path = Paths::ConfigDirectory();
 
       then("I expect this path to end with '/.config'") = [&path] {
         expect(path.string().ends_with("/.config"));
       };
 
       then("I expect this path to start with HomeDirectory") = [&path] {
-        auto home = StandardPaths::HomeDirectory().string();
+        auto home = Paths::HomeDirectory().string();
         expect(path.string().starts_with(home));
       };
     };
@@ -41,7 +41,7 @@ boost::ut::suite<"standardpaths"> standardpaths = [] {
 
   "HomeDirectory"_test = [] {
     given("I call this function") = [] {
-      auto path = StandardPaths::HomeDirectory();
+      auto path = Paths::HomeDirectory();
 
       then("I expect the path to start with either /home or /root") = [&path] {
         auto s = path.string();
@@ -53,4 +53,4 @@ boost::ut::suite<"standardpaths"> standardpaths = [] {
   };
 };
 
-#endif  // STANDARDPATHS_TEST_H
+#endif  // PATHS_TEST_H

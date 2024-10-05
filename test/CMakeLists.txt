@@ -10,8 +10,8 @@ set(PROJECT_SOURCES
     ../src/inputinjector.cpp
     ../src/inputinjector.h
     ../src/json.hpp
-    ../src/standardpaths.cpp
-    ../src/standardpaths.h
+    ../src/paths.cpp
+    ../src/paths.h
     ../src/swipeaction.cpp
     ../src/swipeaction.h
     ../src/swipeparser.cpp
