@@ -1,8 +1,14 @@
 #include "standardpaths.h"
 
 #include <cstdlib>
+#include <stdexcept>
 
 #include "utils.h"
+
+std::filesystem::path StandardPaths::ConfigDirectory() {
+  auto home_directory = HomeDirectory();
+  return home_directory / ".config";
+}
 
 std::filesystem::path StandardPaths::HomeDirectory() {
   auto value = std::getenv(kXdgConfigVariable.data());
