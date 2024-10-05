@@ -5,6 +5,10 @@
 
 #include "utils.h"
 
+std::filesystem::path StandardPaths::ConfigAppDirectory() {
+  return ConfigDirectory() / "slither";
+}
+
 std::filesystem::path StandardPaths::ConfigDirectory() {
   return HomeDirectory() / ".config";
 }
