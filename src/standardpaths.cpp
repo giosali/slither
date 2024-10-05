@@ -6,8 +6,7 @@
 #include "utils.h"
 
 std::filesystem::path StandardPaths::ConfigDirectory() {
-  auto home_directory = HomeDirectory();
-  return home_directory / ".config";
+  return HomeDirectory() / ".config";
 }
 
 std::filesystem::path StandardPaths::HomeDirectory() {
