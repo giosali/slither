@@ -19,8 +19,6 @@ set(PROJECT_SOURCES
     src/main.cpp
     src/paths.cpp
     src/paths.h
-    src/swipeaction.cpp
-    src/swipeaction.h
     src/swipeparser.cpp
     src/swipeparser.h
     src/utils.cpp

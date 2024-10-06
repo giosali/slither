@@ -16,8 +16,6 @@ set(PROJECT_SOURCES
     ../src/json.hpp
     ../src/paths.cpp
     ../src/paths.h
-    ../src/swipeaction.cpp
-    ../src/swipeaction.h
     ../src/swipeparser.cpp
     ../src/swipeparser.h
     ../src/utils.cpp
@@ -27,7 +25,6 @@ set(PROJECT_SOURCES
     inputinjector_test.h
     main.cpp
     paths_test.h
-    swipeaction_test.h
     swipeparser_test.h
     ut.hpp
     utils_test.h
