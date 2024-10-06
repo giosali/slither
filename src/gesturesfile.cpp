@@ -54,9 +54,6 @@ void GesturesFile::Watch() {
         auto event = (struct inotify_event*)&buffer[i];
         if (event->mask & IN_MODIFY) {
           UpdateGestures();
-          for (const auto& g : gestures_) {
-            std::cout << g.GetFingerCount() << "\n";
-          }
         }
 
         i += event_size + event->len;
