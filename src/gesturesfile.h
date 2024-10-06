@@ -9,7 +9,6 @@
 class GesturesFile {
  public:
   GesturesFile();
-  explicit GesturesFile(const std::filesystem::path& path);
 
   std::vector<Gesture> GetGestures() const;
   void Watch();

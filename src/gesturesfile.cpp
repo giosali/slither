@@ -7,15 +7,15 @@
 #include <thread>
 
 #include "json.hpp"
+#include "paths.h"
 
-GesturesFile::GesturesFile() : gestures_{}, path_{} {}
-
-GesturesFile::GesturesFile(const std::filesystem::path& path) : path_{path} {
-  // Creates the gestures file if it doesn't exist.
-  if (!std::filesystem::exists(path)) {
+GesturesFile::GesturesFile()
+    : gestures_{}, path_{Paths::ConfigAppDirectory() / "gestures.json"} {
+  if (!std::filesystem::exists(path_)) {
     // Creates any missing parent directories.
-    std::filesystem::create_directories(path.parent_path());
+    std::filesystem::create_directories(path_.parent_path());
 
+    // Creates the JSON file and writes an empty array to it.
     auto stream = std::ofstream{path_};
     stream << "[]";
   }
