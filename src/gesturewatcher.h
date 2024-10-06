@@ -3,6 +3,7 @@
 
 #include <libinput.h>
 
+#include "gestureconverter.h"
 #include "swipeparser.h"
 
 class GestureWatcher {
@@ -17,6 +18,7 @@ class GestureWatcher {
   static void CloseRestricted(int fd, void* user_data);
   static int OpenRestricted(const char* path, int flags, void* user_data);
 
+  GestureConverter converter_;
   libinput_interface interface_;
   libinput* li_;
   SwipeParser swipe_parser_;

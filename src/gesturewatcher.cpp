@@ -13,7 +13,9 @@
 #include "utils.h"
 
 GestureWatcher::GestureWatcher()
-    : interface_{OpenRestricted, CloseRestricted}, swipe_parser_{} {
+    : converter_{},
+      interface_{OpenRestricted, CloseRestricted},
+      swipe_parser_{} {
   auto udev = udev_new();
   if (udev == nullptr) {
     auto what = Utils::FormatExceptionMessage(
@@ -75,7 +77,9 @@ void GestureWatcher::Enable() {
 
           if (swipe_parser_.IsGestureValid()) {
             auto direction = swipe_parser_.GetDirection();
-            // TODO: handle gesture based on direction.
+            auto finger_count =
+              libinput_event_gesture_get_finger_count(gesture_event);
+            converter_.ConvertGesture(direction, finger_count);
           }
 
           break;
