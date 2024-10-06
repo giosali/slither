@@ -18,6 +18,9 @@ class InputInjector {
   void Inject(const std::vector<uint32_t>& key_codes);
 
  private:
+  void PressKey(uint32_t key_code);
+  void ReleaseKey(uint32_t key_code);
+
   libevdev* dev_;
   libevdev_uinput* uinput_dev_;
 };

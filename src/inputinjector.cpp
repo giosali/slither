@@ -1,5 +1,6 @@
 #include "inputinjector.h"
 
+#include <list>
 #include <stdexcept>
 
 #include "utils.h"
@@ -43,15 +44,48 @@ InputInjector::~InputInjector() {
 }
 
 void InputInjector::Inject(const std::vector<uint32_t>& key_codes) {
+  // TODO: rework this entire block of logic, This can be made much more
+  // efficient.
+
+  auto modifier_key_codes = std::list<uint32_t>{};
+
   for (size_t i = 0; i < key_codes.size(); ++i) {
     auto key_code = key_codes[i];
-
-    // Presses key.
-    auto err = libevdev_uinput_write_event(uinput_dev_, EV_KEY, key_code, 1);
-    err = libevdev_uinput_write_event(uinput_dev_, EV_SYN, SYN_REPORT, 0);
-
-    // Releases key.
-    err = libevdev_uinput_write_event(uinput_dev_, EV_KEY, key_code, 0);
-    err = libevdev_uinput_write_event(uinput_dev_, EV_SYN, SYN_REPORT, 0);
+    switch (key_code) {
+      // CTRL keys
+      case KEY_LEFTCTRL:
+      case KEY_RIGHTCTRL:
+      // Shift keys
+      case KEY_LEFTSHIFT:
+      case KEY_RIGHTSHIFT:
+      // Alt keys
+      case KEY_LEFTALT:
+      case KEY_RIGHTALT:
+        break;
+      // Meta (Super) keys:
+      case KEY_LEFTMETA:
+      case KEY_RIGHTMETA:
+        PressKey(key_code);
+        modifier_key_codes.push_front(key_code);
+        break;
+      default:
+        PressKey(key_code);
+        ReleaseKey(key_code);
+        break;
+    }
   }
+
+  for (auto modifier_key_code : modifier_key_codes) {
+    ReleaseKey(modifier_key_code);
+  }
+}
+
+void InputInjector::PressKey(uint32_t key_code) {
+  libevdev_uinput_write_event(uinput_dev_, EV_KEY, key_code, 1);
+  libevdev_uinput_write_event(uinput_dev_, EV_SYN, SYN_REPORT, 0);
+}
+
+void InputInjector::ReleaseKey(uint32_t key_code) {
+  libevdev_uinput_write_event(uinput_dev_, EV_KEY, key_code, 0);
+  libevdev_uinput_write_event(uinput_dev_, EV_SYN, SYN_REPORT, 0);
 }
