@@ -8,6 +8,7 @@
 
 class InputInjector {
  public:
+  InputInjector();
   explicit InputInjector(const std::unordered_set<int>& key_codes);
 
   ~InputInjector();

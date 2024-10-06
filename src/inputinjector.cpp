@@ -4,8 +4,10 @@
 
 #include "utils.h"
 
+InputInjector::InputInjector() : dev_{nullptr}, uinput_dev_{nullptr} {}
+
 InputInjector::InputInjector(const std::unordered_set<int>& key_codes)
-    : dev_{libevdev_new()} {
+    : dev_{libevdev_new()}, uinput_dev_{nullptr} {
   libevdev_set_name(dev_, "slither device");
 
   auto err = libevdev_enable_event_type(dev_, EV_KEY);
