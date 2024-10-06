@@ -50,7 +50,7 @@ void GesturesFile::Watch() {
     auto i = 0;
     while (i < length) {
       auto event = (struct inotify_event*)&buffer[i];
-      if (event->len && event->mask & IN_MODIFY) {
+      if (event->mask & IN_MODIFY) {
         UpdateGestures();
       }
 
