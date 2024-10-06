@@ -2,6 +2,7 @@
 #define GESTUREFILE_H
 
 #include <filesystem>
+#include <functional>
 #include <vector>
 
 #include "gesture.h"
@@ -11,9 +12,11 @@ class GesturesFile {
   GesturesFile();
 
   std::vector<Gesture> GetGestures() const;
+  void SetCallback(const std::function<void(std::vector<Gesture>)>& value);
   void Watch();
 
  private:
+  std::function<void(std::vector<Gesture>)> callback_;
   std::vector<Gesture> gestures_;
   std::filesystem::path path_;
 
