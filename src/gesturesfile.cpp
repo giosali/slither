@@ -25,13 +25,13 @@ GesturesFile::GesturesFile(const std::filesystem::path& path) : path_{path} {
 std::vector<Gesture> GesturesFile::GetGestures() const { return gestures_; }
 
 void GesturesFile::Watch() {
-  int fd = inotify_init();
+  auto fd = inotify_init();
   if (fd < 0) {
     std::cerr << "Error initializing inotify: " << strerror(errno) << "\n";
     return;
   }
 
-  int wd = inotify_add_watch(fd, path_.c_str(), IN_MODIFY);
+  auto wd = inotify_add_watch(fd, path_.c_str(), IN_MODIFY);
   if (wd < 0) {
     std::cerr << "Error adding watch: " << strerror(errno) << "\n";
     close(fd);
@@ -47,7 +47,7 @@ void GesturesFile::Watch() {
       break;
     }
 
-    int i = 0;
+    auto i = 0;
     while (i < length) {
       auto event = (struct inotify_event*)&buffer[i];
       if (event->len && event->mask & IN_MODIFY) {
