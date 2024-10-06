@@ -1,6 +1,8 @@
 #ifndef INPUTINJECTOR_TEST_H
 #define INPUTINJECTOR_TEST_H
 
+#include <unordered_set>
+
 #include "../src/inputinjector.h"
 #include "ut.hpp"
 
@@ -13,7 +15,7 @@ boost::ut::suite<"inputinjector"> inputinjector = [] {
     given("I initialize an InputInjector object") = [] {
       when("I don't have root access or access to /dev/uinput") = [] {
         then("The constructor should throw an exception") = [] {
-          expect(throws([] { InputInjector({}); }));
+          expect(throws([] { InputInjector{{}}; }));
         };
       };
     };
