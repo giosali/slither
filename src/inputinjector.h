@@ -4,7 +4,9 @@
 #include <libevdev/libevdev-uinput.h>
 #include <libevdev/libevdev.h>
 
+#include <cstdint>
 #include <unordered_set>
+#include <vector>
 
 class InputInjector {
  public:
@@ -13,7 +15,7 @@ class InputInjector {
 
   ~InputInjector();
 
-  void Inject(unsigned int code);
+  void Inject(const std::vector<uint32_t>& key_codes);
 
  private:
   libevdev* dev_;

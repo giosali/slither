@@ -42,12 +42,16 @@ InputInjector::~InputInjector() {
   libevdev_free(dev_);
 }
 
-void InputInjector::Inject(unsigned int code) {
-  // Presses key.
-  auto err = libevdev_uinput_write_event(uinput_dev_, EV_KEY, code, 1);
-  err = libevdev_uinput_write_event(uinput_dev_, EV_SYN, SYN_REPORT, 0);
+void InputInjector::Inject(const std::vector<uint32_t>& key_codes) {
+  for (size_t i = 0; i < key_codes.size(); ++i) {
+    auto key_code = key_codes[i];
 
-  // Releases key.
-  err = libevdev_uinput_write_event(uinput_dev_, EV_KEY, code, 0);
-  err = libevdev_uinput_write_event(uinput_dev_, EV_SYN, SYN_REPORT, 0);
+    // Presses key.
+    auto err = libevdev_uinput_write_event(uinput_dev_, EV_KEY, key_code, 1);
+    err = libevdev_uinput_write_event(uinput_dev_, EV_SYN, SYN_REPORT, 0);
+
+    // Releases key.
+    err = libevdev_uinput_write_event(uinput_dev_, EV_KEY, key_code, 0);
+    err = libevdev_uinput_write_event(uinput_dev_, EV_SYN, SYN_REPORT, 0);
+  }
 }
