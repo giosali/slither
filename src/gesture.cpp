@@ -4,13 +4,15 @@ Gesture::Direction Gesture::GetDirection() const { return direction_; }
 
 size_t Gesture::GetFingerCount() const { return finger_count_; }
 
-std::vector<int> Gesture::GetKeyCodes() const { return key_codes_; }
+std::vector<uint32_t> Gesture::GetKeyCodes() const { return key_codes_; }
 
 void Gesture::SetDirection(Direction value) { direction_ = value; }
 
 void Gesture::SetFingerCount(size_t value) { finger_count_ = value; }
 
-void Gesture::SetKeyCodes(const std::vector<int>& value) { key_codes_ = value; }
+void Gesture::SetKeyCodes(const std::vector<uint32_t>& value) {
+  key_codes_ = value;
+}
 
 void from_json(const nlohmann::json& j, Gesture& g) {
   j.at("direction").get_to(g.direction_);

@@ -31,7 +31,7 @@ boost::ut::suite<"gesture"> gesture = [] {
       };
 
       when("I set a value via SetKeyCodes") = [&gesture] {
-        auto value = std::vector<int>{1, 2};
+        auto value = std::vector<uint32_t>{1, 2};
         gesture.SetKeyCodes(value);
 
         then("I expect to retrieve it through GetFingerCount") =
@@ -53,7 +53,7 @@ boost::ut::suite<"gesture"> gesture = [] {
             auto gesture = json.template get<Gesture>();
             expect(gesture.GetDirection() == Gesture::Direction::kUp);
             expect(gesture.GetFingerCount() == 3);
-            expect(gesture.GetKeyCodes() == std::vector<int>{1, 2});
+            expect(gesture.GetKeyCodes() == std::vector<uint32_t>{1, 2});
           };
       };
     };
