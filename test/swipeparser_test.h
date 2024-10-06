@@ -4,6 +4,7 @@
 #include <tuple>
 #include <vector>
 
+#include "../src/gesture.h"
 #include "../src/swipeparser.h"
 #include "ut.hpp"
 
@@ -15,7 +16,7 @@ boost::ut::suite<"swipeparser"> swipeparser = [] {
   "GetDirection"_test = [] {
     given("The user swipes in various directions") = [] {
       then("The swipes should match the evaluated directions") =
-        [](const std::tuple<double, double, SwipeParser::Direction>& data) {
+        [](const std::tuple<double, double, Gesture::Direction>& data) {
           auto dx = std::get<0>(data);
           auto dy = std::get<1>(data);
           auto direction = std::get<2>(data);
@@ -27,11 +28,11 @@ boost::ut::suite<"swipeparser"> swipeparser = [] {
 
           expect(direction == swipe_parser.GetDirection());
         } |
-        std::vector<std::tuple<double, double, SwipeParser::Direction>>{
-          {0, 200, SwipeParser::Direction::Up},
-          {200, 0, SwipeParser::Direction::Right},
-          {0, -200, SwipeParser::Direction::Down},
-          {-200, 0, SwipeParser::Direction::Left},
+        std::vector<std::tuple<double, double, Gesture::Direction>>{
+          {0, 200, Gesture::Direction::kUp},
+          {200, 0, Gesture::Direction::kRight},
+          {0, -200, Gesture::Direction::kDown},
+          {-200, 0, Gesture::Direction::kLeft},
         };
     };
   };
