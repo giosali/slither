@@ -28,13 +28,13 @@ std::vector<Gesture> GesturesFile::GetGestures() const { return gestures_; }
 void GesturesFile::Watch() {
   auto t = std::thread{[this]() {
     auto fd = inotify_init();
-    if (fd < 0) {
+    if (fd == -1) {
       std::cerr << "Error initializing inotify: " << strerror(errno) << "\n";
       return;
     }
 
     auto wd = inotify_add_watch(fd, path_.c_str(), IN_MODIFY);
-    if (wd < 0) {
+    if (wd == -1) {
       std::cerr << "Error adding watch: " << strerror(errno) << "\n";
       close(fd);
     }
