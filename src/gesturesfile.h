@@ -17,6 +17,8 @@ class GesturesFile {
  private:
   std::vector<Gesture> gestures_;
   std::filesystem::path path_;
+
+  void UpdateGestures();
 };
 
 #endif  // GESTUREFILE_H
