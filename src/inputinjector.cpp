@@ -4,8 +4,7 @@
 
 #include "utils.h"
 
-InputInjector::InputInjector(
-  const std::vector<std::vector<int>>& key_code_groups)
+InputInjector::InputInjector(const std::unordered_set<int>& key_codes)
     : dev_{libevdev_new()} {
   libevdev_set_name(dev_, "slither device");
 
@@ -18,11 +17,8 @@ InputInjector::InputInjector(
   }
 
   // Enables key codes to be programmatically pressed/released.
-  for (size_t i = 0; i < key_code_groups.size(); ++i) {
-    const auto key_codes = key_code_groups[i];
-    for (size_t j = 0; j < key_codes.size(); ++j) {
-      libevdev_enable_event_code(dev_, EV_KEY, key_codes[j], nullptr);
-    }
+  for (auto key_code : key_codes) {
+    libevdev_enable_event_code(dev_, EV_KEY, key_code, nullptr);
   }
 
   err = libevdev_uinput_create_from_device(dev_, LIBEVDEV_UINPUT_OPEN_MANAGED,

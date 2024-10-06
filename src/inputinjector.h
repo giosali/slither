@@ -4,11 +4,11 @@
 #include <libevdev/libevdev-uinput.h>
 #include <libevdev/libevdev.h>
 
-#include <vector>
+#include <unordered_set>
 
 class InputInjector {
  public:
-  explicit InputInjector(const std::vector<std::vector<int>>& key_code_groups);
+  explicit InputInjector(const std::unordered_set<int>& key_codes);
 
   ~InputInjector();
 
