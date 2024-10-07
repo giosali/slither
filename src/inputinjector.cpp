@@ -7,7 +7,7 @@
 
 InputInjector::InputInjector() : dev_{nullptr}, uinput_dev_{nullptr} {}
 
-InputInjector::InputInjector(const std::unordered_set<int>& key_codes)
+InputInjector::InputInjector(const std::unordered_set<uint32_t>& key_codes)
     : dev_{libevdev_new()}, uinput_dev_{nullptr} {
   libevdev_set_name(dev_, "slither device");
 
@@ -52,17 +52,12 @@ void InputInjector::Inject(const std::vector<uint32_t>& key_codes) {
   for (size_t i = 0; i < key_codes.size(); ++i) {
     auto key_code = key_codes[i];
     switch (key_code) {
-      // CTRL keys
       case KEY_LEFTCTRL:
       case KEY_RIGHTCTRL:
-      // Shift keys
       case KEY_LEFTSHIFT:
       case KEY_RIGHTSHIFT:
-      // Alt keys
       case KEY_LEFTALT:
       case KEY_RIGHTALT:
-        break;
-      // Meta (Super) keys:
       case KEY_LEFTMETA:
       case KEY_RIGHTMETA:
         PressKey(key_code);

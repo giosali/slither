@@ -11,7 +11,7 @@
 class InputInjector {
  public:
   InputInjector();
-  explicit InputInjector(const std::unordered_set<int>& key_codes);
+  explicit InputInjector(const std::unordered_set<uint32_t>& key_codes);
 
   ~InputInjector();
 
