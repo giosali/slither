@@ -25,7 +25,7 @@ void GestureConverter::ConvertGesture(Gesture::Direction direction,
 }
 
 void GestureConverter::UpdateInjector(const std::vector<Gesture>& gestures) {
-  auto key_codes = std::unordered_set<int>{};
+  auto key_codes = std::unordered_set<uint32_t>{};
 
   for (const auto& gesture : gestures) {
     auto gesture_key_codes = gesture.GetKeyCodes();
