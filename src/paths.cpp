@@ -1,7 +1,9 @@
 #include "paths.h"
 
 #include <cstdlib>
+#include <format>
 #include <stdexcept>
+#include <string_view>
 
 #include "utils.h"
 
@@ -28,5 +30,18 @@ std::filesystem::path Paths::HomeDirectory() {
     }
   }
 
-  return value;
+  auto home_directory = std::string{value};
+
+  // Means the user is running the application through sudo.
+  // If the user runs the application through sudo, $HOME evaluates to /root.
+  // However, we need $HOME to evaluate to /home/<user> instead.
+  if (home_directory == "/root") {
+    auto sudo_user = std::getenv("SUDO_USER");
+    if (sudo_user != nullptr) {
+      constexpr auto fmt = std::string_view{"/home/{}"};
+      home_directory = std::format(fmt, sudo_user);
+    }
+  }
+
+  return home_directory;
 }
