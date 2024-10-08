@@ -10,7 +10,7 @@
 
 class Gesture {
  public:
-  enum class Direction { kUp, kRight, kDown, kLeft };
+  enum class Direction { kNone, kUp, kRight, kDown, kLeft, kIn, kOut };
 
   Gesture() = default;
 
