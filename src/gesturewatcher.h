@@ -4,6 +4,7 @@
 #include <libinput.h>
 
 #include "gestureconverter.h"
+#include "pinchparser.h"
 #include "swipeparser.h"
 
 class GestureWatcher {
@@ -21,6 +22,7 @@ class GestureWatcher {
   GestureConverter converter_;
   libinput_interface interface_;
   libinput* li_;
+  PinchParser pinch_parser_;
   SwipeParser swipe_parser_;
 };
 

@@ -15,6 +15,7 @@
 GestureWatcher::GestureWatcher()
     : converter_{},
       interface_{OpenRestricted, CloseRestricted},
+      pinch_parser_{},
       swipe_parser_{} {
   auto udev = udev_new();
   if (udev == nullptr) {
@@ -82,6 +83,30 @@ void GestureWatcher::Enable() {
             converter_.ConvertGesture(direction, finger_count);
           }
 
+          break;
+        }
+        case LIBINPUT_EVENT_GESTURE_PINCH_BEGIN:
+          pinch_parser_.Begin();
+          break;
+        case LIBINPUT_EVENT_GESTURE_PINCH_UPDATE: {
+          auto gesture_event = libinput_event_get_gesture_event(event);
+          auto dx = libinput_event_gesture_get_dx_unaccelerated(gesture_event);
+          auto dy = libinput_event_gesture_get_dy_unaccelerated(gesture_event);
+          auto time = libinput_event_gesture_get_time(gesture_event);
+          pinch_parser_.Update(dx, time);
+          break;
+        }
+        case LIBINPUT_EVENT_GESTURE_PINCH_END: {
+          auto gesture_event = libinput_event_get_gesture_event(event);
+          auto time = libinput_event_gesture_get_time(gesture_event);
+          pinch_parser_.End(time);
+
+          if (pinch_parser_.IsGestureValid()) {
+            auto direction = pinch_parser_.GetDirection();
+            auto finger_count =
+              libinput_event_gesture_get_finger_count(gesture_event);
+            converter_.ConvertGesture(direction, finger_count);
+          }
           break;
         }
       }
