@@ -11,6 +11,7 @@ set(PROJECT_SOURCES
     ../src/gesturesfile.cpp
     ../src/inputinjector.cpp
     ../src/paths.cpp
+    ../src/pinchparser.cpp
     ../src/swipeparser.cpp
     ../src/utils.cpp
     main.cpp
