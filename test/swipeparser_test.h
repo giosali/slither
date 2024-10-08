@@ -38,6 +38,28 @@ boost::ut::suite<"swipeparser"> swipeparser = [] {
   };
 
   "IsGestureValid"_test = [] {
+    given("The user swipes left by 125 dpi") = [] {
+      then("I expect the gesture to be valid") = [] {
+        auto swipe_parser = SwipeParser{};
+        swipe_parser.Begin();
+        swipe_parser.Update(-125, 0, 0);
+        swipe_parser.End(1);
+
+        expect(swipe_parser.IsGestureValid() == true);
+      };
+    };
+
+    given("The user swipes right by 125 dpi") = [] {
+      then("I expect the gesture to be valid") = [] {
+        auto swipe_parser = SwipeParser{};
+        swipe_parser.Begin();
+        swipe_parser.Update(125, 0, 0);
+        swipe_parser.End(1);
+
+        expect(swipe_parser.IsGestureValid() == true);
+      };
+    };
+
     given("The user swipes left by 50 dpi") = [] {
       then("I expect the gesture to be invalid") = [] {
         auto swipe_parser = SwipeParser{};
@@ -69,6 +91,17 @@ boost::ut::suite<"swipeparser"> swipeparser = [] {
 
         expect(swipe_parser.IsGestureValid() == true);
       } | std::vector{0, 1, 50, 100, 150, 200, 250};
+    };
+
+    given("The user ends their swipe gesture late") = [] {
+      then("I expect the gesture to be valid") = [](uint32_t time) {
+        auto swipe_parser = SwipeParser{};
+        swipe_parser.Begin();
+        swipe_parser.Update(200, 0, 0);
+        swipe_parser.End(time);
+
+        expect(swipe_parser.IsGestureValid() == false);
+      } | std::vector{251, 300, 400, 500, 1000};
     };
   };
 };
