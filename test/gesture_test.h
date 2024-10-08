@@ -43,7 +43,7 @@ boost::ut::suite<"gesture"> gesture = [] {
   "from_json"_test = [] {
     given("I have a valid string of JSON") = [] {
       auto json_string =
-        "{\"direction\":0,\"fingerCount\":3,\"keyCodes\":[1,2]}";
+        "{\"direction\":1,\"fingerCount\":3,\"keyCodes\":[1,2]}";
 
       when("I convert it to a nlohmann::json object") = [&json_string] {
         auto json = nlohmann::json::parse(json_string);
@@ -60,7 +60,7 @@ boost::ut::suite<"gesture"> gesture = [] {
 
     given("I have a valid string of JSON of an array of objects") = [] {
       auto json_string =
-        "[{\"direction\":0,\"fingerCount\":3,\"keyCodes\":[1,2]},{"
+        "[{\"direction\":1,\"fingerCount\":3,\"keyCodes\":[1,2]},{"
         "\"direction\":1,\"fingerCount\":4,\"keyCodes\":[3,4]}]";
 
       when("I convert it to a nlohmann::json object") = [&json_string] {
@@ -81,9 +81,9 @@ boost::ut::suite<"gesture"> gesture = [] {
       "I have a valid string of JSON of an object with an array of objects "
       "within") = [] {
       auto json_string =
-        "{\"gestures\":[{\"direction\":0,\"fingerCount\":3,\"keyCodes\":[1,2]},"
+        "{\"gestures\":[{\"direction\":1,\"fingerCount\":3,\"keyCodes\":[1,2]},"
         "{"
-        "\"direction\":1,\"fingerCount\":4,\"keyCodes\":[3,4]}]}";
+        "\"direction\":2,\"fingerCount\":4,\"keyCodes\":[3,4]}]}";
 
       when("I convert it to a nlohmann::json object") = [&json_string] {
         auto json = nlohmann::json::parse(json_string);

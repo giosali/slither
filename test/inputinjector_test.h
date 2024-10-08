@@ -1,7 +1,7 @@
 #ifndef INPUTINJECTOR_TEST_H
 #define INPUTINJECTOR_TEST_H
 
-#include <unordered_set>
+#include <cstdint>
 
 #include "../src/inputinjector.h"
 #include "ut.hpp"
@@ -11,11 +11,12 @@ boost::ut::suite<"inputinjector"> inputinjector = [] {
   using namespace boost::ut::bdd;
   using namespace boost::ut::literals;
 
-  "Constructor"_test = [] {
-    given("I initialize an InputInjector object") = [] {
-      when("I don't have root access or access to /dev/uinput") = [] {
-        then("The constructor should throw an exception") = [] {
-          expect(throws([] { InputInjector{{}}; }));
+  "Inject"_test = [] {
+    given("I call this function") = [] {
+      when("I don't have root privileges") = [] {
+        then("I expect an exception to be thrown") = [] {
+          auto key_1 = uint32_t{2};
+          expect(throws([key_1] { InputInjector::Inject({key_1}); }));
         };
       };
     };
