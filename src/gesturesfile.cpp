@@ -15,11 +15,20 @@ GesturesFile::GesturesFile()
       path_{Paths::ConfigAppDirectory() / "gestures.json"} {
   if (!std::filesystem::exists(path_)) {
     // Creates any missing parent directories.
-    std::filesystem::create_directories(path_.parent_path());
+    auto parent_path = path_.parent_path();
+    std::filesystem::create_directories(parent_path);
 
     // Creates the JSON file and writes an empty array to it.
     auto stream = std::ofstream{path_};
     stream << "[]";
+
+    // TODO: an alternative needs to be found to running the program with sudo.
+    //
+    // Prevents this file and its parent directory from having the owner be
+    // assigned to Super User. This is ne necessary if the user invokes the
+    // program with sudo.
+    std::filesystem::permissions(parent_path, std::filesystem::perms::all);
+    std::filesystem::permissions(path_, std::filesystem::perms::all);
   }
 
   UpdateGestures();
