@@ -3,9 +3,14 @@
 #include <cmath>
 
 SwipeParser::SwipeParser()
-    : is_gesture_valid_{false}, sx_{0}, sy_{0}, time_{0} {}
+    : direction_{Gesture::Direction::kNone},
+      is_gesture_valid_{false},
+      sx_{0},
+      sy_{0},
+      time_{0} {}
 
 void SwipeParser::Begin() {
+  direction_ = Gesture::Direction::kNone;
   is_gesture_valid_ = false;
   sx_ = 0;
   sy_ = 0;
@@ -13,7 +18,8 @@ void SwipeParser::Begin() {
 }
 
 void SwipeParser::End(uint32_t time) {
-  is_gesture_valid_ = time - time_ <= kTimeLimit;
+  is_gesture_valid_ =
+    direction_ != Gesture::Direction::kNone && time - time_ <= kTimeLimit;
 }
 
 Gesture::Direction SwipeParser::GetDirection() const { return direction_; }
