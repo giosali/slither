@@ -15,7 +15,7 @@ boost::ut::suite<"swipeparser"> swipeparser = [] {
 
   "GetDirection"_test = [] {
     given("The user swipes in various directions") = [] {
-      then("The swipes should match the evaluated directions") =
+      then("I expect the swipes to match the evaluated directions") =
         [](const std::tuple<double, double, Gesture::Direction>& data) {
           auto dx = std::get<0>(data);
           auto dy = std::get<1>(data);
@@ -26,7 +26,7 @@ boost::ut::suite<"swipeparser"> swipeparser = [] {
           swipe_parser.Update(dx, dy, 0);
           swipe_parser.End(1);
 
-          expect(direction == swipe_parser.GetDirection());
+          expect(swipe_parser.GetDirection() == direction);
         } |
         std::vector<std::tuple<double, double, Gesture::Direction>>{
           {0, 200, Gesture::Direction::kUp},
@@ -39,29 +39,29 @@ boost::ut::suite<"swipeparser"> swipeparser = [] {
 
   "IsGestureValid"_test = [] {
     given("The user swipes left by 50 dpi") = [] {
-      then("The gesture should be invalid") = [] {
+      then("I expect the gesture to be invalid") = [] {
         auto swipe_parser = SwipeParser{};
         swipe_parser.Begin();
         swipe_parser.Update(-50, 0, 0);
         swipe_parser.End(1);
 
-        expect(swipe_parser.IsGestureValid() == true);
+        expect(swipe_parser.IsGestureValid() == false);
       };
     };
 
-    given("The user swipes right by 100 dpi") = [] {
-      then("The gesture should be invalid") = [] {
+    given("The user swipes right by 50 dpi") = [] {
+      then("I expect the gesture to be invalid") = [] {
         auto swipe_parser = SwipeParser{};
         swipe_parser.Begin();
-        swipe_parser.Update(100, 0, 0);
+        swipe_parser.Update(50, 0, 0);
         swipe_parser.End(1);
 
-        expect(swipe_parser.IsGestureValid() == true);
+        expect(swipe_parser.IsGestureValid() == false);
       };
     };
 
-    given("The user ends swipe too late") = [] {
-      then("The gesture should be invalid") = [](uint32_t time) {
+    given("The user ends their swipe gesture on time") = [] {
+      then("I expect the gesture to be valid") = [](uint32_t time) {
         auto swipe_parser = SwipeParser{};
         swipe_parser.Begin();
         swipe_parser.Update(200, 0, 0);
