@@ -18,7 +18,7 @@ class SwipeParser {
 
  private:
   static constexpr double kThreshold = 125;
-  static constexpr double kTimeLimit = 250;
+  static constexpr uint32_t kTimeLimit = 250;
 
   Gesture::Direction direction_;
   bool is_gesture_valid_;
