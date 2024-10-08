@@ -86,7 +86,7 @@ boost::ut::suite<"pinchparser"> pinchparser = [] {
       } | std::vector{0, 1, 50, 100, 150, 200, 250};
     };
 
-    given("The user ends their pinch gesture too late") = [] {
+    given("The user ends their pinch gesture late") = [] {
       then("I expect the gesture to be invalid") = [](uint32_t time) {
         auto parser = PinchParser{};
         parser.Begin();
