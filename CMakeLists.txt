@@ -14,6 +14,7 @@ set(PROJECT_SOURCES
     src/inputinjector.cpp
     src/main.cpp
     src/paths.cpp
+    src/pinchparser.cpp
     src/swipeparser.cpp
     src/utils.cpp
 )
