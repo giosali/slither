@@ -4,6 +4,7 @@
 #include <libinput.h>
 
 #include "gestureconverter.h"
+#include "holdparser.h"
 #include "pinchparser.h"
 #include "swipeparser.h"
 
@@ -20,6 +21,7 @@ class GestureWatcher {
   static int OpenRestricted(const char* path, int flags, void* user_data);
 
   GestureConverter converter_;
+  HoldParser hold_parser_;
   libinput_interface interface_;
   libinput* li_;
   PinchParser pinch_parser_;
