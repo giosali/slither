@@ -14,6 +14,7 @@
 
 GestureWatcher::GestureWatcher()
     : converter_{},
+      hold_parser_{},
       interface_{OpenRestricted, CloseRestricted},
       pinch_parser_{},
       swipe_parser_{} {
@@ -109,6 +110,16 @@ void GestureWatcher::Enable() {
           }
           break;
         }
+        case LIBINPUT_EVENT_GESTURE_HOLD_BEGIN: {
+          auto gesture_event = libinput_event_get_gesture_event(event);
+          auto finger_count =
+            libinput_event_gesture_get_finger_count(gesture_event);
+          hold_parser_.Begin(finger_count);
+          break;
+        }
+        case LIBINPUT_EVENT_GESTURE_HOLD_END:
+          hold_parser_.End();
+          break;
       }
 
       libinput_event_destroy(event);
