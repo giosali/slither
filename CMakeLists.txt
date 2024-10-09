@@ -11,6 +11,7 @@ set(PROJECT_SOURCES
     src/gestureconverter.cpp
     src/gesturesfile.cpp
     src/gesturewatcher.cpp
+    src/holdparser.cpp
     src/inputinjector.cpp
     src/main.cpp
     src/paths.cpp
