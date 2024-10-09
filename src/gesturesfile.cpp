@@ -35,7 +35,7 @@ GesturesFile::GesturesFile()
 std::vector<Gesture> GesturesFile::GetGestures() const { return gestures_; }
 
 void GesturesFile::Watch() {
-  auto t = std::thread{[this]() {
+  auto t = std::jthread{[this]() {
     auto fd = inotify_init();
     if (fd == -1) {
       std::cerr << "Error initializing inotify: " << strerror(errno) << "\n";
