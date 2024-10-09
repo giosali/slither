@@ -35,6 +35,7 @@ GesturesFile::GesturesFile()
 std::vector<Gesture> GesturesFile::GetGestures() const { return gestures_; }
 
 void GesturesFile::Watch() {
+  // TODO: this thread is seemingly run twice; investigate.
   auto t = std::jthread{[this]() {
     auto fd = inotify_init();
     if (fd == -1) {
