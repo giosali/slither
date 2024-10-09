@@ -4,7 +4,7 @@
 
 #include "inputinjector.h"
 
-GestureConverter::GestureConverter() : file_{} {}
+GestureConverter::GestureConverter() : file_{} { file_.Watch(); }
 
 void GestureConverter::ConvertGesture(Gesture::Direction direction,
                                       size_t finger_count) {
