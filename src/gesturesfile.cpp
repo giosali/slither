@@ -10,9 +10,7 @@
 #include "paths.h"
 
 GesturesFile::GesturesFile()
-    : callback_{nullptr},
-      gestures_{},
-      path_{Paths::ConfigAppDirectory() / "gestures.json"} {
+    : gestures_{}, path_{Paths::ConfigAppDirectory() / "gestures.json"} {
   if (!std::filesystem::exists(path_)) {
     // Creates any missing parent directories.
     auto parent_path = path_.parent_path();
@@ -65,12 +63,6 @@ void GesturesFile::Watch() {
         auto event = (struct inotify_event*)&buffer[i];
         if (event->mask & IN_MODIFY) {
           UpdateGestures();
-
-          // Optional callback function gets called every time the gestures are
-          // updated.
-          if (callback_ != nullptr) {
-            callback_(gestures_);
-          }
         }
 
         i += event_size + event->len;
@@ -81,11 +73,6 @@ void GesturesFile::Watch() {
     close(fd);
   }};
   t.detach();
-}
-
-void GesturesFile::SetCallback(
-  const std::function<void(std::vector<Gesture>)>& value) {
-  callback_ = value;
 }
 
 void GesturesFile::UpdateGestures() {
