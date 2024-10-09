@@ -21,7 +21,7 @@ void InputInjector::Inject(const std::vector<uint32_t>& key_codes) {
 
   // This time delay is necessary to give enough time for the uinput device to
   // be created.
-  std::this_thread::sleep_for(std::chrono::milliseconds(50));
+  std::this_thread::sleep_for(std::chrono::milliseconds(100));
 
   // Simulates key presses.
   for (size_t i = 0; i < key_codes.size(); ++i) {
@@ -31,9 +31,9 @@ void InputInjector::Inject(const std::vector<uint32_t>& key_codes) {
   // Syncs keyboard events.
   libevdev_uinput_write_event(uinput_dev, EV_SYN, SYN_REPORT, 0);
 
-  // This time delay is necessary to simulate the average duration between key
-  // presses and key releases.
-  std::this_thread::sleep_for(std::chrono::milliseconds(50));
+  // I don't think a time delay is necessary between key presses and key
+  // releases, but a rather long time delay is necessary before pressing a key
+  // for some reason.
 
   // Simulates key releases.
   for (int32_t i = key_codes.size() - 1; i >= 0; --i) {
