@@ -16,11 +16,11 @@ class GesturesFile {
   void Watch();
 
  private:
+  void UpdateGestures();
+
   std::function<void(std::vector<Gesture>)> callback_;
   std::vector<Gesture> gestures_;
   std::filesystem::path path_;
-
-  void UpdateGestures();
 };
 
 #endif  // GESTUREFILE_H
