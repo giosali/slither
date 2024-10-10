@@ -13,7 +13,6 @@ set(PROJECT_SOURCES
     ../src/paths.cpp
     ../src/pinchparser.cpp
     ../src/swipeparser.cpp
-    ../src/utils.cpp
     main.cpp
 )
 
@@ -25,7 +24,9 @@ target_compile_features(${CMAKE_PROJECT_NAME} PRIVATE cxx_std_20)
 
 find_package(PkgConfig)
 pkg_check_modules(LIBEVDEV REQUIRED libevdev)
+pkg_check_modules(SPDLOG REQUIRED spdlog)
 
 target_link_libraries(${CMAKE_PROJECT_NAME}
     ${LIBEVDEV_LIBRARIES}
+    ${SPDLOG_LIBRARIES}
 )
