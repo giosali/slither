@@ -17,7 +17,6 @@ set(PROJECT_SOURCES
     src/paths.cpp
     src/pinchparser.cpp
     src/swipeparser.cpp
-    src/utils.cpp
 )
 
 add_executable(${CMAKE_PROJECT_NAME}
