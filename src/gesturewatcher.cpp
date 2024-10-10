@@ -3,13 +3,12 @@
 #include <fcntl.h>
 #include <libudev.h>
 #include <poll.h>
+#include <spdlog/spdlog.h>
 #include <unistd.h>
 
 #include <array>
 #include <cerrno>
 #include <stdexcept>
-
-#include "utils.h"
 
 GestureWatcher::GestureWatcher()
     : converter_{},
@@ -17,34 +16,41 @@ GestureWatcher::GestureWatcher()
       interface_{OpenRestricted, CloseRestricted},
       pinch_parser_{},
       swipe_parser_{} {
+  spdlog::info("Entering GestureWatcher::GestureWatcher");
+
+  spdlog::info("Initializing new udev context object");
   auto udev = udev_new();
   if (udev == nullptr) {
-    auto what = Utils::FormatExceptionMessage(
-      "Initializing new udev context object", "udev_new returned nullptr");
+    auto what = "udev_new returned nullptr";
+    spdlog::critical(what);
     throw std::runtime_error{what};
   }
 
+  spdlog::info("Creating a new libinput context from udev");
   li_ = libinput_udev_create_context(&interface_, nullptr, udev);
   if (li_ == nullptr) {
-    auto what = Utils::FormatExceptionMessage(
-      "Creating a new libinput context from udev",
-      "Returned a nullptr libinput context",
-      "The user needs permission to read /dev/input. Either run this program "
-      "via 'sudo' or run the following command: 'sudo gpasswd -a $USER input'");
+    auto what =
+      "Returned a nullptr libinput context while creating a new libinput; "
+      "elevated privileges are required to read /dev/input";
+    spdlog::critical(what);
     throw std::runtime_error{what};
   }
 
+  spdlog::info("Assigning a seat to the libinput context");
   if (libinput_udev_assign_seat(li_, "seat0") == -1) {
-    auto what =
-      Utils::FormatExceptionMessage("Assigning a seat to the libinput context",
-                                    "libinput_udev_assign_seat returned -1");
+    auto what = "libinput_udev_assign_seat returned -1";
+    spdlog::critical(what);
     throw std::runtime_error{what};
   }
+
+  spdlog::info("Exiting GestureWatcher::GestureWatcher");
 }
 
 GestureWatcher::~GestureWatcher() { libinput_unref(li_); }
 
 void GestureWatcher::Enable() {
+  spdlog::info("Entered GestureWatcher::Enable");
+
   auto fd = libinput_get_fd(li_);
   auto fds = std::array<pollfd, 1>{{fd, POLLIN, 0}};
   while (poll(fds.data(), fds.size(), -1) != -1) {
@@ -61,9 +67,13 @@ void GestureWatcher::Enable() {
       auto event_type = libinput_event_get_type(event);
       switch (event_type) {
         case LIBINPUT_EVENT_GESTURE_SWIPE_BEGIN:
+          spdlog::info("Beginning swipe");
+
           swipe_parser_.Begin();
           break;
         case LIBINPUT_EVENT_GESTURE_SWIPE_UPDATE: {
+          spdlog::info("Updating swipe");
+
           auto gesture_event = libinput_event_get_gesture_event(event);
           auto dx = libinput_event_gesture_get_dx_unaccelerated(gesture_event);
           auto dy = libinput_event_gesture_get_dy_unaccelerated(gesture_event);
@@ -72,6 +82,8 @@ void GestureWatcher::Enable() {
           break;
         }
         case LIBINPUT_EVENT_GESTURE_SWIPE_END: {
+          spdlog::info("Ending swipe");
+
           auto gesture_event = libinput_event_get_gesture_event(event);
           auto time = libinput_event_gesture_get_time(gesture_event);
           swipe_parser_.End(time);
@@ -86,9 +98,13 @@ void GestureWatcher::Enable() {
           break;
         }
         case LIBINPUT_EVENT_GESTURE_PINCH_BEGIN:
+          spdlog::info("Beginning pinch");
+
           pinch_parser_.Begin();
           break;
         case LIBINPUT_EVENT_GESTURE_PINCH_UPDATE: {
+          spdlog::info("Updating pinch");
+
           auto gesture_event = libinput_event_get_gesture_event(event);
           auto dx = libinput_event_gesture_get_dx_unaccelerated(gesture_event);
           auto dy = libinput_event_gesture_get_dy_unaccelerated(gesture_event);
@@ -97,6 +113,8 @@ void GestureWatcher::Enable() {
           break;
         }
         case LIBINPUT_EVENT_GESTURE_PINCH_END: {
+          spdlog::info("Ending pinch");
+
           auto gesture_event = libinput_event_get_gesture_event(event);
           auto time = libinput_event_gesture_get_time(gesture_event);
           pinch_parser_.End(time);
@@ -110,6 +128,8 @@ void GestureWatcher::Enable() {
           break;
         }
         case LIBINPUT_EVENT_GESTURE_HOLD_BEGIN: {
+          spdlog::info("Beginning hold");
+
           auto gesture_event = libinput_event_get_gesture_event(event);
           auto finger_count =
             libinput_event_gesture_get_finger_count(gesture_event);
@@ -117,6 +137,8 @@ void GestureWatcher::Enable() {
           break;
         }
         case LIBINPUT_EVENT_GESTURE_HOLD_END:
+          spdlog::info("Ending hold");
+
           hold_parser_.End();
           break;
       }
