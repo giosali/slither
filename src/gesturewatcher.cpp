@@ -7,7 +7,6 @@
 
 #include <array>
 #include <cerrno>
-#include <format>
 #include <stdexcept>
 
 #include "utils.h"
