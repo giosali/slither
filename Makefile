@@ -10,7 +10,7 @@ build:
 	@cmake --build $(OUTPUT_NAME)
 
 run:
-	@sudo ./$(OUTPUT_NAME)/$(NAME)
+	@sudo ./$(OUTPUT_NAME)/$(NAME) --verbose
 
 tests:
 	@cmake -B $(OUTPUT_NAME)_test -S ./test/
