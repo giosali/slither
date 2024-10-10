@@ -31,9 +31,11 @@ find_package(PkgConfig)
 pkg_check_modules(LIBEVDEV REQUIRED libevdev)
 pkg_check_modules(LIBINPUT REQUIRED libinput)
 pkg_check_modules(LIBUDEV REQUIRED libudev)
+pkg_check_modules(SPDLOG REQUIRED spdlog)
 
 target_link_libraries(${CMAKE_PROJECT_NAME}
     ${LIBEVDEV_LIBRARIES}
     ${LIBINPUT_LIBRARIES}
     ${LIBUDEV_LIBRARIES}
+    ${SPDLOG_LIBRARIES}
 )
