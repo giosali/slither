@@ -1,5 +1,6 @@
 #include <spdlog/spdlog.h>
 
+#include <exception>
 #include <iostream>
 
 #include "argparse.hpp"
