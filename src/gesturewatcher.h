@@ -3,10 +3,9 @@
 
 #include <libinput.h>
 
-#include "gestureconverter.h"
-#include "holdparser.h"
-#include "pinchparser.h"
-#include "swipeparser.h"
+#include <memory>
+
+#include "gestureevent.h"
 
 class GestureWatcher {
  public:
@@ -20,12 +19,9 @@ class GestureWatcher {
   static void CloseRestricted(int fd, void* user_data);
   static int OpenRestricted(const char* path, int flags, void* user_data);
 
-  GestureConverter converter_;
-  HoldParser hold_parser_;
+  std::unique_ptr<GestureEvent> gesture_event_;
   libinput_interface interface_;
   libinput* li_;
-  PinchParser pinch_parser_;
-  SwipeParser swipe_parser_;
 };
 
 #endif  // GESTUREWATCHER_H
