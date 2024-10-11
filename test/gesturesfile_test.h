@@ -10,12 +10,21 @@ boost::ut::suite<"gesturesfile"> gesturesfile = [] {
   using namespace boost::ut::bdd;
   using namespace boost::ut::literals;
 
-  "GetGestures"_test = [] {
-    given("I have a default-initialized GesturesFile object") = [] {
-      auto file = GesturesFile{};
+  "FindGestureKeyCodes"_test = [] {
+    given("GesturesFile::Initialized hasn't been called") = [] {
+      auto direction = Gesture::Direction::kNone;
+      auto key_codes = GesturesFile::FindGestureKeyCodes(direction, 0);
 
-      then("I expect GetGestures to return a vector") = [&file] {
-        expect(file.GetGestures().size() >= 0);
+      then("I expect an empty vector to be returned") = [&key_codes] {
+        expect(key_codes.empty());
+      };
+    };
+  };
+
+  "Watch"_test = [] {
+    given("I call this function") = [] {
+      then("I expect an exception to not be thrown") = [] {
+        expect(nothrow([] { GesturesFile::Watch(); }));
       };
     };
   };
