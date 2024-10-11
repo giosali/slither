@@ -9,10 +9,12 @@ project(slither_test VERSION 0.1.0 LANGUAGES CXX)
 set(PROJECT_SOURCES
     ../src/gesture.cpp
     ../src/gesturesfile.cpp
+    ../src/gestureevent.cpp
+    ../src/holdgestureevent.cpp
     ../src/inputinjector.cpp
     ../src/paths.cpp
-    ../src/pinchparser.cpp
-    ../src/swipeparser.cpp
+    ../src/pinchgestureevent.cpp
+    ../src/swipegestureevent.cpp
     main.cpp
 )
 
@@ -24,9 +26,11 @@ target_compile_features(${CMAKE_PROJECT_NAME} PRIVATE cxx_std_20)
 
 find_package(PkgConfig)
 pkg_check_modules(LIBEVDEV REQUIRED libevdev)
+pkg_check_modules(LIBINPUT REQUIRED libinput)
 pkg_check_modules(SPDLOG REQUIRED spdlog)
 
 target_link_libraries(${CMAKE_PROJECT_NAME}
     ${LIBEVDEV_LIBRARIES}
+    ${LIBINPUT_LIBRARIES}
     ${SPDLOG_LIBRARIES}
 )
