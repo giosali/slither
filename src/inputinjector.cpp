@@ -1,7 +1,7 @@
 #include "inputinjector.h"
 
-#include <libevdev/libevdev-uinput.h>
-#include <libevdev/libevdev.h>
+#include <libevdev-1.0/libevdev/libevdev-uinput.h>
+#include <libevdev-1.0/libevdev/libevdev.h>
 #include <spdlog/spdlog.h>
 
 #include <chrono>
