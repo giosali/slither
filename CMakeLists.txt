@@ -8,14 +8,16 @@ project(slither VERSION 0.1.0 LANGUAGES CXX)
 
 set(PROJECT_SOURCES
     src/gesture.cpp
+    src/gestureevent.cpp
+    src/gestureeventfactory.cpp
     src/gesturesfile.cpp
     src/gesturewatcher.cpp
-    src/holdparser.cpp
+    src/holdgestureevent.cpp
     src/inputinjector.cpp
     src/main.cpp
     src/paths.cpp
-    src/pinchparser.cpp
-    src/swipeparser.cpp
+    src/pinchgestureevent.cpp
+    src/swipegestureevent.cpp
 )
 
 add_executable(${CMAKE_PROJECT_NAME}
