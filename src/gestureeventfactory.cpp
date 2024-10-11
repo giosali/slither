@@ -1,5 +1,7 @@
 #include "gestureeventfactory.h"
 
+#include <exception>
+
 #include "holdgestureevent.h"
 #include "pinchgestureevent.h"
 #include "swipegestureevent.h"
@@ -14,6 +16,7 @@ std::unique_ptr<GestureEvent> GestureEventFactory::CreateGestureEvent(
     case LIBINPUT_EVENT_GESTURE_HOLD_BEGIN:
       return std::make_unique<HoldGestureEvent>(event);
     default:
-      return nullptr;
+      auto what = "Processed an invalid gesture event type";
+      throw std::runtime_error{what};
   }
 }
