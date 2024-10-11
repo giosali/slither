@@ -29,6 +29,11 @@ pkg_check_modules(LIBEVDEV REQUIRED libevdev)
 pkg_check_modules(LIBINPUT REQUIRED libinput)
 pkg_check_modules(SPDLOG REQUIRED spdlog)
 
+target_include_directories(${CMAKE_PROJECT_NAME}
+    PRIVATE
+        ${LIBEVDEV_INCLUDE_DIRS}
+)
+
 target_link_libraries(${CMAKE_PROJECT_NAME}
     ${LIBEVDEV_LIBRARIES}
     ${LIBINPUT_LIBRARIES}
