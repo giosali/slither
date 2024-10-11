@@ -70,7 +70,7 @@ void SwipeGestureEvent::Update(libinput_event* event) {
   } else if (std::abs(sy_) >= kThreshold) {
     // Handles vertical swipes.
     time_ = time;
-    direction_ = sy_ < 0 ? Gesture::Direction::kDown : Gesture::Direction::kUp;
+    direction_ = sy_ < 0 ? Gesture::Direction::kUp : Gesture::Direction::kDown;
 
     spdlog::info("Vertical threshold met");
     spdlog::debug("Value of direction_: {}", static_cast<int>(direction_));
