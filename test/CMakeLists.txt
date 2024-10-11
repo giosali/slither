@@ -8,8 +8,9 @@ project(slither_test VERSION 0.1.0 LANGUAGES CXX)
 
 set(PROJECT_SOURCES
     ../src/gesture.cpp
-    ../src/gesturesfile.cpp
     ../src/gestureevent.cpp
+    ../src/gestureeventfactory.cpp
+    ../src/gesturesfile.cpp
     ../src/holdgestureevent.cpp
     ../src/inputinjector.cpp
     ../src/paths.cpp
