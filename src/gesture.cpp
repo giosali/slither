@@ -1,8 +1,5 @@
 #include "gesture.h"
 
-Gesture::Gesture(Direction direction, int32_t finger_count)
-    : direction_{direction}, finger_count_{finger_count} {}
-
 Gesture::Direction Gesture::GetDirection() const { return direction_; }
 
 int32_t Gesture::GetFingerCount() const { return finger_count_; }
@@ -15,10 +12,6 @@ void Gesture::SetFingerCount(int32_t value) { finger_count_ = value; }
 
 void Gesture::SetKeyCodes(const std::vector<uint32_t>& value) {
   key_codes_ = value;
-}
-
-bool Gesture::operator==(const Gesture& g) {
-  return direction_ == g.direction_ && finger_count_ == g.finger_count_;
 }
 
 void from_json(const nlohmann::json& j, Gesture& g) {
