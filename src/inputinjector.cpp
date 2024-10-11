@@ -1,7 +1,5 @@
 #include "inputinjector.h"
 
-#include <libevdev-1.0/libevdev/libevdev-uinput.h>
-#include <libevdev-1.0/libevdev/libevdev.h>
 #include <spdlog/spdlog.h>
 
 #include <chrono>
@@ -47,49 +45,11 @@ void InputInjector::Inject(const std::vector<uint32_t>& key_codes) {
   // be created.
   std::this_thread::sleep_for(std::chrono::milliseconds(100));
 
-  // Simulates key presses.
-  spdlog::info("Simulating key presses");
-  for (size_t i = 0; i < key_codes.size(); ++i) {
-    auto key_code = key_codes[i];
-    err = libevdev_uinput_write_event(uinput_dev, EV_KEY, key_code, 1);
-    if (err != 0) {
-      spdlog::error(
-        "Failed to simulate key press for key code: {} (errno: {}, strerror: "
-        "{})",
-        key_code, -err, std::strerror(-err));
-    }
-  }
-
-  // Syncs keyboard events.
-  err = libevdev_uinput_write_event(uinput_dev, EV_SYN, SYN_REPORT, 0);
-  if (err != 0) {
-    spdlog::error("Failed to sync key event (errno: {}, strerror: {})", -err,
-                  std::strerror(-err));
-  }
-
   // I don't think a time delay is necessary between key presses and key
   // releases, but a rather long time delay is necessary before pressing a key
   // for some reason.
-
-  // Simulates key releases.
-  spdlog::info("Simulating key releases");
-  for (int32_t i = key_codes.size() - 1; i >= 0; --i) {
-    auto key_code = key_codes[i];
-    libevdev_uinput_write_event(uinput_dev, EV_KEY, key_code, 0);
-    if (err != 0) {
-      spdlog::error(
-        "Failed to simulate key release for key code: {} (errno: {}, strerror: "
-        "{})",
-        key_code, -err, std::strerror(-err));
-    }
-  }
-
-  // Syncs keyboard events.
-  err = libevdev_uinput_write_event(uinput_dev, EV_SYN, SYN_REPORT, 0);
-  if (err != 0) {
-    spdlog::error("Failed to sync key event (errno: {}, strerror: {})", -err,
-                  std::strerror(-err));
-  }
+  Write(true, uinput_dev, key_codes);
+  Write(false, uinput_dev, key_codes);
 
   // This time delay seems to be necessary to allow for pinch gestures to work
   // for some reason.
@@ -100,4 +60,48 @@ void InputInjector::Inject(const std::vector<uint32_t>& key_codes) {
   libevdev_free(dev);
 
   spdlog::info("Exiting InputInjector::Inject");
+}
+
+void InputInjector::Write(bool press, libevdev_uinput* uinput_dev,
+                          const std::vector<uint32_t>& key_codes) {
+  auto err = int32_t{0};
+
+  if (press) {
+    // Simulates key presses.
+    spdlog::info("Simulating key presses");
+    for (size_t i = 0; i < key_codes.size(); ++i) {
+      auto key_code = key_codes[i];
+      err = libevdev_uinput_write_event(uinput_dev, EV_KEY, key_code, 1);
+
+      if (err != 0) {
+        spdlog::error(
+          "Failed to simulate key release for key code: {} (errno: {}, "
+          "strerror: "
+          "{})",
+          key_code, -err, std::strerror(-err));
+      }
+    }
+  } else {
+    // Simulates key releases.
+    spdlog::info("Simulating key releases");
+    for (int32_t i = key_codes.size() - 1; i >= 0; --i) {
+      auto key_code = key_codes[i];
+      err = libevdev_uinput_write_event(uinput_dev, EV_KEY, key_code, 0);
+
+      if (err != 0) {
+        spdlog::error(
+          "Failed to simulate key release for key code: {} (errno: {}, "
+          "strerror: "
+          "{})",
+          key_code, -err, std::strerror(-err));
+      }
+    }
+  }
+
+  // Syncs keyboard events.
+  err = libevdev_uinput_write_event(uinput_dev, EV_SYN, SYN_REPORT, 0);
+  if (err != 0) {
+    spdlog::error("Failed to sync key event (errno: {}, strerror: {})", -err,
+                  std::strerror(-err));
+  }
 }
