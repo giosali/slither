@@ -10,12 +10,9 @@
 #include <cerrno>
 #include <stdexcept>
 
-GestureWatcher::GestureWatcher()
-    : converter_{},
-      hold_parser_{},
-      interface_{OpenRestricted, CloseRestricted},
-      pinch_parser_{},
-      swipe_parser_{} {
+#include "gestureeventfactory.h"
+
+GestureWatcher::GestureWatcher() : interface_{OpenRestricted, CloseRestricted} {
   spdlog::info("Entering GestureWatcher::GestureWatcher");
 
   spdlog::info("Initializing new udev context object");
@@ -58,7 +55,7 @@ void GestureWatcher::Enable() {
       libinput_dispatch(li_);
       auto event = libinput_get_event(li_);
 
-      // Means that no event is available.
+      // Indicates that no event is available.
       if (event == nullptr) {
         libinput_event_destroy(event);
         break;
@@ -67,79 +64,29 @@ void GestureWatcher::Enable() {
       auto event_type = libinput_event_get_type(event);
       switch (event_type) {
         case LIBINPUT_EVENT_GESTURE_SWIPE_BEGIN:
-          spdlog::info("Beginning swipe");
-
-          swipe_parser_.Begin();
-          break;
-        case LIBINPUT_EVENT_GESTURE_SWIPE_UPDATE: {
-          spdlog::info("Updating swipe");
-
-          auto gesture_event = libinput_event_get_gesture_event(event);
-          auto dx = libinput_event_gesture_get_dx_unaccelerated(gesture_event);
-          auto dy = libinput_event_gesture_get_dy_unaccelerated(gesture_event);
-          auto time = libinput_event_gesture_get_time(gesture_event);
-          swipe_parser_.Update(dx, dy, time);
-          break;
-        }
-        case LIBINPUT_EVENT_GESTURE_SWIPE_END: {
-          spdlog::info("Ending swipe");
-
-          auto gesture_event = libinput_event_get_gesture_event(event);
-          auto time = libinput_event_gesture_get_time(gesture_event);
-          swipe_parser_.End(time);
-
-          if (swipe_parser_.IsGestureValid()) {
-            auto direction = swipe_parser_.GetDirection();
-            auto finger_count =
-              libinput_event_gesture_get_finger_count(gesture_event);
-            converter_.ConvertGesture(direction, finger_count);
-          }
-
-          break;
-        }
         case LIBINPUT_EVENT_GESTURE_PINCH_BEGIN:
-          spdlog::info("Beginning pinch");
-
-          pinch_parser_.Begin();
-          break;
-        case LIBINPUT_EVENT_GESTURE_PINCH_UPDATE: {
-          spdlog::info("Updating pinch");
-
-          auto gesture_event = libinput_event_get_gesture_event(event);
-          auto dx = libinput_event_gesture_get_dx_unaccelerated(gesture_event);
-          auto dy = libinput_event_gesture_get_dy_unaccelerated(gesture_event);
-          auto time = libinput_event_gesture_get_time(gesture_event);
-          pinch_parser_.Update(dx, time);
-          break;
-        }
-        case LIBINPUT_EVENT_GESTURE_PINCH_END: {
-          spdlog::info("Ending pinch");
-
-          auto gesture_event = libinput_event_get_gesture_event(event);
-          auto time = libinput_event_gesture_get_time(gesture_event);
-          pinch_parser_.End(time);
-
-          if (pinch_parser_.IsGestureValid()) {
-            auto direction = pinch_parser_.GetDirection();
-            auto finger_count =
-              libinput_event_gesture_get_finger_count(gesture_event);
-            converter_.ConvertGesture(direction, finger_count);
+        case LIBINPUT_EVENT_GESTURE_HOLD_BEGIN:
+          gesture_event_ =
+            GestureEventFactory::CreateGestureEvent(event, event_type);
+          if (gesture_event_ != nullptr) {
+            gesture_event_->Begin(event);
           }
-          break;
-        }
-        case LIBINPUT_EVENT_GESTURE_HOLD_BEGIN: {
-          spdlog::info("Beginning hold");
 
-          auto gesture_event = libinput_event_get_gesture_event(event);
-          auto finger_count =
-            libinput_event_gesture_get_finger_count(gesture_event);
-          hold_parser_.Begin(finger_count);
           break;
-        }
+        case LIBINPUT_EVENT_GESTURE_SWIPE_UPDATE:
+        case LIBINPUT_EVENT_GESTURE_PINCH_UPDATE:
+          if (gesture_event_ != nullptr) {
+            gesture_event_->Update(event);
+          }
+
+          break;
+        case LIBINPUT_EVENT_GESTURE_SWIPE_END:
+        case LIBINPUT_EVENT_GESTURE_PINCH_END:
         case LIBINPUT_EVENT_GESTURE_HOLD_END:
-          spdlog::info("Ending hold");
+          if (gesture_event_ != nullptr) {
+            gesture_event_->End(event);
+          }
 
-          hold_parser_.End();
           break;
       }
 
