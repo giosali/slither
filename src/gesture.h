@@ -15,10 +15,10 @@ class Gesture {
   Gesture() = default;
 
   Direction GetDirection() const;
-  size_t GetFingerCount() const;
+  int32_t GetFingerCount() const;
   std::vector<uint32_t> GetKeyCodes() const;
   void SetDirection(Direction value);
-  void SetFingerCount(size_t value);
+  void SetFingerCount(int32_t value);
   void SetKeyCodes(const std::vector<uint32_t>& value);
   bool operator==(const Gesture& g);
 
@@ -27,7 +27,7 @@ class Gesture {
   friend void to_json(nlohmann::json& j, const Gesture& g);
 
   Direction direction_;
-  size_t finger_count_;
+  int32_t finger_count_;
   std::vector<uint32_t> key_codes_;
 };
 

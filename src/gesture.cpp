@@ -2,13 +2,13 @@
 
 Gesture::Direction Gesture::GetDirection() const { return direction_; }
 
-size_t Gesture::GetFingerCount() const { return finger_count_; }
+int32_t Gesture::GetFingerCount() const { return finger_count_; }
 
 std::vector<uint32_t> Gesture::GetKeyCodes() const { return key_codes_; }
 
 void Gesture::SetDirection(Direction value) { direction_ = value; }
 
-void Gesture::SetFingerCount(size_t value) { finger_count_ = value; }
+void Gesture::SetFingerCount(int32_t value) { finger_count_ = value; }
 
 void Gesture::SetKeyCodes(const std::vector<uint32_t>& value) {
   key_codes_ = value;
