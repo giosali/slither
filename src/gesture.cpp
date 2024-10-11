@@ -14,6 +14,10 @@ void Gesture::SetKeyCodes(const std::vector<uint32_t>& value) {
   key_codes_ = value;
 }
 
+bool Gesture::operator==(const Gesture& g) {
+  return direction_ == g.direction_ && finger_count_ == g.finger_count_;
+}
+
 void from_json(const nlohmann::json& j, Gesture& g) {
   j.at("direction").get_to(g.direction_);
   j.at("fingerCount").get_to(g.finger_count_);

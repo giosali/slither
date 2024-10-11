@@ -20,6 +20,7 @@ class Gesture {
   void SetDirection(Direction value);
   void SetFingerCount(size_t value);
   void SetKeyCodes(const std::vector<uint32_t>& value);
+  bool operator==(const Gesture& g);
 
  private:
   friend void from_json(const nlohmann::json& j, Gesture& g);
