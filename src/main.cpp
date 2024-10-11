@@ -4,6 +4,7 @@
 #include <iostream>
 
 #include "argparse.hpp"
+#include "gesturesfile.h"
 #include "gesturewatcher.h"
 
 int main(int argc, char* argv[]) {
@@ -27,6 +28,8 @@ int main(int argc, char* argv[]) {
   if (verbose) {
     spdlog::set_level(spdlog::level::debug);
   }
+
+  GesturesFile::Initialize();
 
   auto gesture_watcher = GestureWatcher{};
   gesture_watcher.Enable();
