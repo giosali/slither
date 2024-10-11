@@ -8,7 +8,6 @@ project(slither VERSION 0.1.0 LANGUAGES CXX)
 
 set(PROJECT_SOURCES
     src/gesture.cpp
-    src/gestureconverter.cpp
     src/gesturesfile.cpp
     src/gesturewatcher.cpp
     src/holdparser.cpp
