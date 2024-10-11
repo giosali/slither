@@ -19,9 +19,9 @@ class GestureWatcher {
   static void CloseRestricted(int fd, void* user_data);
   static int OpenRestricted(const char* path, int flags, void* user_data);
 
-  std::unique_ptr<GestureEvent> gesture_event_;
-  libinput_interface interface_;
-  libinput* li_;
+  std::unique_ptr<GestureEvent> gesture_event_{nullptr};
+  libinput_interface interface_{OpenRestricted, CloseRestricted};
+  libinput* li_{nullptr};
 };
 
 #endif  // GESTUREWATCHER_H

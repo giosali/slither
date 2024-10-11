@@ -12,7 +12,7 @@
 
 #include "gestureeventfactory.h"
 
-GestureWatcher::GestureWatcher() : interface_{OpenRestricted, CloseRestricted} {
+GestureWatcher::GestureWatcher() {
   spdlog::info("Entering GestureWatcher::GestureWatcher");
 
   spdlog::info("Initializing new udev context object");
