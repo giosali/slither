@@ -1,23 +1,28 @@
 #ifndef GESTUREFILE_H
 #define GESTUREFILE_H
 
+#include <cstdint>
 #include <filesystem>
+#include <mutex>
 #include <vector>
 
 #include "gesture.h"
 
 class GesturesFile {
  public:
-  GesturesFile();
+  GesturesFile() = delete;
 
-  std::vector<Gesture> GetGestures() const;
-  void Watch();
+  static std::vector<uint32_t> FindGestureKeyCodes(Gesture::Direction direction,
+                                                   int32_t finger_count);
+  static void Initialize();
+  static void Watch();
 
  private:
-  void UpdateGestures();
+  static void UpdateGestures();
 
-  std::vector<Gesture> gestures_;
-  std::filesystem::path path_;
+  static std::vector<Gesture> gestures_;
+  static std::mutex mtx_;
+  static std::filesystem::path path_;
 };
 
 #endif  // GESTUREFILE_H

@@ -1,5 +1,6 @@
 #include "gesturesfile.h"
 
+#include <spdlog/spdlog.h>
 #include <sys/inotify.h>
 
 #include <fstream>
@@ -9,8 +10,28 @@
 #include "json.hpp"
 #include "paths.h"
 
-GesturesFile::GesturesFile()
-    : gestures_{}, path_{Paths::ConfigAppDirectory() / "gestures.json"} {
+std::vector<uint32_t> GesturesFile::FindGestureKeyCodes(
+  Gesture::Direction direction, int32_t finger_count) {
+  spdlog::info("Entering GesturesFile::FindGestureKeyCodes");
+  spdlog::debug("Value of direction: {}", static_cast<int>(direction));
+  spdlog::debug("Value of finger_count: {}", finger_count);
+
+  auto lock = std::lock_guard(mtx_);
+
+  for (size_t i = 0, l = gestures_.size(); i < l; ++i) {
+    if (auto g = gestures_[i];
+        g.GetDirection() == direction && g.GetFingerCount() == finger_count) {
+      spdlog::info("Exiting GesturesFile::FindGestureKeyCodes with key codes");
+      return g.GetKeyCodes();
+    }
+  }
+
+  spdlog::info("Exiting GesturesFile::FindGestureKeyCodes without key codes");
+  return {};
+}
+
+void GesturesFile::Initialize() {
+  path_ = Paths::ConfigAppDirectory() / "gestures.json";
   if (!std::filesystem::exists(path_)) {
     // Creates any missing parent directories.
     auto parent_path = path_.parent_path();
@@ -32,11 +53,9 @@ GesturesFile::GesturesFile()
   UpdateGestures();
 }
 
-std::vector<Gesture> GesturesFile::GetGestures() const { return gestures_; }
-
 void GesturesFile::Watch() {
   // TODO: this thread is seemingly run twice; investigate.
-  auto t = std::jthread{[this]() {
+  auto t = std::jthread{[]() {
     auto fd = inotify_init();
     if (fd == -1) {
       std::cerr << "Error initializing inotify: " << strerror(errno) << "\n";
@@ -82,8 +101,15 @@ void GesturesFile::UpdateGestures() {
   // Reads the gestures file and transforms its contents to Gesture objects.
   try {
     auto json = nlohmann::json::parse(stream);
+    auto lock = std::lock_guard(mtx_);
     gestures_ = json.template get<std::vector<Gesture>>();
   } catch (const nlohmann::json::exception& e) {
     std::cerr << e.what() << "\n";
   }
 }
+
+std::vector<Gesture> GesturesFile::gestures_{};
+
+std::mutex GesturesFile::mtx_{};
+
+std::filesystem::path GesturesFile::path_{};
