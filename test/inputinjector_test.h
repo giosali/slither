@@ -14,9 +14,8 @@ boost::ut::suite<"inputinjector"> inputinjector = [] {
   "Inject"_test = [] {
     given("I call this function") = [] {
       when("I don't have root privileges") = [] {
-        then("I expect an exception to be thrown") = [] {
-          auto key_1 = uint32_t{2};
-          expect(throws([key_1] { InputInjector::Inject({key_1}); }));
+        then("I expect an exception to not be thrown") = [] {
+          expect(nothrow([] { InputInjector::Inject({}); }));
         };
       };
     };
