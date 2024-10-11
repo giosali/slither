@@ -25,9 +25,9 @@ class Gesture {
   friend void from_json(const nlohmann::json& j, Gesture& g);
   friend void to_json(nlohmann::json& j, const Gesture& g);
 
-  Direction direction_;
-  int32_t finger_count_;
-  std::vector<uint32_t> key_codes_;
+  Direction direction_{};
+  int32_t finger_count_{};
+  std::vector<uint32_t> key_codes_{};
 };
 
 // void from_json(const nlohmann::json& j, Gesture& g);
