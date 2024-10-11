@@ -1,5 +1,8 @@
 #include "gesture.h"
 
+Gesture::Gesture(Direction direction, int32_t finger_count)
+    : direction_{direction}, finger_count_{finger_count} {}
+
 Gesture::Direction Gesture::GetDirection() const { return direction_; }
 
 int32_t Gesture::GetFingerCount() const { return finger_count_; }

@@ -13,6 +13,7 @@ class Gesture {
   enum class Direction { kNone, kUp, kRight, kDown, kLeft, kIn, kOut };
 
   Gesture() = default;
+  Gesture(Direction direction, int32_t finger_count);
 
   Direction GetDirection() const;
   int32_t GetFingerCount() const;
