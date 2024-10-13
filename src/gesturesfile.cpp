@@ -40,14 +40,6 @@ void GesturesFile::Initialize() {
     // Creates the JSON file and writes an empty array to it.
     auto stream = std::ofstream{path_};
     stream << "[]";
-
-    // TODO: an alternative needs to be found to running the program with sudo.
-    //
-    // Prevents this file and its parent directory from having the owner be
-    // assigned to Super User. This is ne necessary if the user invokes the
-    // program with sudo.
-    std::filesystem::permissions(parent_path, std::filesystem::perms::all);
-    std::filesystem::permissions(path_, std::filesystem::perms::all);
   }
 
   UpdateGestures();
