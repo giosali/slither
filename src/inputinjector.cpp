@@ -7,8 +7,6 @@
 #include <thread>
 
 void InputInjector::Inject(const std::vector<uint32_t>& key_codes) {
-  spdlog::info("Entering InputInjector::Inject");
-
   auto dev = libevdev_new();
   libevdev_set_name(dev, "Slither Device");
 
@@ -58,8 +56,6 @@ void InputInjector::Inject(const std::vector<uint32_t>& key_codes) {
   // The uinput device must be destroyed before freeing the libevdev device.
   libevdev_uinput_destroy(uinput_dev);
   libevdev_free(dev);
-
-  spdlog::info("Exiting InputInjector::Inject");
 }
 
 void InputInjector::Write(bool press, libevdev_uinput* uinput_dev,

@@ -16,8 +16,6 @@ std::filesystem::path Paths::ConfigDirectory() {
 }
 
 std::filesystem::path Paths::HomeDirectory() {
-  spdlog::info("Entering Paths::HomeDirectory");
-
   spdlog::info("Retrieving the home directory via environment variables");
   auto value = std::getenv("HOME");
   if (value == nullptr) {
@@ -49,6 +47,5 @@ std::filesystem::path Paths::HomeDirectory() {
   }
 
   spdlog::debug("Value of home_directory: {}", home_directory);
-  spdlog::info("Exiting Paths::HomeDirectory");
   return home_directory;
 }

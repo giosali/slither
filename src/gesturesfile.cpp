@@ -12,7 +12,6 @@
 
 std::vector<uint32_t> GesturesFile::FindGestureKeyCodes(
   Gesture::Direction direction, int32_t finger_count) {
-  spdlog::info("Entering GesturesFile::FindGestureKeyCodes");
   spdlog::debug("Value of direction: {}", static_cast<int>(direction));
   spdlog::debug("Value of finger_count: {}", finger_count);
 
@@ -21,12 +20,9 @@ std::vector<uint32_t> GesturesFile::FindGestureKeyCodes(
   for (size_t i = 0, l = gestures_.size(); i < l; ++i) {
     if (auto g = gestures_[i];
         g.GetDirection() == direction && g.GetFingerCount() == finger_count) {
-      spdlog::info("Exiting GesturesFile::FindGestureKeyCodes with key codes");
       return g.GetKeyCodes();
     }
   }
-
-  spdlog::info("Exiting GesturesFile::FindGestureKeyCodes without key codes");
   return {};
 }
 

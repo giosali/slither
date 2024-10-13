@@ -13,8 +13,6 @@
 #include "gestureeventfactory.h"
 
 GestureWatcher::GestureWatcher() {
-  spdlog::info("Entering GestureWatcher::GestureWatcher");
-
   spdlog::info("Initializing new udev context object");
   auto udev = udev_new();
   if (udev == nullptr) {
@@ -39,8 +37,6 @@ GestureWatcher::GestureWatcher() {
     spdlog::critical(what);
     throw std::runtime_error{what};
   }
-
-  spdlog::info("Exiting GestureWatcher::GestureWatcher");
 }
 
 GestureWatcher::~GestureWatcher() { libinput_unref(li_); }
