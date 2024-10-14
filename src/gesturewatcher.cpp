@@ -42,8 +42,6 @@ GestureWatcher::GestureWatcher() {
 GestureWatcher::~GestureWatcher() { libinput_unref(li_); }
 
 void GestureWatcher::Enable() {
-  spdlog::info("Entered GestureWatcher::Enable");
-
   auto fd = libinput_get_fd(li_);
   auto fds = std::array<pollfd, 1>{{fd, POLLIN, 0}};
   while (poll(fds.data(), fds.size(), -1) != -1) {
