@@ -10,7 +10,8 @@ build:
 	@cmake --build $(OUTPUT_NAME) -j 4
 
 run:
-	@sudo ./$(OUTPUT_NAME)/$(NAME) --verbose
+	@test -z "$(getcap ./$(OUTPUT_NAME)/$(NAME))" && sudo setcap cap_dac_override=ep ./$(OUTPUT_NAME)/$(NAME)
+	./$(OUTPUT_NAME)/$(NAME) --verbose
 
 tests:
 	@cmake -B $(OUTPUT_NAME)_test -S ./test/
