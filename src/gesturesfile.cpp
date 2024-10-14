@@ -12,8 +12,10 @@
 
 std::vector<uint32_t> GesturesFile::FindGestureKeyCodes(
   Gesture::Direction direction, int32_t finger_count) {
-  spdlog::debug("Value of direction: {}", static_cast<int>(direction));
-  spdlog::debug("Value of finger_count: {}", finger_count);
+  spdlog::debug(
+    "In GesturesFile::FindGestureKeyCodes(Gesture::Direction, int32_t): "
+    "direction = {}, finger_count = {}",
+    static_cast<int>(direction), finger_count);
 
   auto lock = std::lock_guard(mtx_);
 
@@ -28,6 +30,8 @@ std::vector<uint32_t> GesturesFile::FindGestureKeyCodes(
 
 void GesturesFile::Initialize() {
   path_ = Paths::ConfigAppDirectory() / "gestures.json";
+  spdlog::debug("In GesturesFile::Initialize(): path_ = {}", path_.string());
+
   if (!std::filesystem::exists(path_)) {
     // Creates any missing parent directories.
     auto parent_path = path_.parent_path();
