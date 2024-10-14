@@ -62,25 +62,16 @@ void GestureWatcher::Enable() {
         case LIBINPUT_EVENT_GESTURE_HOLD_BEGIN:
           gesture_event_ =
             GestureEventFactory::CreateGestureEvent(event, event_type);
-          if (gesture_event_ != nullptr) {
-            gesture_event_->Begin(event);
-          }
-
+          gesture_event_->Begin(event);
           break;
         case LIBINPUT_EVENT_GESTURE_SWIPE_UPDATE:
         case LIBINPUT_EVENT_GESTURE_PINCH_UPDATE:
-          if (gesture_event_ != nullptr) {
-            gesture_event_->Update(event);
-          }
-
+          gesture_event_->Update(event);
           break;
         case LIBINPUT_EVENT_GESTURE_SWIPE_END:
         case LIBINPUT_EVENT_GESTURE_PINCH_END:
         case LIBINPUT_EVENT_GESTURE_HOLD_END:
-          if (gesture_event_ != nullptr) {
-            gesture_event_->End(event);
-          }
-
+          gesture_event_->End(event);
           break;
       }
 
