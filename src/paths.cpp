@@ -16,7 +16,7 @@ std::filesystem::path Paths::ConfigDirectory() {
 }
 
 std::filesystem::path Paths::HomeDirectory() {
-  spdlog::info("Retrieving the home directory via environment variables");
+  spdlog::info("Retrieving home directory via environment variables");
   auto value = std::getenv("HOME");
   if (value == nullptr) {
     value = std::getenv("XDG_CONFIG_HOME");
