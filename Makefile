@@ -6,8 +6,8 @@ clean:
 	@rm -rf $(OUTPUT_NAME)_test
 
 build:
-	@cmake -B $(OUTPUT_NAME) -S .
-	@cmake --build $(OUTPUT_NAME)
+	@cmake -B $(OUTPUT_NAME) -S . -G Ninja
+	@cmake --build $(OUTPUT_NAME) -j 4
 
 run:
 	@sudo ./$(OUTPUT_NAME)/$(NAME) --verbose
