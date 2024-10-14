@@ -25,9 +25,7 @@ int main(int argc, char* argv[]) {
   }
 
   auto verbose = program.get<bool>("--verbose");
-  if (verbose) {
-    spdlog::set_level(spdlog::level::debug);
-  }
+  spdlog::set_level(verbose ? spdlog::level::debug : spdlog::level::off);
 
   GesturesFile::Initialize();
 
