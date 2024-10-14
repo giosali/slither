@@ -67,7 +67,7 @@ void InputInjector::Write(bool press, libevdev_uinput* uinput_dev,
     spdlog::info("Simulating key presses");
     for (size_t i = 0; i < key_codes.size(); ++i) {
       auto key_code = key_codes[i];
-      spdlog::debug("Value of key_code: {}", key_code);
+      spdlog::debug("key_code = {}", key_code);
       err = libevdev_uinput_write_event(uinput_dev, EV_KEY, key_code, 1);
 
       if (err != 0) {
@@ -83,7 +83,7 @@ void InputInjector::Write(bool press, libevdev_uinput* uinput_dev,
     spdlog::info("Simulating key releases");
     for (int32_t i = key_codes.size() - 1; i >= 0; --i) {
       auto key_code = key_codes[i];
-      spdlog::debug("Value of key_code: {}", key_code);
+      spdlog::debug("key_code = {}", key_code);
       err = libevdev_uinput_write_event(uinput_dev, EV_KEY, key_code, 0);
 
       if (err != 0) {
