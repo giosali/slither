@@ -28,5 +28,5 @@ def run(c: Context):
 @task
 def test(c: Context):
     c.run(f"cmake -B {TEST_BUILD_DIR} -S ./test/")
-    c.run(f"cmake --build {TEST_BUILD_DIR}")
+    c.run(f"cmake --build {TEST_BUILD_DIR} -j 4")
     c.run(f"./{TEST_BUILD_DIR}/{NAME}_test")
