@@ -1,5 +1,7 @@
 #include "pinchgestureevent.h"
 
+#include <spdlog/spdlog.h>
+
 #include "gesturesfile.h"
 #include "inputinjector.h"
 
@@ -9,6 +11,8 @@ PinchGestureEvent::PinchGestureEvent(libinput_event* event)
 void PinchGestureEvent::Begin(libinput_event* event) {
   auto gesture_event = libinput_event_get_gesture_event(event);
   auto time = libinput_event_gesture_get_time(gesture_event);
+  spdlog::debug("In PinchGestureEvent::Begin(libinput_event*): time = {}",
+                time);
 
   time_ = time;
 }
@@ -16,8 +20,17 @@ void PinchGestureEvent::Begin(libinput_event* event) {
 void PinchGestureEvent::End(libinput_event* event) {
   auto gesture_event = libinput_event_get_gesture_event(event);
   auto time = libinput_event_gesture_get_time(gesture_event);
+  spdlog::debug("In PinchGestureEvent::End(libinput_event*): time = {}", time);
 
-  if (direction_ == Gesture::Direction::kNone || time - time_ > kTimeLimit) {
+  auto time_diff = time - time_;
+  if (direction_ == Gesture::Direction::kNone || time_diff > kTimeLimit) {
+    spdlog::info(
+      "In PinchGestureEvent::End(libinput_event*): direction_ or time_diff is "
+      "invalid");
+    spdlog::debug(
+      "In PinchGestureEvent::End(libinput_event*): direction_ = {}, time_diff "
+      "= {}",
+      static_cast<int>(direction_), time_diff);
     return;
   }
 
@@ -29,25 +42,41 @@ void PinchGestureEvent::End(libinput_event* event) {
 }
 
 void PinchGestureEvent::Update(libinput_event* event) {
-  // The only thing that seems to matter when parsing the coordinates of a
-  // pinch gesture is the x-coordinate. The y-coordinate will only change if
-  // the user vertically moves their hand up and down while performing a pinch
-  // gesture. That seems unlikely to ever happen while pinching; it's an
-  // unnatural movement.
-  // Even if the user has their fingers positioned perpendicular to the x-axis,
-  // the gesture will be poorly detected. The y-coordinate seems useless.
+  // It's important to keep track of the y-coordinate when monitoring pinches.
+  // If the user performs an inward pinch with their right hand, the
+  // x-coordinate sum appears to be positive as expected.
+  // However, if the user pefroms an inward pinch with their left hand, the
+  // x-coordinate sum now appears to be negative. If we only tracked pinch
+  // gestures' x-coordinate values, an left-handed inward pinch would be
+  // interpreted as a right-handed outward pinch. Therefore, it's important to
+  // keep track of the y-coordinate when monitoring pinches.
+  //
+  // An inward pinch, regardless of handedness, always produces a positive
+  // y-coordinate sum. Likewise, an outward pinch always produces a negative
+  // y-coordinate sum.
 
   auto gesture_event = libinput_event_get_gesture_event(event);
   auto dx = libinput_event_gesture_get_dx_unaccelerated(gesture_event);
   auto time = libinput_event_gesture_get_time(gesture_event);
 
   sx_ += dx;
+  spdlog::debug("In PinchGestureEvent::Update(libinput_event*): sx_ = {}", sx_);
 
   if (sx_ >= kPinchInThreshold) {
     time_ = time;
     direction_ = Gesture::Direction::kIn;
+
+    spdlog::info("Inward pinch threshold met");
+    spdlog::debug(
+      "In PinchGestureEvent::Update(libinput_event*): direction_ = {}",
+      static_cast<int>(direction_));
   } else if (sx_ <= kPinchOutThreshold) {
     time_ = time;
     direction_ = Gesture::Direction::kOut;
+
+    spdlog::info("Outward pinch threshold met");
+    spdlog::debug(
+      "In PinchGestureEvent::Update(libinput_event*): direction_ = {}",
+      static_cast<int>(direction_));
   }
 }
