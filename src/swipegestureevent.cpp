@@ -49,10 +49,9 @@ void SwipeGestureEvent::Update(libinput_event* event) {
 
   sx_ += dx;
   sy_ += dy;
-
   spdlog::debug(
-    "In SwipeGestureEvent::Update(libinput_event* event): sx_ = {}, sy_ = {}",
-    sx_, sy_);
+    "In SwipeGestureEvent::Update(libinput_event*): sx_ = {}, sy_ = {}", sx_,
+    sy_);
 
   if (std::abs(sx_) >= kThreshold) {
     // Handles horizontal swipes.
@@ -62,7 +61,7 @@ void SwipeGestureEvent::Update(libinput_event* event) {
 
     spdlog::info("Horizontal threshold met");
     spdlog::debug(
-      "In SwipeGestureEvent::Update(libinput_event* event): direction_ = {}",
+      "In SwipeGestureEvent::Update(libinput_event*): direction_ = {}",
       static_cast<int>(direction_));
   } else if (std::abs(sy_) >= kThreshold) {
     // Handles vertical swipes.
@@ -71,7 +70,7 @@ void SwipeGestureEvent::Update(libinput_event* event) {
 
     spdlog::info("Vertical threshold met");
     spdlog::debug(
-      "In SwipeGestureEvent::Update(libinput_event* event): direction_ = {}",
+      "In SwipeGestureEvent::Update(libinput_event*): direction_ = {}",
       static_cast<int>(direction_));
   }
 }
