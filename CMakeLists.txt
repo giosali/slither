@@ -8,6 +8,8 @@ project(slither VERSION 0.1.0 LANGUAGES CXX)
 
 set(CMAKE_CXX_SCAN_FOR_MODULES OFF)
 
+include_directories(${PROJECT_SOURCE_DIR}/include)
+
 set(PROJECT_SOURCES
     src/gesture.cpp
     src/gestureevent.cpp

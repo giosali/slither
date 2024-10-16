@@ -6,6 +6,8 @@ endif()
 
 project(slither_test VERSION 0.1.0 LANGUAGES CXX)
 
+include_directories(../include)
+
 set(PROJECT_SOURCES
     ../src/gesture.cpp
     ../src/gestureevent.cpp
