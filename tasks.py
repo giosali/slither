@@ -1,4 +1,4 @@
-from invoke import Context, Result, task
+from invoke import Context, task
 
 NAME = "slither"
 BUILD_DIR = "build"
@@ -23,7 +23,7 @@ def run(c: Context, gui: bool = False):
     if gui:
         c.run(f"{exe} --gui")
     else:
-        if (result := c.run(f"getcap {exe}")).stdout == "":
+        if (result := c.run(f"getcap {exe}")) != None and result.stdout == "":
             c.run(f"sudo setcap cap_dac_override=ep {exe}")
 
         c.run(f"{exe} --verbose")
