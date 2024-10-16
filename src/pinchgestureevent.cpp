@@ -2,6 +2,8 @@
 
 #include <spdlog/spdlog.h>
 
+#include <cmath>
+
 #include "gesturesfile.h"
 #include "inputinjector.h"
 
@@ -57,26 +59,23 @@ void PinchGestureEvent::Update(libinput_event* event) {
 
   auto gesture_event = libinput_event_get_gesture_event(event);
   auto dx = libinput_event_gesture_get_dx_unaccelerated(gesture_event);
+  auto dy = libinput_event_gesture_get_dy_unaccelerated(gesture_event);
   auto time = libinput_event_gesture_get_time(gesture_event);
 
   sx_ += dx;
-  spdlog::debug("In PinchGestureEvent::Update(libinput_event*): sx_ = {}", sx_);
+  sy_ += dy;
 
-  if (sx_ >= kPinchInThreshold) {
-    time_ = time;
-    direction_ = Gesture::Direction::kIn;
+  auto sxy = std::abs(sx_) + std::abs(sy_);
+  spdlog::debug("In PinchGestureEvent::Update(libinput_event*): sxy = {}", sxy);
 
-    spdlog::info("Inward pinch threshold met");
-    spdlog::debug(
-      "In PinchGestureEvent::Update(libinput_event*): direction_ = {}",
-      static_cast<int>(direction_));
-  } else if (sx_ <= kPinchOutThreshold) {
-    time_ = time;
-    direction_ = Gesture::Direction::kOut;
-
-    spdlog::info("Outward pinch threshold met");
-    spdlog::debug(
-      "In PinchGestureEvent::Update(libinput_event*): direction_ = {}",
-      static_cast<int>(direction_));
+  if (sxy < kPinchThreshold) {
+    return;
   }
+
+  spdlog::info("Pinch threshold met");
+  time_ = time;
+  direction_ = sy_ < 0 ? Gesture::Direction::kOut : Gesture::Direction::kIn;
+  spdlog::debug(
+    "In PinchGestureEvent::Update(libinput_event*): direction_ = {}",
+    static_cast<int>(direction_));
 }
