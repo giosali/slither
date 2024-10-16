@@ -1,6 +1,6 @@
 #include "gestureeventfactory.h"
 
-#include <exception>
+#include <stdexcept>
 
 #include "holdgestureevent.h"
 #include "pinchgestureevent.h"
