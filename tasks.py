@@ -18,11 +18,15 @@ def clean(c: Context):
 
 @task
 def run(c: Context, gui: bool = False):
-    result: Result = c.run(f"getcap ./{BUILD_DIR}/{NAME}")
-    if result.stdout == "":
-        c.run(f"sudo setcap cap_dac_override=ep ./{BUILD_DIR}/{NAME}")
+    exe = f"./{BUILD_DIR}/{NAME}"
 
-    c.run(f"./{BUILD_DIR}/{NAME} {"--gui" if gui else "--verbose"}")
+    if gui:
+        c.run(f"{exe} --gui")
+    else:
+        if (result := c.run(f"getcap {exe}")).stdout == "":
+            c.run(f"sudo setcap cap_dac_override=ep {exe}")
+
+        c.run(f"{exe} --verbose")
 
 
 @task
