@@ -73,6 +73,8 @@ void GestureWatcher::Enable() {
         case LIBINPUT_EVENT_GESTURE_HOLD_END:
           gesture_event_->End(event);
           break;
+        default:
+          break;
       }
 
       libinput_event_destroy(event);
