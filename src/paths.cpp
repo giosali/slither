@@ -3,9 +3,7 @@
 #include <spdlog/spdlog.h>
 
 #include <cstdlib>
-#include <format>
 #include <stdexcept>
-#include <string_view>
 
 std::filesystem::path Paths::ConfigAppDirectory() {
   return ConfigDirectory() / "slither";
