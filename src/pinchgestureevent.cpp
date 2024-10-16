@@ -11,28 +11,27 @@ PinchGestureEvent::PinchGestureEvent(libinput_event* event)
     : GestureEvent{event} {}
 
 void PinchGestureEvent::Begin(libinput_event* event) {
+  spdlog::info("In PinchGestureEvent::Begin(libinput_event*)");
+
   auto gesture_event = libinput_event_get_gesture_event(event);
   auto time = libinput_event_gesture_get_time(gesture_event);
-  spdlog::debug("In PinchGestureEvent::Begin(libinput_event*): time = {}",
-                time);
+  spdlog::debug("time = {}", time);
 
   time_ = time;
 }
 
 void PinchGestureEvent::End(libinput_event* event) {
+  spdlog::info("In PinchGestureEvent::End(libinput_event*)");
+
   auto gesture_event = libinput_event_get_gesture_event(event);
   auto time = libinput_event_gesture_get_time(gesture_event);
-  spdlog::debug("In PinchGestureEvent::End(libinput_event*): time = {}", time);
+  spdlog::debug("In time = {}", time);
 
   auto time_diff = time - time_;
   if (direction_ == Gesture::Direction::kNone || time_diff > kTimeLimit) {
-    spdlog::info(
-      "In PinchGestureEvent::End(libinput_event*): direction_ or time_diff is "
-      "invalid");
-    spdlog::debug(
-      "In PinchGestureEvent::End(libinput_event*): direction_ = {}, time_diff "
-      "= {}",
-      static_cast<int>(direction_), time_diff);
+    spdlog::info("direction_ or time_diff is invalid");
+    spdlog::debug("direction_ = {}, time_diff = {}",
+                  static_cast<int>(direction_), time_diff);
     return;
   }
 
@@ -57,6 +56,8 @@ void PinchGestureEvent::Update(libinput_event* event) {
   // y-coordinate sum. Likewise, an outward pinch always produces a negative
   // y-coordinate sum.
 
+  spdlog::info("In PinchGestureEvent::Update(libinput_event*)");
+
   auto gesture_event = libinput_event_get_gesture_event(event);
   auto dx = libinput_event_gesture_get_dx_unaccelerated(gesture_event);
   auto dy = libinput_event_gesture_get_dy_unaccelerated(gesture_event);
@@ -64,9 +65,9 @@ void PinchGestureEvent::Update(libinput_event* event) {
 
   sx_ += dx;
   sy_ += dy;
-
   auto sxy = std::abs(sx_) + std::abs(sy_);
-  spdlog::debug("In PinchGestureEvent::Update(libinput_event*): sxy = {}", sxy);
+  spdlog::debug("dx = {}, dy = {}, sx_ = {}, sy_ = {}, sxy = {}", dx, dy, sx_,
+                sy_, sxy);
 
   if (sxy < kPinchThreshold) {
     return;
@@ -75,7 +76,5 @@ void PinchGestureEvent::Update(libinput_event* event) {
   spdlog::info("Pinch threshold met");
   time_ = time;
   direction_ = sy_ < 0 ? Gesture::Direction::kOut : Gesture::Direction::kIn;
-  spdlog::debug(
-    "In PinchGestureEvent::Update(libinput_event*): direction_ = {}",
-    static_cast<int>(direction_));
+  spdlog::debug("direction_ = {}", static_cast<int>(direction_));
 }
