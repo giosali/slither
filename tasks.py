@@ -17,12 +17,12 @@ def clean(c: Context):
 
 
 @task
-def run(c: Context):
+def run(c: Context, gui: bool = False):
     result: Result = c.run(f"getcap ./{BUILD_DIR}/{NAME}")
     if result.stdout == "":
         c.run(f"sudo setcap cap_dac_override=ep ./{BUILD_DIR}/{NAME}")
 
-    c.run(f"./{BUILD_DIR}/{NAME} --verbose")
+    c.run(f"./{BUILD_DIR}/{NAME} {"--gui" if gui else "--verbose"}")
 
 
 @task
