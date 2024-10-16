@@ -17,12 +17,12 @@ class PinchGestureEvent : public GestureEvent {
   void Update(libinput_event* event) override;
 
  private:
-  static constexpr double kPinchInThreshold = 40;
-  static constexpr double kPinchOutThreshold = -20;
+  static constexpr double kPinchThreshold = 50;
   static constexpr uint32_t kTimeLimit = 250;
 
   Gesture::Direction direction_{};
   double sx_{};
+  double sy_{};
   uint32_t time_{};
 };
 
