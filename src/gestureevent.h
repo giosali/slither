@@ -5,8 +5,6 @@
 
 #include <cstdint>
 
-#include "gesture.h"
-
 class GestureEvent {
  public:
   explicit GestureEvent(libinput_event* event);

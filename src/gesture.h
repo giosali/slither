@@ -1,9 +1,7 @@
 #ifndef GESTURE_H
 #define GESTURE_H
 
-#include <cstddef>
 #include <cstdint>
-#include <string>
 #include <vector>
 
 #include "json.hpp"
