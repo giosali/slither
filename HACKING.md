@@ -5,7 +5,7 @@
 On Fedora, the following must be run to get started:
 
 ```sh
-sudo dnf install gcc-c++ libinput-devel libudev-devel libevdev-devel spdlog-devel
+sudo dnf install gcc-c++ libinput-devel libudev-devel libevdev-devel spdlog-devel gtkmm4.0-devel
 ```
 
 # Coding Style
