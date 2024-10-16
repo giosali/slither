@@ -7,7 +7,6 @@
 #include <stop_token>
 #include <thread>
 
-#include "gesture.h"
 #include "gestureevent.h"
 
 class HoldGestureEvent : public GestureEvent {
