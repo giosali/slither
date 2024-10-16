@@ -1,8 +1,8 @@
 #ifndef GESTURE_TEST_H
 #define GESTURE_TEST_H
 
+#include "../include/json.hpp"
 #include "../src/gesture.h"
-#include "../src/json.hpp"
 #include "ut.hpp"
 
 boost::ut::suite<"gesture"> gesture = [] {
