@@ -17,7 +17,7 @@ class PinchGestureEvent : public GestureEvent {
   void Update(libinput_event* event) override;
 
  private:
-  static constexpr double kPinchThreshold = 50;
+  static constexpr double kPinchThreshold = 40;
   static constexpr uint32_t kTimeLimit = 250;
 
   Gesture::Direction direction_{};
