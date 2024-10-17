@@ -23,6 +23,7 @@ set(PROJECT_SOURCES
     src/core/paths.cpp
     src/core/pinchgestureevent.cpp
     src/core/swipegestureevent.cpp
+    src/core/utilities.cpp
     src/main.cpp
 )
 
