@@ -12,17 +12,18 @@ project(slither VERSION 0.1.0 LANGUAGES CXX)
 include_directories(${PROJECT_SOURCE_DIR}/include)
 
 set(PROJECT_SOURCES
-    src/gesture.cpp
-    src/gestureevent.cpp
-    src/gestureeventfactory.cpp
-    src/gesturesfile.cpp
-    src/gesturewatcher.cpp
-    src/holdgestureevent.cpp
-    src/inputinjector.cpp
+    src/ui/mainwindow.cpp
+    src/core/gesture.cpp
+    src/core/gestureevent.cpp
+    src/core/gestureeventfactory.cpp
+    src/core/gesturesfile.cpp
+    src/core/gesturewatcher.cpp
+    src/core/holdgestureevent.cpp
+    src/core/inputinjector.cpp
+    src/core/paths.cpp
+    src/core/pinchgestureevent.cpp
+    src/core/swipegestureevent.cpp
     src/main.cpp
-    src/paths.cpp
-    src/pinchgestureevent.cpp
-    src/swipegestureevent.cpp
 )
 
 add_executable(${CMAKE_PROJECT_NAME}

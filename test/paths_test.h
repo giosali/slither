@@ -1,7 +1,7 @@
 #ifndef PATHS_TEST_H
 #define PATHS_TEST_H
 
-#include "../src/paths.h"
+#include "../src/core/paths.h"
 #include "ut.hpp"
 
 boost::ut::suite<"paths"> paths = [] {

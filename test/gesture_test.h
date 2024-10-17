@@ -2,7 +2,7 @@
 #define GESTURE_TEST_H
 
 #include "../include/json.hpp"
-#include "../src/gesture.h"
+#include "../src/core/gesture.h"
 #include "ut.hpp"
 
 boost::ut::suite<"gesture"> gesture = [] {

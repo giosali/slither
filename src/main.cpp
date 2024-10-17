@@ -5,8 +5,8 @@
 #include <iostream>
 
 #include "argparse.hpp"
-#include "gesturesfile.h"
-#include "gesturewatcher.h"
+#include "core/gesturesfile.h"
+#include "core/gesturewatcher.h"
 #include "ui/mainwindow.h"
 
 int main(int argc, char* argv[]) {

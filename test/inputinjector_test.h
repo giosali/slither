@@ -1,9 +1,7 @@
 #ifndef INPUTINJECTOR_TEST_H
 #define INPUTINJECTOR_TEST_H
 
-#include <cstdint>
-
-#include "../src/inputinjector.h"
+#include "../src/core/inputinjector.h"
 #include "ut.hpp"
 
 boost::ut::suite<"inputinjector"> inputinjector = [] {

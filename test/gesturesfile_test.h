@@ -1,8 +1,8 @@
 #ifndef GESTURESFILE_TEST_H
 #define GESTURESFILE_TEST_H
 
-#include "../src/gesture.h"
-#include "../src/gesturesfile.h"
+#include "../src/core/gesture.h"
+#include "../src/core/gesturesfile.h"
 #include "ut.hpp"
 
 boost::ut::suite<"gesturesfile"> gesturesfile = [] {

@@ -9,15 +9,15 @@ project(slither_test VERSION 0.1.0 LANGUAGES CXX)
 include_directories(../include)
 
 set(PROJECT_SOURCES
-    ../src/gesture.cpp
-    ../src/gestureevent.cpp
-    ../src/gestureeventfactory.cpp
-    ../src/gesturesfile.cpp
-    ../src/holdgestureevent.cpp
-    ../src/inputinjector.cpp
-    ../src/paths.cpp
-    ../src/pinchgestureevent.cpp
-    ../src/swipegestureevent.cpp
+    ../src/core/gesture.cpp
+    ../src/core/gestureevent.cpp
+    ../src/core/gestureeventfactory.cpp
+    ../src/core/gesturesfile.cpp
+    ../src/core/holdgestureevent.cpp
+    ../src/core/inputinjector.cpp
+    ../src/core/paths.cpp
+    ../src/core/pinchgestureevent.cpp
+    ../src/core/swipegestureevent.cpp
     main.cpp
 )
 

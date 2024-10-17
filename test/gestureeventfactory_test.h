@@ -5,7 +5,7 @@
 
 #include <vector>
 
-#include "../src/gestureeventfactory.h"
+#include "../src/core/gestureeventfactory.h"
 #include "ut.hpp"
 
 boost::ut::suite<"gestureeventfactory"> gestureeventfactory = [] {
