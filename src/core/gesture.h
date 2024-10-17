@@ -2,6 +2,7 @@
 #define GESTURE_H
 
 #include <cstdint>
+#include <string>
 #include <vector>
 
 #include "json.hpp"
@@ -18,6 +19,7 @@ class Gesture {
   void SetDirection(Direction value);
   void SetFingerCount(int32_t value);
   void SetKeyCodes(const std::vector<uint32_t>& value);
+  std::string ToString() const;
 
  private:
   friend void from_json(const nlohmann::json& j, Gesture& g);
