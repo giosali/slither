@@ -16,6 +16,7 @@ class MainWindow : public Gtk::Window {
 
  private:
   Gtk::Button add_button_{};
+  Gtk::Button delete_button_{};
   std::array<Gtk::ListBox, 5> list_boxes_{};
   Gtk::StackSwitcher stack_switcher_{};
 };
