@@ -10,6 +10,15 @@ boost::ut::suite<"gesturesfile"> gesturesfile = [] {
   using namespace boost::ut::bdd;
   using namespace boost::ut::literals;
 
+  "GetGestures"_test = [] {
+    given("GesturesFile::Initialized hasn't been called") = [] {
+      then("I expect an empty vector to be returned") = [] {
+        auto gestures = GesturesFile::GetGestures();
+        expect(gestures.empty());
+      };
+    };
+  };
+
   "FindGestureKeyCodes"_test = [] {
     given("GesturesFile::Initialized hasn't been called") = [] {
       auto direction = Gesture::Direction::kNone;
