@@ -69,9 +69,6 @@ MainWindow::MainWindow() {
   // Dialog
   // Save: document-save
   // Cancel: window-close
-
-  // Remove: list-remove
-  // Edit: document-properties
   add_button_.set_icon_name("list-add");
   add_button_.set_tooltip_text("Add gesture");
   add_button_.set_margin_end(6);
@@ -79,9 +76,13 @@ MainWindow::MainWindow() {
   delete_button_.set_icon_name("list-remove");
   delete_button_.set_tooltip_text("Delete gesture");
 
+  edit_button_.set_icon_name("document-properties");
+  edit_button_.set_tooltip_text("Edit gesture");
+
   // The order in which the buttons are added matters.
   action_bar.pack_end(add_button_);  // This should always be added first.
   action_bar.pack_end(delete_button_);
+  action_bar.pack_end(edit_button_);
 
   set_child(box);
 }
