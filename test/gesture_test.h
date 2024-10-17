@@ -1,6 +1,10 @@
 #ifndef GESTURE_TEST_H
 #define GESTURE_TEST_H
 
+#include <cstdint>
+#include <tuple>
+#include <vector>
+
 #include "../include/json.hpp"
 #include "../src/core/gesture.h"
 #include "ut.hpp"
@@ -36,6 +40,28 @@ boost::ut::suite<"gesture"> gesture = [] {
 
         then("I expect to retrieve it through GetFingerCount") =
           [&gesture, &value] { expect(gesture.GetKeyCodes() == value); };
+      };
+    };
+  };
+
+  "ToString"_test = [] {
+    given("I have a Gesture object with the Up direction") = [] {
+      auto gesture = Gesture{};
+      gesture.SetDirection(Gesture::Direction::kUp);
+
+      when("I call SetKeyCodes with a variety of key codes") = [&gesture] {
+        then("I expect to receive the correct string representations") =
+          [&gesture](const auto& tuple) {
+            auto key_codes = std::get<0>(tuple);
+            auto expected = "Up, " + std::get<1>(tuple);
+
+            gesture.SetKeyCodes(key_codes);
+            auto actual = gesture.ToString();
+
+            expect(actual == expected);
+          } |
+          std::vector<std::tuple<std::vector<uint32_t>, std::string>>{
+            {{29, 16}, "CTRL + Q"}, {{97, 2}, "CTRL + 1"}};
       };
     };
   };
