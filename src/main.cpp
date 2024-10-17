@@ -28,6 +28,9 @@ int main(int argc, char* argv[]) {
     return 1;
   }
 
+  auto verbose = program.get<bool>("--verbose");
+  spdlog::set_level(verbose ? spdlog::level::debug : spdlog::level::off);
+
   // GUI portion of the program.
   auto gui = program.get<bool>("--gui");
   if (gui) {
@@ -36,9 +39,6 @@ int main(int argc, char* argv[]) {
   }
 
   // Core portion of the program.
-  auto verbose = program.get<bool>("--verbose");
-  spdlog::set_level(verbose ? spdlog::level::debug : spdlog::level::off);
-
   GesturesFile::Initialize();
 
   auto gesture_watcher = GestureWatcher{};
