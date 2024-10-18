@@ -5,6 +5,27 @@
 
 #include "utilities.h"
 
+std::string Gesture::StringifyDirection(Direction direction) {
+  switch (direction) {
+    case Direction::kNone:
+      return "Hold";
+    case Direction::kUp:
+      return "Swipe Up";
+    case Direction::kRight:
+      return "Swipe Right";
+    case Direction::kDown:
+      return "Swipe Down";
+    case Direction::kLeft:
+      return "Swipe Left";
+    case Direction::kIn:
+      return "Pinch Inward";
+    case Direction::kOut:
+      return "Pinch Outward";
+    default:
+      return "";
+  }
+}
+
 Gesture::Direction Gesture::GetDirection() const { return direction_; }
 
 int32_t Gesture::GetFingerCount() const { return finger_count_; }
@@ -20,30 +41,7 @@ void Gesture::SetKeyCodes(const std::vector<uint32_t>& value) {
 }
 
 std::string Gesture::ToString() const {
-  auto direction = std::string{};
-  switch (direction_) {
-    case Direction::kNone:
-      direction = "Hold";
-      break;
-    case Gesture::Direction::kUp:
-      direction = "Up";
-      break;
-    case Direction::kRight:
-      direction = "Right";
-      break;
-    case Direction::kDown:
-      direction = "Down";
-      break;
-    case Direction::kLeft:
-      direction = "Left";
-      break;
-    case Direction::kIn:
-      direction = "In";
-      break;
-    case Direction::kOut:
-      direction = "Out";
-      break;
-  }
+  auto direction = StringifyDirection(direction_);
 
   auto representations = std::vector<std::string>{};
   for (auto key_code : key_codes_) {

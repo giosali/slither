@@ -13,6 +13,7 @@ class Gesture {
 
   Gesture() = default;
 
+  static std::string StringifyDirection(Direction direction);
   Direction GetDirection() const;
   int32_t GetFingerCount() const;
   std::vector<uint32_t> GetKeyCodes() const;
