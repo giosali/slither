@@ -26,7 +26,7 @@ add_executable(${CMAKE_PROJECT_NAME}
     ${PROJECT_SOURCES}
 )
 
-target_compile_features(${CMAKE_PROJECT_NAME} PRIVATE cxx_std_20)
+target_compile_features(${CMAKE_PROJECT_NAME} PRIVATE cxx_std_23)
 
 find_package(PkgConfig)
 pkg_check_modules(LIBEVDEV REQUIRED libevdev)

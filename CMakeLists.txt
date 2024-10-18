@@ -32,7 +32,7 @@ add_executable(${CMAKE_PROJECT_NAME}
     ${PROJECT_SOURCES}
 )
 
-target_compile_features(${CMAKE_PROJECT_NAME} PRIVATE cxx_std_20)
+target_compile_features(${CMAKE_PROJECT_NAME} PRIVATE cxx_std_23)
 
 # https://stackoverflow.com/a/29316084/18831815
 find_package(PkgConfig)
