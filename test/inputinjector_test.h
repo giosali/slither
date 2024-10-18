@@ -4,7 +4,7 @@
 #include "../src/core/inputinjector.h"
 #include "ut.hpp"
 
-boost::ut::suite<"inputinjector"> inputinjector = [] {
+boost::ut::suite<"inputinjector"> inline inputinjector = [] {
   using namespace boost::ut;
   using namespace boost::ut::bdd;
   using namespace boost::ut::literals;

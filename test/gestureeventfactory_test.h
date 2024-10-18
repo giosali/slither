@@ -8,7 +8,7 @@
 #include "../src/core/gestureeventfactory.h"
 #include "ut.hpp"
 
-boost::ut::suite<"gestureeventfactory"> gestureeventfactory = [] {
+boost::ut::suite<"gestureeventfactory"> inline gestureeventfactory = [] {
   using namespace boost::ut;
   using namespace boost::ut::bdd;
   using namespace boost::ut::literals;

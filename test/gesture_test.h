@@ -9,7 +9,7 @@
 #include "../src/core/gesture.h"
 #include "ut.hpp"
 
-boost::ut::suite<"gesture"> gesture = [] {
+boost::ut::suite<"gesture"> inline gesture = [] {
   using namespace boost::ut;
   using namespace boost::ut::bdd;
   using namespace boost::ut::literals;

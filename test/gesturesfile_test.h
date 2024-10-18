@@ -5,7 +5,7 @@
 #include "../src/core/gesturesfile.h"
 #include "ut.hpp"
 
-boost::ut::suite<"gesturesfile"> gesturesfile = [] {
+boost::ut::suite<"gesturesfile"> inline gesturesfile = [] {
   using namespace boost::ut;
   using namespace boost::ut::bdd;
   using namespace boost::ut::literals;

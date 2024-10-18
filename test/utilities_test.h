@@ -8,7 +8,7 @@
 #include "../src/core/utilities.h"
 #include "ut.hpp"
 
-boost::ut::suite<"utilities"> utilities = [] {
+boost::ut::suite<"utilities"> inline utilities = [] {
   using namespace boost::ut;
   using namespace boost::ut::bdd;
   using namespace boost::ut::literals;
