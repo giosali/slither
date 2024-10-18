@@ -9,6 +9,8 @@ class GestureEvent {
  public:
   explicit GestureEvent(libinput_event* event);
 
+  virtual ~GestureEvent() = default;
+
   virtual void Begin(libinput_event* event) = 0;
   virtual void End(libinput_event* event) = 0;
   virtual void Update(libinput_event* event) = 0;
