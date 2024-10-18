@@ -4,5 +4,6 @@
 #include "inputinjector_test.h"
 #include "paths_test.h"
 #include "ut.hpp"
+#include "utilities_test.h"
 
 int main() {}
