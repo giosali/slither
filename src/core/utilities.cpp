@@ -265,6 +265,9 @@ std::string Utilities::KeyCodeToString(uint32_t key_code) {
       return "SCALE";
     case 121:
       return "KP_COMMA";
+    case 125:  // LEFTMETA
+    case 126:  // RIGHTMETA
+      return "Meta";
     default:
       return "";
   }
