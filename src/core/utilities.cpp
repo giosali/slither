@@ -13,10 +13,20 @@ std::string Utilities::Join(const std::string& delimiter,
   return result;
 }
 
+/**
+ * @brief Returns string representation of a key code.
+ *
+ * @link
+ * https://github.com/torvalds/linux/blob/master/include/uapi/linux/input-event-codes.h
+ * @link https://gitlab.gnome.org/GNOME/gtk/-/blob/main/gdk/gdkkeysyms.h
+ *
+ * @param key_code - The key code based on Linux input event codes.
+ * @return std::string
+ */
 std::string Utilities::KeyCodeToString(uint32_t key_code) {
   switch (key_code) {
     case 1:
-      return "ESC";
+      return "Escape";
     case 2:
       return "1";
     case 3:
@@ -37,14 +47,14 @@ std::string Utilities::KeyCodeToString(uint32_t key_code) {
       return "9";
     case 11:
       return "0";
-    case 12:  // MINUS
-      return "-";
-    case 13:  // EQUAL
-      return "=";
+    case 12:  // -
+      return "Minus";
+    case 13:  // =
+      return "Equal";
     case 14:
-      return "BACKSPACE";
+      return "Backspace";
     case 15:
-      return "TAB";
+      return "Tab";
     case 16:
       return "Q";
     case 17:
@@ -70,9 +80,9 @@ std::string Utilities::KeyCodeToString(uint32_t key_code) {
     case 27:
       return "]";
     case 28:
-      return "ENTER";
+      return "Enter";
     case 29:  // LEFTCTRL
-      return "CTRL";
+      return "Ctrl";
     case 30:
       return "A";
     case 31:
@@ -91,16 +101,16 @@ std::string Utilities::KeyCodeToString(uint32_t key_code) {
       return "K";
     case 38:
       return "L";
-    case 39:  // SEMICOLON
-      return ";";
-    case 40:  // APOSTROPHE
-      return "'";
-    case 41:  // GRAVE
-      return "`";
+    case 39:  // ;
+      return "Semicolon";
+    case 40:  // '
+      return "Apostrophe";
+    case 41:  // `
+      return "Grave";
     case 42:  // LEFTSHIFT
-      return "SHIFT";
-    case 43:  // BACKSLASH
-      return "\\";
+      return "Shift";
+    case 43:
+      return "Backslash";
     case 44:
       return "Z";
     case 45:
@@ -115,22 +125,22 @@ std::string Utilities::KeyCodeToString(uint32_t key_code) {
       return "N";
     case 50:
       return "M";
-    case 51:  // COMMA
-      return ",";
-    case 52:  // DOT
-      return ".";
-    case 53:  // SLASH
-      return "/";
+    case 51:  // ,
+      return "Comma";
+    case 52:  // .
+      return "Period";
+    case 53:  // /
+      return "Slash";
     case 54:  // RIGHTSHIFT
-      return "SHIFT";
+      return "Shift";
     case 55:
-      return "KPASTERISK";
+      return "KP_ASTERISK";
     case 56:  // LEFTALT
-      return "ALT";
+      return "Alt";
     case 57:
-      return "SPACE";
+      return "Space";
     case 58:
-      return "CAPSLOCK";
+      return "Caps_Lock";
     case 59:
       return "F1";
     case 60:
@@ -152,35 +162,35 @@ std::string Utilities::KeyCodeToString(uint32_t key_code) {
     case 68:
       return "F10";
     case 69:
-      return "NUMLOCK";
+      return "Num_Lock";
     case 70:
-      return "SCROLLLOCK";
+      return "Scroll_Lock";
     case 71:
-      return "KP7";
+      return "KP_7";
     case 72:
-      return "KP8";
+      return "KP_8";
     case 73:
-      return "KP9";
+      return "KP_9";
     case 74:
-      return "KPMINUS";
+      return "KP_MINUS";
     case 75:
-      return "KP4";
+      return "KP_4";
     case 76:
-      return "KP5";
+      return "KP_5";
     case 77:
-      return "KP6";
+      return "KP_6";
     case 78:
-      return "KPPLUS";
+      return "KP_PLUS";
     case 79:
-      return "KP1";
+      return "KP_1";
     case 80:
-      return "KP2";
+      return "KP_2";
     case 81:
-      return "KP3";
+      return "KP_3";
     case 82:
-      return "KP0";
+      return "KP_0";
     case 83:
-      return "KPDOT";
+      return "KP_DOT";
     case 85:
       return "ZENKAKUHANKAKU";
     case 86:
@@ -202,39 +212,39 @@ std::string Utilities::KeyCodeToString(uint32_t key_code) {
     case 94:
       return "MUHENKAN";
     case 95:
-      return "KPJPCOMMA";
+      return "KP_JPCOMMA";
     case 96:
-      return "KPENTER";
+      return "KP_ENTER";
     case 97:  // RIGHTCTRL
-      return "CTRL";
+      return "Ctrl";
     case 98:
-      return "KPSLASH";
+      return "KP_SLASH";
     case 99:
       return "SYSRQ";
     case 100:  // RIGHTALT
-      return "ALT";
+      return "Alt";
     case 101:
       return "LINEFEED";
     case 102:
-      return "HOME";
+      return "Home";
     case 103:
-      return "UP";
+      return "Up";
     case 104:
-      return "PAGEUP";
+      return "Page_Up";
     case 105:
-      return "LEFT";
+      return "Left";
     case 106:
-      return "RIGHT";
+      return "Right";
     case 107:
-      return "END";
+      return "End";
     case 108:
-      return "DOWN";
+      return "Down";
     case 109:
-      return "PAGEDOWN";
+      return "Page_Down";
     case 110:
-      return "INSERT";
+      return "Insert";
     case 111:
-      return "DELETE";
+      return "Delete";
     case 112:
       return "MACRO";
     case 113:
@@ -246,15 +256,15 @@ std::string Utilities::KeyCodeToString(uint32_t key_code) {
     case 116:
       return "POWER";
     case 117:
-      return "KPEQUAL";
+      return "KP_EQUAL";
     case 118:
-      return "KPPLUSMINUS";
+      return "KP_PLUSMINUS";
     case 119:
-      return "PAUSE";
+      return "Pause";
     case 120:
       return "SCALE";
     case 121:
-      return "KPCOMMA";
+      return "KP_COMMA";
     default:
       return "";
   }
