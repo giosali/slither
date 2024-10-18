@@ -53,7 +53,7 @@ boost::ut::suite<"gesture"> gesture = [] {
         then("I expect to receive the correct string representations") =
           [&gesture](const auto& tuple) {
             auto key_codes = std::get<0>(tuple);
-            auto expected = "Up, " + std::get<1>(tuple);
+            auto expected = "Swipe Up, " + std::get<1>(tuple);
 
             gesture.SetKeyCodes(key_codes);
             auto actual = gesture.ToString();
