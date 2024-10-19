@@ -1,5 +1,21 @@
 #include "utilities.h"
 
+bool Utilities::IsModifierKey(uint32_t key_code) {
+  switch (key_code) {
+    case 29:
+    case 42:
+    case 54:
+    case 56:
+    case 97:
+    case 100:
+    case 125:
+    case 126:
+      return true;
+    default:
+      return false;
+  }
+}
+
 std::string Utilities::Join(const std::string& delimiter,
                             const std::vector<std::string>& elements) {
   if (elements.empty()) {
