@@ -15,7 +15,7 @@ class GesturesFile {
   static std::vector<uint32_t> FindGestureKeyCodes(Gesture::Direction direction,
                                                    int32_t finger_count);
   static std::vector<Gesture> GetGestures();
-  static void Initialize();
+  static void Initialize(bool set_gestures = true);
   static std::vector<Gesture> ReadGestures();
   static void Watch();
 
