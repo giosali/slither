@@ -12,9 +12,9 @@ class GesturesFile {
  public:
   GesturesFile() = delete;
 
-  static std::vector<Gesture> GetGestures();
   static std::vector<uint32_t> FindGestureKeyCodes(Gesture::Direction direction,
                                                    int32_t finger_count);
+  static std::vector<Gesture> GetGestures();
   static void Initialize();
   static void Watch();
 

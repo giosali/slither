@@ -10,8 +10,6 @@
 #include "json.hpp"
 #include "paths.h"
 
-std::vector<Gesture> GesturesFile::GetGestures() { return gestures_; }
-
 std::vector<uint32_t> GesturesFile::FindGestureKeyCodes(
   Gesture::Direction direction, int32_t finger_count) {
   spdlog::debug(
@@ -27,8 +25,11 @@ std::vector<uint32_t> GesturesFile::FindGestureKeyCodes(
       return g.GetKeyCodes();
     }
   }
+
   return {};
 }
+
+std::vector<Gesture> GesturesFile::GetGestures() { return gestures_; }
 
 void GesturesFile::Initialize() {
   path_ = Paths::ConfigAppDirectory() / "gestures.json";
