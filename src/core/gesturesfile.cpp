@@ -10,6 +10,15 @@
 #include "json.hpp"
 #include "paths.h"
 
+void GesturesFile::DeleteGesture(const Gesture& gesture) {
+  for (auto it = gestures_.begin(); it != gestures_.end(); ++it) {
+    if (gesture == *it) {
+      it = gestures_.erase(it);
+      break;
+    }
+  }
+}
+
 std::vector<uint32_t> GesturesFile::FindGestureKeyCodes(
   Gesture::Direction direction, int32_t finger_count) {
   spdlog::debug(
