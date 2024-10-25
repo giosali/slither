@@ -46,7 +46,7 @@ void GesturesFile::Initialize(bool set_gestures) {
   }
 
   if (set_gestures) {
-    SetGestures(ReadGestures());
+    gestures_ = ReadGestures();
   }
 }
 
@@ -94,7 +94,7 @@ void GesturesFile::Watch() {
       while (i < length) {
         auto event = (struct inotify_event*)&buffer[i];
         if (event->mask & IN_MODIFY) {
-          SetGestures(ReadGestures());
+          gestures_ = ReadGestures();
         }
 
         i += event_size + event->len;
@@ -105,10 +105,6 @@ void GesturesFile::Watch() {
     close(fd);
   }};
   t.detach();
-}
-
-void GesturesFile::SetGestures(const std::vector<Gesture>& value) {
-  gestures_ = value;
 }
 
 std::vector<Gesture> GesturesFile::gestures_{};

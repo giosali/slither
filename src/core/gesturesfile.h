@@ -20,8 +20,6 @@ class GesturesFile {
   static void Watch();
 
  private:
-  static void SetGestures(const std::vector<Gesture>& value);
-
   static std::vector<Gesture> gestures_;
   static std::mutex mtx_;
   static std::filesystem::path path_;
