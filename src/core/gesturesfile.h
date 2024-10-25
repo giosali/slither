@@ -16,10 +16,11 @@ class GesturesFile {
                                                    int32_t finger_count);
   static std::vector<Gesture> GetGestures();
   static void Initialize();
+  static std::vector<Gesture> ReadGestures();
   static void Watch();
 
  private:
-  static void UpdateGestures();
+  static void SetGestures(const std::vector<Gesture>& value);
 
   static std::vector<Gesture> gestures_;
   static std::mutex mtx_;

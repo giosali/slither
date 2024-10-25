@@ -45,7 +45,22 @@ void GesturesFile::Initialize() {
     stream << "[]";
   }
 
-  UpdateGestures();
+  SetGestures(ReadGestures());
+}
+
+std::vector<Gesture> GesturesFile::ReadGestures() {
+  auto stream = std::ifstream{path_};
+
+  // Reads the gestures file and transforms its contents to Gesture objects.
+  try {
+    auto json = nlohmann::json::parse(stream);
+    auto lock = std::lock_guard(mtx_);
+    return json.template get<std::vector<Gesture>>();
+  } catch (const nlohmann::json::exception& e) {
+    std::cerr << e.what() << "\n";
+  }
+
+  return {};
 }
 
 void GesturesFile::Watch() {
@@ -77,7 +92,7 @@ void GesturesFile::Watch() {
       while (i < length) {
         auto event = (struct inotify_event*)&buffer[i];
         if (event->mask & IN_MODIFY) {
-          UpdateGestures();
+          SetGestures(ReadGestures());
         }
 
         i += event_size + event->len;
@@ -90,17 +105,8 @@ void GesturesFile::Watch() {
   t.detach();
 }
 
-void GesturesFile::UpdateGestures() {
-  auto stream = std::ifstream{path_};
-
-  // Reads the gestures file and transforms its contents to Gesture objects.
-  try {
-    auto json = nlohmann::json::parse(stream);
-    auto lock = std::lock_guard(mtx_);
-    gestures_ = json.template get<std::vector<Gesture>>();
-  } catch (const nlohmann::json::exception& e) {
-    std::cerr << e.what() << "\n";
-  }
+void GesturesFile::SetGestures(const std::vector<Gesture>& value) {
+  gestures_ = value;
 }
 
 std::vector<Gesture> GesturesFile::gestures_{};
