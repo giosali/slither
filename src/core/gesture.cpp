@@ -54,6 +54,11 @@ std::string Gesture::ToString() const {
   return std::format(final_fmt, direction, representation);
 }
 
+bool Gesture::operator==(const Gesture& gesture) const {
+  return direction_ == gesture.direction_ &&
+         finger_count_ == gesture.finger_count_;
+}
+
 void from_json(const nlohmann::json& j, Gesture& g) {
   j.at("direction").get_to(g.direction_);
   j.at("fingerCount").get_to(g.finger_count_);
