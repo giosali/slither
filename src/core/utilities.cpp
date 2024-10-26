@@ -4,14 +4,14 @@
 
 bool Utilities::IsModifierKey(uint32_t key_code) {
   switch (key_code) {
-    case 29:
-    case 42:
-    case 54:
-    case 56:
-    case 97:
-    case 100:
-    case 125:
-    case 126:
+    case KEY_LEFTCTRL:
+    case KEY_RIGHTCTRL:
+    case KEY_LEFTALT:
+    case KEY_RIGHTALT:
+    case KEY_LEFTSHIFT:
+    case KEY_RIGHTSHIFT:
+    case KEY_LEFTMETA:
+    case KEY_RIGHTMETA:
       return true;
     default:
       return false;
