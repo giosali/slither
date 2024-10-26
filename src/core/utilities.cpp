@@ -65,10 +65,10 @@ std::string Utilities::KeyCodeToString(uint32_t key_code) {
       return "9";
     case KEY_0:
       return "0";
-    case KEY_MINUS:  // -
-      return "Minus";
-    case KEY_EQUAL:  // =
-      return "Equal";
+    case KEY_MINUS:
+      return "-";
+    case KEY_EQUAL:
+      return "=";
     case KEY_BACKSPACE:
       return "Backspace";
     case KEY_TAB:
@@ -120,11 +120,11 @@ std::string Utilities::KeyCodeToString(uint32_t key_code) {
     case KEY_L:
       return "L";
     case KEY_SEMICOLON:
-      return "Semicolon";
+      return ";";
     case KEY_APOSTROPHE:
-      return "Apostrophe";
+      return "'";
     case KEY_GRAVE:
-      return "Grave";
+      return "`";
     case KEY_LEFTSHIFT:
       return "Shift";
     case KEY_BACKSLASH:
@@ -144,11 +144,11 @@ std::string Utilities::KeyCodeToString(uint32_t key_code) {
     case KEY_M:
       return "M";
     case KEY_COMMA:
-      return "Comma";
+      return ",";
     case KEY_DOT:
-      return "Period";
+      return ".";
     case KEY_SLASH:
-      return "Slash";
+      return "/";
     case KEY_RIGHTSHIFT:
       return "Shift";
     case KEY_KPASTERISK:
@@ -158,7 +158,7 @@ std::string Utilities::KeyCodeToString(uint32_t key_code) {
     case KEY_SPACE:
       return "Space";
     case KEY_CAPSLOCK:
-      return "Caps_Lock";
+      return "Caps Lock";
     case KEY_F1:
       return "F1";
     case KEY_F2:
@@ -180,9 +180,9 @@ std::string Utilities::KeyCodeToString(uint32_t key_code) {
     case KEY_F10:
       return "F10";
     case KEY_NUMLOCK:
-      return "Num_Lock";
+      return "Num Lock";
     case KEY_SCROLLLOCK:
-      return "Scroll_Lock";
+      return "Scroll Lock";
     case KEY_KP7:
       return "KP_7";
     case KEY_KP8:
@@ -248,7 +248,7 @@ std::string Utilities::KeyCodeToString(uint32_t key_code) {
     case KEY_UP:
       return "Up";
     case KEY_PAGEUP:
-      return "Page_Up";
+      return "Page Up";
     case KEY_LEFT:
       return "Left";
     case KEY_RIGHT:
@@ -258,7 +258,7 @@ std::string Utilities::KeyCodeToString(uint32_t key_code) {
     case KEY_DOWN:
       return "Down";
     case KEY_PAGEDOWN:
-      return "Page_Down";
+      return "Page Down";
     case KEY_INSERT:
       return "Insert";
     case KEY_DELETE:
