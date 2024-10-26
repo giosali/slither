@@ -1,5 +1,7 @@
 #include "utilities.h"
 
+#include <linux/input-event-codes.h>
+
 bool Utilities::IsModifierKey(uint32_t key_code) {
   switch (key_code) {
     case 29:
@@ -41,249 +43,249 @@ std::string Utilities::Join(const std::string& delimiter,
  */
 std::string Utilities::KeyCodeToString(uint32_t key_code) {
   switch (key_code) {
-    case 1:
+    case KEY_ESC:
       return "Escape";
-    case 2:
+    case KEY_1:
       return "1";
-    case 3:
+    case KEY_2:
       return "2";
-    case 4:
+    case KEY_3:
       return "3";
-    case 5:
+    case KEY_4:
       return "4";
-    case 6:
+    case KEY_5:
       return "5";
-    case 7:
+    case KEY_6:
       return "6";
-    case 8:
+    case KEY_7:
       return "7";
-    case 9:
+    case KEY_8:
       return "8";
-    case 10:
+    case KEY_9:
       return "9";
-    case 11:
+    case KEY_0:
       return "0";
-    case 12:  // -
+    case KEY_MINUS:  // -
       return "Minus";
-    case 13:  // =
+    case KEY_EQUAL:  // =
       return "Equal";
-    case 14:
+    case KEY_BACKSPACE:
       return "Backspace";
-    case 15:
+    case KEY_TAB:
       return "Tab";
-    case 16:
+    case KEY_Q:
       return "Q";
-    case 17:
+    case KEY_W:
       return "W";
-    case 18:
+    case KEY_E:
       return "E";
-    case 19:
+    case KEY_R:
       return "R";
-    case 20:
+    case KEY_T:
       return "T";
-    case 21:
+    case KEY_Y:
       return "Y";
-    case 22:
+    case KEY_U:
       return "U";
-    case 23:
+    case KEY_I:
       return "I";
-    case 24:
+    case KEY_O:
       return "O";
-    case 25:
+    case KEY_P:
       return "P";
-    case 26:
+    case KEY_LEFTBRACE:
       return "[";
-    case 27:
+    case KEY_RIGHTBRACE:
       return "]";
-    case 28:
+    case KEY_ENTER:
       return "Enter";
-    case 29:  // LEFTCTRL
+    case KEY_LEFTCTRL:
       return "Ctrl";
-    case 30:
+    case KEY_A:
       return "A";
-    case 31:
+    case KEY_S:
       return "S";
-    case 32:
+    case KEY_D:
       return "D";
-    case 33:
+    case KEY_F:
       return "F";
-    case 34:
+    case KEY_G:
       return "G";
-    case 35:
+    case KEY_H:
       return "H";
-    case 36:
+    case KEY_J:
       return "J";
-    case 37:
+    case KEY_K:
       return "K";
-    case 38:
+    case KEY_L:
       return "L";
-    case 39:  // ;
+    case KEY_SEMICOLON:
       return "Semicolon";
-    case 40:  // '
+    case KEY_APOSTROPHE:
       return "Apostrophe";
-    case 41:  // `
+    case KEY_GRAVE:
       return "Grave";
-    case 42:  // LEFTSHIFT
+    case KEY_LEFTSHIFT:
       return "Shift";
-    case 43:
+    case KEY_BACKSLASH:
       return "Backslash";
-    case 44:
+    case KEY_Z:
       return "Z";
-    case 45:
+    case KEY_X:
       return "X";
-    case 46:
+    case KEY_C:
       return "C";
-    case 47:
+    case KEY_V:
       return "V";
-    case 48:
+    case KEY_B:
       return "B";
-    case 49:
+    case KEY_N:
       return "N";
-    case 50:
+    case KEY_M:
       return "M";
-    case 51:  // ,
+    case KEY_COMMA:
       return "Comma";
-    case 52:  // .
+    case KEY_DOT:
       return "Period";
-    case 53:  // /
+    case KEY_SLASH:
       return "Slash";
-    case 54:  // RIGHTSHIFT
+    case KEY_RIGHTSHIFT:
       return "Shift";
-    case 55:
+    case KEY_KPASTERISK:
       return "KP_ASTERISK";
-    case 56:  // LEFTALT
+    case KEY_LEFTALT:
       return "Alt";
-    case 57:
+    case KEY_SPACE:
       return "Space";
-    case 58:
+    case KEY_CAPSLOCK:
       return "Caps_Lock";
-    case 59:
+    case KEY_F1:
       return "F1";
-    case 60:
+    case KEY_F2:
       return "F2";
-    case 61:
+    case KEY_F3:
       return "F3";
-    case 62:
+    case KEY_F4:
       return "F4";
-    case 63:
+    case KEY_F5:
       return "F5";
-    case 64:
+    case KEY_F6:
       return "F6";
-    case 65:
+    case KEY_F7:
       return "F7";
-    case 66:
+    case KEY_F8:
       return "F8";
-    case 67:
+    case KEY_F9:
       return "F9";
-    case 68:
+    case KEY_F10:
       return "F10";
-    case 69:
+    case KEY_NUMLOCK:
       return "Num_Lock";
-    case 70:
+    case KEY_SCROLLLOCK:
       return "Scroll_Lock";
-    case 71:
+    case KEY_KP7:
       return "KP_7";
-    case 72:
+    case KEY_KP8:
       return "KP_8";
-    case 73:
+    case KEY_KP9:
       return "KP_9";
-    case 74:
+    case KEY_KPMINUS:
       return "KP_MINUS";
-    case 75:
+    case KEY_KP4:
       return "KP_4";
-    case 76:
+    case KEY_KP5:
       return "KP_5";
-    case 77:
+    case KEY_KP6:
       return "KP_6";
-    case 78:
+    case KEY_KPPLUS:
       return "KP_PLUS";
-    case 79:
+    case KEY_KP1:
       return "KP_1";
-    case 80:
+    case KEY_KP2:
       return "KP_2";
-    case 81:
+    case KEY_KP3:
       return "KP_3";
-    case 82:
+    case KEY_KP0:
       return "KP_0";
-    case 83:
+    case KEY_KPDOT:
       return "KP_DOT";
-    case 85:
+    case KEY_ZENKAKUHANKAKU:
       return "ZENKAKUHANKAKU";
-    case 86:
+    case KEY_102ND:
       return "102ND";
-    case 87:
+    case KEY_F11:
       return "F11";
-    case 88:
+    case KEY_F12:
       return "F12";
-    case 89:
+    case KEY_RO:
       return "RO";
-    case 90:
+    case KEY_KATAKANA:
       return "KATAKANA";
-    case 91:
+    case KEY_HIRAGANA:
       return "HIRAGANA";
-    case 92:
+    case KEY_HENKAN:
       return "HENKAN";
-    case 93:
+    case KEY_KATAKANAHIRAGANA:
       return "KATAKANAHIRAGANA";
-    case 94:
+    case KEY_MUHENKAN:
       return "MUHENKAN";
-    case 95:
+    case KEY_KPJPCOMMA:
       return "KP_JPCOMMA";
-    case 96:
+    case KEY_KPENTER:
       return "KP_ENTER";
-    case 97:  // RIGHTCTRL
+    case KEY_RIGHTCTRL:
       return "Ctrl";
-    case 98:
+    case KEY_KPSLASH:
       return "KP_SLASH";
-    case 99:
+    case KEY_SYSRQ:
       return "SYSRQ";
-    case 100:  // RIGHTALT
+    case KEY_RIGHTALT:
       return "Alt";
-    case 101:
+    case KEY_LINEFEED:
       return "LINEFEED";
-    case 102:
+    case KEY_HOME:
       return "Home";
-    case 103:
+    case KEY_UP:
       return "Up";
-    case 104:
+    case KEY_PAGEUP:
       return "Page_Up";
-    case 105:
+    case KEY_LEFT:
       return "Left";
-    case 106:
+    case KEY_RIGHT:
       return "Right";
-    case 107:
+    case KEY_END:
       return "End";
-    case 108:
+    case KEY_DOWN:
       return "Down";
-    case 109:
+    case KEY_PAGEDOWN:
       return "Page_Down";
-    case 110:
+    case KEY_INSERT:
       return "Insert";
-    case 111:
+    case KEY_DELETE:
       return "Delete";
-    case 112:
+    case KEY_MACRO:
       return "MACRO";
-    case 113:
+    case KEY_MUTE:
       return "MUTE";
-    case 114:
+    case KEY_VOLUMEDOWN:
       return "VOLUMEDOWN";
-    case 115:
+    case KEY_VOLUMEUP:
       return "VOLUMEUP";
-    case 116:
+    case KEY_POWER:
       return "POWER";
-    case 117:
+    case KEY_KPEQUAL:
       return "KP_EQUAL";
-    case 118:
+    case KEY_KPPLUSMINUS:
       return "KP_PLUSMINUS";
-    case 119:
+    case KEY_PAUSE:
       return "Pause";
-    case 120:
+    case KEY_SCALE:
       return "SCALE";
-    case 121:
+    case KEY_KPCOMMA:
       return "KP_COMMA";
-    case 125:  // LEFTMETA
-    case 126:  // RIGHTMETA
-      return "Meta";
+    case KEY_LEFTMETA:
+    case KEY_RIGHTMETA:
+      return "Super";
     default:
       return "";
   }
