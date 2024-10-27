@@ -18,6 +18,16 @@ bool Utilities::IsModifierKey(uint32_t key_code) {
   }
 }
 
+bool Utilities::IsShiftKey(uint32_t key_code) {
+  switch (key_code) {
+    case KEY_LEFTSHIFT:
+    case KEY_RIGHTSHIFT:
+      return true;
+    default:
+      return false;
+  }
+}
+
 std::string Utilities::Join(const std::string& delimiter,
                             const std::vector<std::string>& elements) {
   if (elements.empty()) {

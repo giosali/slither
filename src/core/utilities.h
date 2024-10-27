@@ -17,6 +17,7 @@ class Utilities {
            std::views::transform([](auto e) { return decltype(front)(e); });
   };
   static bool IsModifierKey(uint32_t key_code);
+  static bool IsShiftKey(uint32_t key_code);
   static std::string Join(const std::string& delimiter,
                           const std::vector<std::string>& elements);
   static std::string KeyCodeToString(uint32_t key_code);
