@@ -44,7 +44,7 @@ std::vector<uint32_t> GesturesFile::FindGestureKeyCodes(
 
 std::vector<Gesture> GesturesFile::GetGestures() { return gestures_; }
 
-void GesturesFile::Initialize(bool set_gestures) {
+void GesturesFile::Initialize() {
   path_ = Paths::ConfigAppDirectory() / "gestures.json";
   spdlog::debug("In GesturesFile::Initialize(): path_ = {}", path_.string());
 
@@ -58,9 +58,7 @@ void GesturesFile::Initialize(bool set_gestures) {
     stream << "[]";
   }
 
-  if (set_gestures) {
-    gestures_ = ReadGestures();
-  }
+  gestures_ = ReadGestures();
 }
 
 std::vector<Gesture> GesturesFile::ReadGestures() {
