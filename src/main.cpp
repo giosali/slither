@@ -1,5 +1,6 @@
-#include <gtkmm-4.0/gtkmm.h>
 #include <spdlog/spdlog.h>
+#include <wx/app.h>
+#include <wx/init.h>
 
 #include <exception>
 #include <iostream>
@@ -7,7 +8,7 @@
 #include "argparse.hpp"
 #include "core/gesturesfile.h"
 #include "core/gesturewatcher.h"
-#include "ui/mainwindow.h"
+#include "ui/app.h"
 
 int main(int argc, char* argv[]) {
   auto program = argparse::ArgumentParser{"Slither"};
@@ -31,16 +32,22 @@ int main(int argc, char* argv[]) {
   auto verbose = program.get<bool>("--verbose");
   spdlog::set_level(verbose ? spdlog::level::debug : spdlog::level::off);
 
+  // Must be called prior to beginning either the GUI or core portion of the
+  // application.
+  GesturesFile::Initialize();
+
   // GUI portion of the program.
   auto gui = program.get<bool>("--gui");
   if (gui) {
-    auto app = Gtk::Application::create("io.github.giosali.slither");
-    return app->make_window_and_run<MainWindow>(0, nullptr);
+    wxApp::SetInstance(new App{});
+    wxEntryStart(argc, argv);
+    wxTheApp->CallOnInit();
+    wxTheApp->OnRun();
+    wxEntryCleanup();
+    return 0;
   }
 
   // Core portion of the program.
-  GesturesFile::Initialize();
-
   auto gesture_watcher = GestureWatcher{};
   gesture_watcher.Enable();
 }
