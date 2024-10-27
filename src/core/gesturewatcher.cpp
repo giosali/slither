@@ -11,8 +11,12 @@
 #include <stdexcept>
 
 #include "gestureeventfactory.h"
+#include "gesturesfile.h"
 
 GestureWatcher::GestureWatcher() {
+  GesturesFile::Initialize();
+  GesturesFile::Watch();
+
   spdlog::info("Initializing new udev context object");
   auto udev = udev_new();
   if (udev == nullptr) {

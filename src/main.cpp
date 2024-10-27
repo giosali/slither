@@ -6,7 +6,6 @@
 #include <iostream>
 
 #include "argparse.hpp"
-#include "core/gesturesfile.h"
 #include "core/gesturewatcher.h"
 #include "ui/app.h"
 
@@ -31,10 +30,6 @@ int main(int argc, char* argv[]) {
 
   auto verbose = program.get<bool>("--verbose");
   spdlog::set_level(verbose ? spdlog::level::debug : spdlog::level::off);
-
-  // Must be called prior to beginning either the GUI or core portion of the
-  // application.
-  GesturesFile::Initialize();
 
   // GUI portion of the program.
   auto gui = program.get<bool>("--gui");
