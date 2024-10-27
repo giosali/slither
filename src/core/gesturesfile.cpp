@@ -74,6 +74,12 @@ std::vector<Gesture> GesturesFile::ReadGestures() {
   return {};
 }
 
+void GesturesFile::Save() {
+  auto j = nlohmann::json{gestures_};
+  auto stream = std::ofstream{path_};
+  stream << j.dump(2);
+}
+
 void GesturesFile::Watch() {
   // TODO: this thread is seemingly run twice; investigate.
   auto t = std::jthread{[]() {

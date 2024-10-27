@@ -18,6 +18,7 @@ class GesturesFile {
   static std::vector<Gesture> GetGestures();
   static void Initialize(bool set_gestures = true);
   static std::vector<Gesture> ReadGestures();
+  static void Save();
   static void Watch();
 
  private:
