@@ -12,6 +12,8 @@ class Gesture {
   enum class Direction { kNone, kUp, kRight, kDown, kLeft, kIn, kOut };
 
   Gesture() = default;
+  Gesture(Direction direction, int32_t finger_count,
+          const std::vector<uint32_t>& key_codes);
 
   static std::string StringifyDirection(Direction direction);
   Direction GetDirection() const;

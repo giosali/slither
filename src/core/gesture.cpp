@@ -5,6 +5,12 @@
 
 #include "utilities.h"
 
+Gesture::Gesture(Direction direction, int32_t finger_count,
+                 const std::vector<uint32_t>& key_codes)
+    : direction_{direction},
+      finger_count_{finger_count},
+      key_codes_{key_codes} {}
+
 std::string Gesture::StringifyDirection(Direction direction) {
   switch (direction) {
     case Direction::kNone:
