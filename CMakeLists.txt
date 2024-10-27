@@ -12,8 +12,6 @@ project(slither VERSION 0.1.0 LANGUAGES CXX)
 include_directories(${PROJECT_SOURCE_DIR}/include)
 
 set(PROJECT_SOURCES
-    src/ui/gesturelistboxrow.cpp
-    src/ui/mainwindow.cpp
     src/core/gesture.cpp
     src/core/gestureevent.cpp
     src/core/gestureeventfactory.cpp
@@ -26,6 +24,13 @@ set(PROJECT_SOURCES
     src/core/swipegestureevent.cpp
     src/core/utilities.cpp
     src/main.cpp
+    src/ui/app.cpp
+    src/ui/directionstring.cpp
+    src/ui/gesturestring.cpp
+    src/ui/gestureformdialog.cpp
+    src/ui/mainframe.cpp
+    src/ui/mainpage.cpp
+    src/ui/mainstatusbar.cpp
 )
 
 add_executable(${CMAKE_PROJECT_NAME}
@@ -34,9 +39,11 @@ add_executable(${CMAKE_PROJECT_NAME}
 
 target_compile_features(${CMAKE_PROJECT_NAME} PRIVATE cxx_std_23)
 
+find_package(wxWidgets REQUIRED)
+include(${wxWidgets_USE_FILE})
+
 # https://stackoverflow.com/a/29316084/18831815
 find_package(PkgConfig)
-pkg_check_modules(GTKMM REQUIRED gtkmm-4.0)
 pkg_check_modules(LIBEVDEV REQUIRED libevdev)
 pkg_check_modules(LIBINPUT REQUIRED libinput)
 pkg_check_modules(LIBUDEV REQUIRED libudev)
@@ -44,14 +51,13 @@ pkg_check_modules(SPDLOG REQUIRED spdlog)
 
 target_include_directories(${CMAKE_PROJECT_NAME}
     PRIVATE
-        ${GTKMM_INCLUDE_DIRS}
         ${LIBEVDEV_INCLUDE_DIRS}
 )
 
 target_link_libraries(${CMAKE_PROJECT_NAME}
-    ${GTKMM_LIBRARIES}
     ${LIBEVDEV_LIBRARIES}
     ${LIBINPUT_LIBRARIES}
     ${LIBUDEV_LIBRARIES}
     ${SPDLOG_LIBRARIES}
+    ${wxWidgets_LIBRARIES}
 )
