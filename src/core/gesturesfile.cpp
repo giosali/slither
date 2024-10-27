@@ -10,6 +10,10 @@
 #include "json.hpp"
 #include "paths.h"
 
+void GesturesFile::AddGesture(const Gesture& gesture) {
+  gestures_.push_back(gesture);
+}
+
 void GesturesFile::DeleteGesture(const Gesture& gesture) {
   for (auto it = gestures_.begin(); it != gestures_.end(); ++it) {
     if (gesture == *it) {
