@@ -2,6 +2,46 @@
 
 #include <linux/input-event-codes.h>
 
+#include <unordered_map>
+
+std::string Utilities::ConvertDirectionToString(Gesture::Direction direction) {
+  switch (direction) {
+    case Gesture::Direction::kNone:
+      return kHoldText;
+    case Gesture::Direction::kUp:
+      return kUpText;
+    case Gesture::Direction::kRight:
+      return kRightText;
+    case Gesture::Direction::kDown:
+      return kDownText;
+    case Gesture::Direction::kLeft:
+      return kLeftText;
+    case Gesture::Direction::kIn:
+      return kInText;
+    case Gesture::Direction::kOut:
+      return kOutText;
+    default:
+      return {};
+  }
+}
+
+Gesture::Direction Utilities::ConvertStringToDirection(const std::string& s) {
+  // This is not a function that needs to be performant. This function will
+  // only be called when the user is adding or editing a gesture via the GUI
+  // and presses "Save."
+  auto direction_map = std::unordered_map<std::string_view, Gesture::Direction>{
+    {kHoldText, Gesture::Direction::kNone},
+    {kUpText, Gesture::Direction::kUp},
+    {kRightText, Gesture::Direction::kRight},
+    {kDownText, Gesture::Direction::kDown},
+    {kLeftText, Gesture::Direction::kLeft},
+    {kInText, Gesture::Direction::kIn},
+    {kOutText, Gesture::Direction::kOut}};
+
+  auto it = direction_map.find(s);
+  return it != direction_map.end() ? it->second : Gesture::Direction::kNone;
+}
+
 bool Utilities::IsModifierKey(uint32_t key_code) {
   switch (key_code) {
     case KEY_LEFTCTRL:
