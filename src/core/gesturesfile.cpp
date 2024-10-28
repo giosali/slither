@@ -46,7 +46,7 @@ void GesturesFile::Initialize() {
   path_ = Paths::ConfigAppDirectory() / "gestures.json";
   spdlog::debug("In GesturesFile::Initialize(): path_ = {}", path_.string());
 
-  if (std::filesystem::exists(path_)) {
+  if (!std::filesystem::exists(path_)) {
     Create();
   }
 
@@ -54,7 +54,7 @@ void GesturesFile::Initialize() {
 }
 
 void GesturesFile::Save() {
-  if (std::filesystem::exists(path_)) {
+  if (!std::filesystem::exists(path_)) {
     Create();
   }
 
