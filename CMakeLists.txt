@@ -12,6 +12,7 @@ project(slither VERSION 0.1.0 LANGUAGES CXX)
 include_directories(${PROJECT_SOURCE_DIR}/include)
 
 set(PROJECT_SOURCES
+    src/core/directorywatcher.cpp
     src/core/gesture.cpp
     src/core/gestureevent.cpp
     src/core/gestureeventfactory.cpp
