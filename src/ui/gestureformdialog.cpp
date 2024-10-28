@@ -97,6 +97,9 @@ GestureFormDialog::GestureFormDialog(wxWindow* parent, const wxString& title,
 GestureFormDialog::GestureFormDialog(wxWindow* parent, const wxString& title,
                                      const Gesture& gesture)
     : GestureFormDialog{parent, title, gesture.GetFingerCount()} {
+  is_editing_ = true;
+  previous_gesture_ = gesture;
+
   // Sets the displayed label for the wxChoice direction widget to the one in
   // the gesture instance.
   auto direction = gesture.GetDirection();
@@ -352,7 +355,8 @@ void GestureFormDialog::OnSaveButtonClick(wxCommandEvent& event) {
   auto direction = Utilities::ConvertStringToDirection(selection.ToStdString());
   auto gesture = Gesture{direction, finger_count_, key_codes_};
 
-  GesturesFile::AddGesture(gesture);
+  is_editing_ ? GesturesFile::ReplaceGesture(previous_gesture_, gesture)
+              : GesturesFile::AddGesture(gesture);
   GesturesFile::Save();
   Close();
 }

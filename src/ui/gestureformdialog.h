@@ -29,8 +29,10 @@ class GestureFormDialog final : public wxDialog {
   wxChoice* direction_choice_{nullptr};
   int32_t finger_count_{};
   wxBoxSizer* inner_{nullptr};
+  bool is_editing_{false};
   std::vector<uint32_t> key_codes_{};
   wxStaticText* key_combination_text_{nullptr};
+  Gesture previous_gesture_{};
 };
 
 #endif  // GESTUREFORMDIALOG_H
