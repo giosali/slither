@@ -1,9 +1,6 @@
 #include "mainpage.h"
 
-#include <wx/sizer.h>
 #include <wx/wx.h>
-
-#include "gesturestring.h"
 
 MainPage::MainPage(wxWindow* parent, int32_t finger_count)
     : wxPanel{parent},
@@ -15,14 +12,20 @@ MainPage::MainPage(wxWindow* parent, int32_t finger_count)
   SetSizer(sizer);
 }
 
-void MainPage::Append(const GestureString& item) const {
-  list_box_->Append(item);
+void MainPage::Append(const Gesture& gesture) {
+  list_box_->Append(gesture.ToString());
+  gestures_.push_back(gesture);
 }
 
-void MainPage::Clear() const { list_box_->Clear(); }
+void MainPage::Clear() {
+  list_box_->Clear();
+  gestures_.clear();
+}
 
-wxString MainPage::GetCurrentRow() const {
-  return list_box_->GetStringSelection();
+std::optional<Gesture> MainPage::GetCurrentGesture() const {
+  auto selection = list_box_->GetSelection();
+  return selection != wxNOT_FOUND ? std::make_optional(gestures_[selection])
+                                  : std::nullopt;
 }
 
 int32_t MainPage::GetFingerCount() const { return finger_count_; }
