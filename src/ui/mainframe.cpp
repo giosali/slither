@@ -29,20 +29,7 @@ MainFrame::MainFrame()
 
 MainPage* MainFrame::GetCurrentPage() const {
   auto page = notebook_->GetCurrentPage();
-  if (page == nullptr) {
-    return nullptr;
-  }
-
-  return static_cast<MainPage*>(page);
-}
-
-wxString MainFrame::GetCurrentRow() const {
-  auto main_page = GetCurrentPage();
-  if (main_page == nullptr) {
-    return {};
-  }
-
-  return main_page->GetCurrentRow();
+  return page != nullptr ? static_cast<MainPage*>(page) : nullptr;
 }
 
 void MainFrame::OnClick(wxCommandEvent& event) {
@@ -63,17 +50,16 @@ void MainFrame::OnClick(wxCommandEvent& event) {
       return;
     }
 
-    // Removes the current row visually.
-    main_page->DeleteCurrentRow();
-
-    auto row = GetCurrentRow();
-    if (row.IsEmpty()) {
+    auto gesture = main_page->GetCurrentGesture();
+    if (!gesture.has_value()) {
       return;
     }
 
+    // Removes the current row visually.
+    main_page->DeleteCurrentRow();
+
     // Removes the current row via IO.
-    auto gesture = static_cast<GestureString&>(row).GetGesture();
-    GesturesFile::DeleteGesture(gesture);
+    GesturesFile::DeleteGesture(gesture.value());
     GesturesFile::Save();
   } else if (data == Constants::kEditButtonLabel) {
     auto main_page = GetCurrentPage();
@@ -81,14 +67,13 @@ void MainFrame::OnClick(wxCommandEvent& event) {
       return;
     }
 
-    auto row = GetCurrentRow();
-    if (row.IsEmpty()) {
+    auto gesture = main_page->GetCurrentGesture();
+    if (!gesture.has_value()) {
       return;
     }
 
-    auto gesture = static_cast<GestureString&>(row).GetGesture();
-    auto form_dialog = new GestureFormDialog(
-      this, "Edit a Gesture", main_page->GetFingerCount(), gesture);
+    auto form_dialog =
+      new GestureFormDialog(this, "Edit a Gesture", gesture.value());
     form_dialog->Bind(wxEVT_CLOSE_WINDOW, &MainFrame::OnDialogClose, this);
     form_dialog->ShowModal();
   }
@@ -111,10 +96,10 @@ void MainFrame::UpdatePages() {
   for (const auto& gesture : GesturesFile::GetGestures()) {
     auto finger_count = gesture.GetFingerCount();
 
-    // 1 must be subtracted from finger count since the pages are zero-based.
+    // Subtracts 1 from finger count since the pages used zero-based indexing.
     auto page = notebook_->GetPage(finger_count - 1);
 
     auto main_page = static_cast<MainPage*>(page);
-    main_page->Append(GestureString{gesture});
+    main_page->Append(gesture);
   }
 }
