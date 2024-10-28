@@ -18,6 +18,7 @@ class GesturesFile {
                                                    int32_t finger_count);
   static std::vector<Gesture> GetGestures();
   static void Initialize();
+  static void ReplaceGesture(const Gesture& previous, const Gesture& current);
   static void Save();
   static void Watch();
 

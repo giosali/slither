@@ -57,6 +57,16 @@ void GesturesFile::Initialize() {
   gestures_ = ReadGestures();
 }
 
+void GesturesFile::ReplaceGesture(const Gesture& previous,
+                                  const Gesture& current) {
+  for (size_t i = 0, l = gestures_.size(); i < l; ++i) {
+    if (auto gesture = gestures_[i]; gesture == previous) {
+      gestures_[i] = current;
+      break;
+    }
+  }
+}
+
 void GesturesFile::Save() {
   spdlog::info("In GesturesFile::Save()");
 
