@@ -1,7 +1,6 @@
 #include "gesture.h"
 
 #include <format>
-#include <string_view>
 
 #include "utilities.h"
 
@@ -56,8 +55,7 @@ std::string Gesture::ToString() const {
 
   auto representation = Utilities::Join(" + ", representations);
 
-  constexpr auto final_fmt = std::string_view{"{}, {}"};
-  return std::format(final_fmt, direction, representation);
+  return std::format("{}: {}", direction, representation);
 }
 
 bool Gesture::operator==(const Gesture& gesture) const {
