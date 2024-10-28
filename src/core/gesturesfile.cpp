@@ -3,7 +3,6 @@
 #include <spdlog/spdlog.h>
 
 #include <fstream>
-#include <iostream>
 
 #include "directorywatcher.h"
 #include "json.hpp"
@@ -69,7 +68,7 @@ std::vector<Gesture> GesturesFile::ReadGestures() {
     auto lock = std::lock_guard(mtx_);
     return json.template get<std::vector<Gesture>>();
   } catch (const nlohmann::json::exception& e) {
-    std::cerr << e.what() << "\n";
+    spdlog::error(e.what());
   }
 
   return {};
