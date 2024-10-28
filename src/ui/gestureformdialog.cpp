@@ -95,9 +95,8 @@ GestureFormDialog::GestureFormDialog(wxWindow* parent, const wxString& title,
 }
 
 GestureFormDialog::GestureFormDialog(wxWindow* parent, const wxString& title,
-                                     int32_t finger_count,
                                      const Gesture& gesture)
-    : GestureFormDialog{parent, title, finger_count} {}
+    : GestureFormDialog{parent, title, gesture.GetFingerCount()} {}
 
 /**
  * @brief Converts a GTK keyval to its corresponding Linux input event code

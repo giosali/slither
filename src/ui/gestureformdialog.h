@@ -13,7 +13,7 @@ class GestureFormDialog final : public wxDialog {
   explicit GestureFormDialog(wxWindow* parent, const wxString& title,
                              int32_t finger_count);
   explicit GestureFormDialog(wxWindow* parent, const wxString& title,
-                             int32_t finger_count, const Gesture& gesture);
+                             const Gesture& gesture);
 
   virtual ~GestureFormDialog() = default;
 
