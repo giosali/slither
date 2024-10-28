@@ -15,7 +15,6 @@ class Gesture {
   Gesture(Direction direction, int32_t finger_count,
           const std::vector<uint32_t>& key_codes);
 
-  static std::string StringifyDirection(Direction direction);
   Direction GetDirection() const;
   int32_t GetFingerCount() const;
   std::vector<uint32_t> GetKeyCodes() const;
@@ -33,8 +32,5 @@ class Gesture {
   int32_t finger_count_{};
   std::vector<uint32_t> key_codes_{};
 };
-
-// void from_json(const nlohmann::json& j, Gesture& g);
-// void to_json(nlohmann::json& j, const Gesture& g);
 
 #endif  // GESTURE_H

@@ -10,27 +10,6 @@ Gesture::Gesture(Direction direction, int32_t finger_count,
       finger_count_{finger_count},
       key_codes_{key_codes} {}
 
-std::string Gesture::StringifyDirection(Direction direction) {
-  switch (direction) {
-    case Direction::kNone:
-      return "Hold";
-    case Direction::kUp:
-      return "Swipe Up";
-    case Direction::kRight:
-      return "Swipe Right";
-    case Direction::kDown:
-      return "Swipe Down";
-    case Direction::kLeft:
-      return "Swipe Left";
-    case Direction::kIn:
-      return "Pinch Inward";
-    case Direction::kOut:
-      return "Pinch Outward";
-    default:
-      return "";
-  }
-}
-
 Gesture::Direction Gesture::GetDirection() const { return direction_; }
 
 int32_t Gesture::GetFingerCount() const { return finger_count_; }
@@ -46,16 +25,16 @@ void Gesture::SetKeyCodes(const std::vector<uint32_t>& value) {
 }
 
 std::string Gesture::ToString() const {
-  auto direction = StringifyDirection(direction_);
+  auto direction_rep = Utilities::ConvertDirectionToString(direction_);
 
-  auto representations = std::vector<std::string>{};
+  auto key_code_reps = std::vector<std::string>{};
   for (auto key_code : key_codes_) {
-    representations.push_back(Utilities::KeyCodeToString(key_code));
+    key_code_reps.push_back(Utilities::KeyCodeToString(key_code));
   }
 
-  auto representation = Utilities::Join(" + ", representations);
+  auto representation = Utilities::Join(" + ", key_code_reps);
 
-  return std::format("{}: {}", direction, representation);
+  return std::format("{}: {}", direction_rep, representation);
 }
 
 bool Gesture::operator==(const Gesture& gesture) const {
