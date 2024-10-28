@@ -10,7 +10,6 @@
 #include "../core/gesture.h"
 #include "../core/gesturesfile.h"
 #include "../core/utilities.h"
-#include "directionstring.h"
 
 GestureFormDialog::GestureFormDialog(wxWindow* parent, const wxString& title,
                                      int32_t finger_count)
@@ -26,7 +25,7 @@ GestureFormDialog::GestureFormDialog(wxWindow* parent, const wxString& title,
   direction_choice_ = new wxChoice{panel, wxID_ANY};
   for (auto direction : Utilities::EnumRange(Gesture::Direction::kNone,
                                              Gesture::Direction::kOut)) {
-    direction_choice_->Append(DirectionString{direction});
+    direction_choice_->Append(Utilities::ConvertDirectionToString(direction));
   }
 
   // Sets displayed text to first item.
@@ -339,10 +338,9 @@ void GestureFormDialog::OnClearButtonClick(wxCommandEvent& event) {
 
 void GestureFormDialog::OnSaveButtonClick(wxCommandEvent& event) {
   auto selection = direction_choice_->GetStringSelection();
-  auto direction_string = static_cast<DirectionString&>(selection);
+  auto direction = Utilities::ConvertStringToDirection(selection.ToStdString());
+  auto gesture = Gesture{direction, finger_count_, key_codes_};
 
-  auto gesture =
-    Gesture{direction_string.GetDirection(), finger_count_, key_codes_};
   GesturesFile::AddGesture(gesture);
   GesturesFile::Save();
   Close();
