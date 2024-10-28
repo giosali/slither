@@ -46,17 +46,36 @@ void GesturesFile::Initialize() {
   path_ = Paths::ConfigAppDirectory() / "gestures.json";
   spdlog::debug("In GesturesFile::Initialize(): path_ = {}", path_.string());
 
-  if (!std::filesystem::exists(path_)) {
-    // Creates any missing parent directories.
-    auto parent_path = path_.parent_path();
-    std::filesystem::create_directories(parent_path);
-
-    // Creates the JSON file and writes an empty array to it.
-    auto stream = std::ofstream{path_};
-    stream << "[]";
+  if (std::filesystem::exists(path_)) {
+    Create();
   }
 
   gestures_ = ReadGestures();
+}
+
+void GesturesFile::Save() {
+  if (std::filesystem::exists(path_)) {
+    Create();
+  }
+
+  auto j = nlohmann::json{gestures_};
+  auto stream = std::ofstream{path_};
+  stream << j.dump(2);
+}
+
+void GesturesFile::Watch() {
+  DirectoryWatcher::AddFile(path_.filename(),
+                            [] { gestures_ = ReadGestures(); });
+}
+
+void GesturesFile::Create() {
+  // Creates any missing parent directories.
+  auto parent_path = path_.parent_path();
+  std::filesystem::create_directories(parent_path);
+
+  // Creates the JSON file and writes an empty array to it.
+  auto stream = std::ofstream{path_};
+  stream << "[]";
 }
 
 std::vector<Gesture> GesturesFile::ReadGestures() {
@@ -72,17 +91,6 @@ std::vector<Gesture> GesturesFile::ReadGestures() {
   }
 
   return {};
-}
-
-void GesturesFile::Save() {
-  auto j = nlohmann::json{gestures_};
-  auto stream = std::ofstream{path_};
-  stream << j.dump(2);
-}
-
-void GesturesFile::Watch() {
-  DirectoryWatcher::AddFile(path_.filename(),
-                            [] { gestures_ = ReadGestures(); });
 }
 
 std::vector<Gesture> GesturesFile::gestures_{};

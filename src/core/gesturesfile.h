@@ -18,11 +18,13 @@ class GesturesFile {
                                                    int32_t finger_count);
   static std::vector<Gesture> GetGestures();
   static void Initialize();
-  static std::vector<Gesture> ReadGestures();
   static void Save();
   static void Watch();
 
  private:
+  static void Create();
+  static std::vector<Gesture> ReadGestures();
+
   static std::vector<Gesture> gestures_;
   static std::mutex mtx_;
   static std::filesystem::path path_;
