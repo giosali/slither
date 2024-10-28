@@ -26,7 +26,6 @@ set(PROJECT_SOURCES
     src/core/utilities.cpp
     src/main.cpp
     src/ui/app.cpp
-    src/ui/directionstring.cpp
     src/ui/gesturestring.cpp
     src/ui/gestureformdialog.cpp
     src/ui/mainframe.cpp
