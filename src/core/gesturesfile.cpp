@@ -54,13 +54,20 @@ void GesturesFile::Initialize() {
 }
 
 void GesturesFile::Save() {
+  spdlog::info("In GesturesFile::Save()");
+
   if (!std::filesystem::exists(path_)) {
     Create();
   }
 
-  auto j = nlohmann::json{gestures_};
+  // Must be initialized thusly to prevent the vector from appearing inside
+  // another array.
+  nlohmann::json j = gestures_;
+
   auto stream = std::ofstream{path_};
-  stream << j.dump(2);
+  auto dump = j.dump(2);
+  spdlog::debug("dump = {}", dump);
+  stream << dump;
 }
 
 void GesturesFile::Watch() {
