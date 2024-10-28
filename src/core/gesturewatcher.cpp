@@ -10,10 +10,17 @@
 #include <cerrno>
 #include <stdexcept>
 
+#include "directorywatcher.h"
 #include "gestureeventfactory.h"
 #include "gesturesfile.h"
+#include "paths.h"
 
 GestureWatcher::GestureWatcher() {
+  // Watches for changes to files in the app config directory.
+  DirectoryWatcher::Initialize(Paths::ConfigAppDirectory());
+  DirectoryWatcher::Watch();
+
+  // Specifically watches for changes to the gestures file.
   GesturesFile::Initialize();
   GesturesFile::Watch();
 
