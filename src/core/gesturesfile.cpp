@@ -13,8 +13,12 @@ void GesturesFile::AddGesture(const Gesture& gesture) {
 }
 
 void GesturesFile::DeleteGesture(const Gesture& gesture) {
+  spdlog::info("In GesturesFile::DeleteGesture(const Gesture&)");
+
   for (auto it = gestures_.begin(); it != gestures_.end(); ++it) {
     if (gesture == *it) {
+      spdlog::info("Deleting gesture");
+
       it = gestures_.erase(it);
       break;
     }
