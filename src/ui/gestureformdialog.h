@@ -24,6 +24,7 @@ class GestureFormDialog final : public wxDialog {
   void OnSaveButtonClick(wxCommandEvent& event);
   void OnKeyDown(wxKeyEvent& event);
   void OnTextEnter(wxCommandEvent& event);
+  void SetKeyCombinationText();
 
   wxChoice* direction_choice_{nullptr};
   int32_t finger_count_{};

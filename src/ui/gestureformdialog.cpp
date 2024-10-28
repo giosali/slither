@@ -96,7 +96,19 @@ GestureFormDialog::GestureFormDialog(wxWindow* parent, const wxString& title,
 
 GestureFormDialog::GestureFormDialog(wxWindow* parent, const wxString& title,
                                      const Gesture& gesture)
-    : GestureFormDialog{parent, title, gesture.GetFingerCount()} {}
+    : GestureFormDialog{parent, title, gesture.GetFingerCount()} {
+  // Sets the displayed label for the wxChoice direction widget to the one in
+  // the gesture instance.
+  auto direction = gesture.GetDirection();
+  auto direction_str = Utilities::ConvertDirectionToString(direction);
+  if (auto n = direction_choice_->FindString(direction_str); n != wxNOT_FOUND) {
+    direction_choice_->SetSelection(n);
+  }
+
+  key_codes_ = gesture.GetKeyCodes();
+
+  SetKeyCombinationText();
+}
 
 /**
  * @brief Converts a GTK keyval to its corresponding Linux input event code
@@ -396,13 +408,7 @@ void GestureFormDialog::OnKeyDown(wxKeyEvent& event) {
     key_codes_.push_back(linux_key_code);
   }
 
-  auto representations = std::vector<std::string>{};
-  representations.reserve(key_codes_.size());
-  for (auto key_code : key_codes_) {
-    representations.push_back(Utilities::KeyCodeToString(key_code));
-  }
-
-  key_combination_text_->SetLabel(Utilities::Join(" + ", representations));
+  SetKeyCombinationText();
 
   // Centers key combination text (by recalculating the layout of the sizer
   // and its children).
@@ -419,4 +425,14 @@ void GestureFormDialog::OnTextEnter(wxCommandEvent& event) {
   if (auto text = text_ctrl->GetValue(); !text.IsEmpty()) {
     text_ctrl->Clear();
   }
+}
+
+void GestureFormDialog::SetKeyCombinationText() {
+  auto representations = std::vector<std::string>{};
+  representations.reserve(key_codes_.size());
+  for (auto key_code : key_codes_) {
+    representations.push_back(Utilities::KeyCodeToString(key_code));
+  }
+
+  key_combination_text_->SetLabel(Utilities::Join(" + ", representations));
 }
