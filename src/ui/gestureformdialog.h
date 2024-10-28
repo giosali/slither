@@ -26,7 +26,7 @@ class GestureFormDialog final : public wxDialog {
   void OnTextEnter(wxCommandEvent& event);
 
   wxChoice* direction_choice_{nullptr};
-  int32_t finger_count_;
+  int32_t finger_count_{};
   wxBoxSizer* inner_{nullptr};
   std::vector<uint32_t> key_codes_{};
   wxStaticText* key_combination_text_{nullptr};
