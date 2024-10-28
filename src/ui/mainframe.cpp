@@ -110,7 +110,10 @@ void MainFrame::UpdatePages() {
   // Repopulates those list boxes.
   for (const auto& gesture : GesturesFile::GetGestures()) {
     auto finger_count = gesture.GetFingerCount();
-    auto page = notebook_->GetPage(finger_count);
+
+    // 1 must be subtracted from finger count since the pages are zero-based.
+    auto page = notebook_->GetPage(finger_count - 1);
+
     auto main_page = static_cast<MainPage*>(page);
     main_page->Append(GestureString{gesture});
   }
