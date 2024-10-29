@@ -15,7 +15,7 @@ class SwipeGestureEvent : public GestureEvent {
   void Update(libinput_event* event) override;
 
  private:
-  static constexpr double kThreshold = 125;
+  static constexpr double kThreshold = 70;
   static constexpr uint32_t kTimeLimit = 200;
 
   Gesture::Direction direction_{};
