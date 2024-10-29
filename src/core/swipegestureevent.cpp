@@ -2,6 +2,9 @@
 
 #include <spdlog/spdlog.h>
 
+#include <algorithm>
+#include <cstdlib>
+
 #include "gesturesfile.h"
 #include "inputinjector.h"
 
@@ -50,22 +53,22 @@ void SwipeGestureEvent::Update(libinput_event* event) {
 
   sx_ += dx;
   sy_ += dy;
-  spdlog::debug("sx_ = {}, sy_ = {}", sx_, sy_);
+  auto x_mag = std::abs(sx_);
+  auto y_mag = std::abs(sy_);
+  auto max = std::max(x_mag, y_mag);
+  spdlog::debug("sx_ = {}, sy_ = {}, max = {}", sx_, sy_, max);
 
-  if (std::abs(sx_) >= kThreshold) {
-    // Handles horizontal swipes.
-    time_ = time;
+  if (max < kThreshold) {
+    return;
+  }
+
+  time_ = time;
+  if (max == x_mag) {
     direction_ =
       sx_ < 0 ? Gesture::Direction::kLeft : Gesture::Direction::kRight;
-
-    spdlog::info("Horizontal threshold met");
     spdlog::debug("direction_ = {}", static_cast<int>(direction_));
-  } else if (std::abs(sy_) >= kThreshold) {
-    // Handles vertical swipes.
-    time_ = time;
+  } else {
     direction_ = sy_ < 0 ? Gesture::Direction::kUp : Gesture::Direction::kDown;
-
-    spdlog::info("Vertical threshold met");
     spdlog::debug("direction_ = {}", static_cast<int>(direction_));
   }
 }
