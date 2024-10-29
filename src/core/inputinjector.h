@@ -5,17 +5,23 @@
 #include <libevdev-1.0/libevdev/libevdev.h>
 
 #include <cstdint>
+#include <unordered_set>
 #include <vector>
 
 class InputInjector {
  public:
   InputInjector() = delete;
 
+  static void Destroy();
+  static void Initialize(const std::unordered_set<uint32_t> key_codes);
   static void Inject(const std::vector<uint32_t>& key_codes);
 
  private:
   static void Write(bool press, libevdev_uinput* uinput_dev,
                     const std::vector<uint32_t>& key_codes);
+
+  static libevdev* dev_;
+  static libevdev_uinput* uinput_dev_;
 };
 
 #endif  // INPUTINJECTOR_H
