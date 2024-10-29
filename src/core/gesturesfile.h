@@ -25,6 +25,7 @@ class GesturesFile {
  private:
   static void Create();
   static std::vector<Gesture> ReadGestures();
+  static void SetGestures(const std::vector<Gesture>& value);
 
   static std::vector<Gesture> gestures_;
   static std::mutex mtx_;

@@ -3,8 +3,10 @@
 #include <spdlog/spdlog.h>
 
 #include <fstream>
+#include <unordered_set>
 
 #include "directorywatcher.h"
+#include "inputinjector.h"
 #include "json.hpp"
 #include "paths.h"
 
@@ -54,7 +56,7 @@ void GesturesFile::Initialize() {
     Create();
   }
 
-  gestures_ = ReadGestures();
+  SetGestures(ReadGestures());
 }
 
 void GesturesFile::ReplaceGesture(const Gesture& previous,
@@ -86,7 +88,7 @@ void GesturesFile::Save() {
 
 void GesturesFile::Watch() {
   DirectoryWatcher::AddFile(path_.filename(),
-                            [] { gestures_ = ReadGestures(); });
+                            [] { SetGestures(ReadGestures()); });
 }
 
 void GesturesFile::Create() {
@@ -112,6 +114,22 @@ std::vector<Gesture> GesturesFile::ReadGestures() {
   }
 
   return {};
+}
+
+void GesturesFile::SetGestures(const std::vector<Gesture>& value) {
+  gestures_ = value;
+
+  InputInjector::Destroy();
+
+  // Extracts all unique key codes from gestures.
+  auto key_codes = std::unordered_set<uint32_t>{};
+  for (const auto& gesture : value) {
+    for (auto key_code : gesture.GetKeyCodes()) {
+      key_codes.insert(key_code);
+    }
+  }
+
+  InputInjector::Initialize(key_codes);
 }
 
 std::vector<Gesture> GesturesFile::gestures_{};
