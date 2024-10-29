@@ -16,7 +16,7 @@ class SwipeGestureEvent : public GestureEvent {
 
  private:
   static constexpr double kThreshold = 125;
-  static constexpr uint32_t kTimeLimit = 250;
+  static constexpr uint32_t kTimeLimit = 200;
 
   Gesture::Direction direction_{};
   double sx_{};
