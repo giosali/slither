@@ -10,6 +10,7 @@
 #include "../core/gesture.h"
 #include "../core/gesturesfile.h"
 #include "../core/utilities.h"
+#include "colors.h"
 
 GestureFormDialog::GestureFormDialog(wxWindow* parent, const wxString& title,
                                      int32_t finger_count)
@@ -42,7 +43,7 @@ GestureFormDialog::GestureFormDialog(wxWindow* parent, const wxString& title,
 
   auto keycodes_text_ctrl_text =
     new wxStaticText{panel, wxID_ANY, "Type keys one at a time."};
-  keycodes_text_ctrl_text->SetForegroundColour(wxColour{156, 156, 156});
+  keycodes_text_ctrl_text->SetForegroundColour(Colors::GetSecondaryTextColor());
 
   key_combination_text_ = new wxStaticText{panel, wxID_ANY, ""};
 
