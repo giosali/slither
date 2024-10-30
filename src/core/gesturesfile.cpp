@@ -48,7 +48,9 @@ std::vector<uint32_t> GesturesFile::FindGestureKeyCodes(
 
 std::vector<Gesture> GesturesFile::GetGestures() { return gestures_; }
 
-void GesturesFile::Initialize() {
+void GesturesFile::Initialize(bool ignore_injector) {
+  ignore_injector_ = ignore_injector;
+
   path_ = Paths::ConfigAppDirectory() / "gestures.json";
   spdlog::debug("In GesturesFile::Initialize(): path_ = {}", path_.string());
 
@@ -119,20 +121,24 @@ std::vector<Gesture> GesturesFile::ReadGestures() {
 void GesturesFile::SetGestures(const std::vector<Gesture>& value) {
   gestures_ = value;
 
-  InputInjector::Destroy();
+  if (!ignore_injector_) {
+    InputInjector::Destroy();
 
-  // Extracts all unique key codes from gestures.
-  auto key_codes = std::unordered_set<uint32_t>{};
-  for (const auto& gesture : value) {
-    for (auto key_code : gesture.GetKeyCodes()) {
-      key_codes.insert(key_code);
+    // Extracts all unique key codes from gestures.
+    auto key_codes = std::unordered_set<uint32_t>{};
+    for (const auto& gesture : value) {
+      for (auto key_code : gesture.GetKeyCodes()) {
+        key_codes.insert(key_code);
+      }
     }
-  }
 
-  InputInjector::Initialize(key_codes);
+    InputInjector::Initialize(key_codes);
+  }
 }
 
 std::vector<Gesture> GesturesFile::gestures_{};
+
+bool GesturesFile::ignore_injector_{false};
 
 std::mutex GesturesFile::mtx_{};
 
