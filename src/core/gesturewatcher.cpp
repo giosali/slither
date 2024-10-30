@@ -21,7 +21,7 @@ GestureWatcher::GestureWatcher() {
   DirectoryWatcher::Watch();
 
   // Specifically watches for changes to the gestures file.
-  GesturesFile::Initialize();
+  GesturesFile::Initialize(false);
   GesturesFile::Watch();
 
   spdlog::info("Initializing new udev context object");

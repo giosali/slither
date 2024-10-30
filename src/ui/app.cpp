@@ -4,7 +4,7 @@
 #include "mainframe.h"
 
 bool App::OnInit() {
-  GesturesFile::Initialize();
+  GesturesFile::Initialize(true);
 
   auto frame = new MainFrame{};
   frame->Show();
