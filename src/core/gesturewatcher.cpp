@@ -14,11 +14,16 @@
 #include "gestureeventfactory.h"
 #include "gesturesfile.h"
 #include "paths.h"
+#include "settingsfile.h"
 
 GestureWatcher::GestureWatcher() {
   // Watches for changes to files in the app config directory.
   DirectoryWatcher::Initialize(Paths::ConfigAppDirectory());
   DirectoryWatcher::Watch();
+
+  // Specifically watches for changes to the settings file.
+  SettingsFile::Initialize();
+  SettingsFile::Watch();
 
   // Specifically watches for changes to the gestures file.
   GesturesFile::Initialize(false);
