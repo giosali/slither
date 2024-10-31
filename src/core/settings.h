@@ -7,13 +7,13 @@
 
 class Settings {
  public:
-  enum class PinchSensitivity { kLow = 10, kMedium = 20, kHigh = 40 };
+  enum class PinchSensitivity { kLow = 40, kMedium = 20, kHigh = 10 };
   enum class SwipeSensitivity {
-    kVeryLow = 35,
-    kLow = 50,
+    kVeryLow = 105,
+    kLow = 90,
     kMedium = 70,
-    kHigh = 90,
-    kVeryHigh = 105
+    kHigh = 50,
+    kVeryHigh = 35
   };
 
   Settings() = default;
