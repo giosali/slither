@@ -22,14 +22,18 @@ set(PROJECT_SOURCES
     src/core/inputinjector.cpp
     src/core/paths.cpp
     src/core/pinchgestureevent.cpp
+    src/core/settings.cpp
+    src/core/settingsfile.cpp
     src/core/swipegestureevent.cpp
     src/core/utilities.cpp
     src/main.cpp
     src/ui/app.cpp
+    src/ui/colors.cpp
     src/ui/gestureformdialog.cpp
+    src/ui/gesturepage.cpp
+    src/ui/gesturespage.cpp
     src/ui/mainframe.cpp
-    src/ui/mainpage.cpp
-    src/ui/mainstatusbar.cpp
+    src/ui/settingspage.cpp
 )
 
 add_executable(${CMAKE_PROJECT_NAME}
