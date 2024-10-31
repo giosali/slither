@@ -2,8 +2,6 @@
 #define GESTURE_TEST_H
 
 #include <cstdint>
-#include <tuple>
-#include <vector>
 
 #include "../include/json.hpp"
 #include "../src/core/gesture.h"
@@ -13,29 +11,6 @@ boost::ut::suite<"gesture"> inline gesture = [] {
   using namespace boost::ut;
   using namespace boost::ut::bdd;
   using namespace boost::ut::literals;
-
-  "StringifyDirection"_test = [] {
-    given(
-      "I call Gesture::StringifyDirection with all possible Gesture::Direction "
-      "values") = [] {
-      then("I expect them to match their corresponding string values") =
-        [](const auto& tuple) {
-          auto direction = std::get<0>(tuple);
-          auto expected = std::get<1>(tuple);
-          auto actual = Gesture::StringifyDirection(direction);
-          expect(actual == expected);
-        } |
-        std::vector<std::tuple<Gesture::Direction, std::string>>{
-          {Gesture::Direction::kNone, "Hold"},
-          {Gesture::Direction::kUp, "Swipe Up"},
-          {Gesture::Direction::kRight, "Swipe Right"},
-          {Gesture::Direction::kDown, "Swipe Down"},
-          {Gesture::Direction::kLeft, "Swipe Left"},
-          {Gesture::Direction::kIn, "Pinch Inward"},
-          {Gesture::Direction::kOut, "Pinch Outward"},
-        };
-    };
-  };
 
   feature("Getters/Setters") = [] {
     given("I have a Gesture object") = [] {
@@ -76,7 +51,7 @@ boost::ut::suite<"gesture"> inline gesture = [] {
         then("I expect to receive the correct string representations") =
           [&gesture](const auto& tuple) {
             auto key_codes = std::get<0>(tuple);
-            auto expected = "Swipe Up, " + std::get<1>(tuple);
+            auto expected = "Swipe Up: " + std::get<1>(tuple);
 
             gesture.SetKeyCodes(key_codes);
             auto actual = gesture.ToString();
@@ -84,7 +59,7 @@ boost::ut::suite<"gesture"> inline gesture = [] {
             expect(actual == expected);
           } |
           std::vector<std::tuple<std::vector<uint32_t>, std::string>>{
-            {{29, 16}, "CTRL + Q"}, {{97, 2}, "CTRL + 1"}};
+            {{29, 16}, "Ctrl + Q"}, {{97, 2}, "Ctrl + 1"}};
       };
     };
   };

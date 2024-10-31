@@ -9,6 +9,7 @@ project(slither_test VERSION 0.1.0 LANGUAGES CXX)
 include_directories(../include)
 
 set(PROJECT_SOURCES
+    ../src/core/directorywatcher.cpp
     ../src/core/gesture.cpp
     ../src/core/gestureevent.cpp
     ../src/core/gestureeventfactory.cpp
@@ -17,6 +18,8 @@ set(PROJECT_SOURCES
     ../src/core/inputinjector.cpp
     ../src/core/paths.cpp
     ../src/core/pinchgestureevent.cpp
+    ../src/core/settings.cpp
+    ../src/core/settingsfile.cpp
     ../src/core/swipegestureevent.cpp
     ../src/core/utilities.cpp
     main.cpp
