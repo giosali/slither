@@ -25,6 +25,20 @@ std::string Utilities::ConvertDirectionToString(Gesture::Direction direction) {
   }
 }
 
+std::string Utilities::ConvertPinchSensitivityToString(
+  Settings::PinchSensitivity sensitivity) {
+  switch (sensitivity) {
+    case Settings::PinchSensitivity::kLow:
+      return "Low";
+    case Settings::PinchSensitivity::kMedium:
+      return "Medium";
+    case Settings::PinchSensitivity::kHigh:
+      return "High";
+    default:
+      return {};
+  }
+}
+
 Gesture::Direction Utilities::ConvertStringToDirection(const std::string& s) {
   // This is not a function that needs to be performant. This function will
   // only be called when the user is adding or editing a gesture via the GUI
@@ -40,6 +54,24 @@ Gesture::Direction Utilities::ConvertStringToDirection(const std::string& s) {
 
   auto it = direction_map.find(s);
   return it != direction_map.end() ? it->second : Gesture::Direction::kNone;
+}
+
+std::string Utilities::ConvertSwipeSensitivityToString(
+  Settings::SwipeSensitivity sensitivity) {
+  switch (sensitivity) {
+    case Settings::SwipeSensitivity::kVeryLow:
+      return "Very Low";
+    case Settings::SwipeSensitivity::kLow:
+      return "Low";
+    case Settings::SwipeSensitivity::kMedium:
+      return "Medium";
+    case Settings::SwipeSensitivity::kHigh:
+      return "High";
+    case Settings::SwipeSensitivity::kVeryHigh:
+      return "Very High";
+    default:
+      return {};
+  }
 }
 
 bool Utilities::IsModifierKey(uint32_t key_code) {

@@ -8,13 +8,18 @@
 #include <vector>
 
 #include "gesture.h"
+#include "settings.h"
 
 class Utilities {
  public:
   Utilities() = delete;
 
   static std::string ConvertDirectionToString(Gesture::Direction direction);
+  static std::string ConvertPinchSensitivityToString(
+    Settings::PinchSensitivity sensitivity);
   static Gesture::Direction ConvertStringToDirection(const std::string& s);
+  static std::string ConvertSwipeSensitivityToString(
+    Settings::SwipeSensitivity sensitivity);
   static inline auto EnumRange = [](auto front, auto back) {
     return std::views::iota(std::to_underlying(front),
                             std::to_underlying(back) + 1) |
