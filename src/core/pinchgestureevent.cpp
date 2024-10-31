@@ -6,6 +6,7 @@
 
 #include "gesturesfile.h"
 #include "inputinjector.h"
+#include "settingsfile.h"
 
 PinchGestureEvent::PinchGestureEvent(libinput_event* event)
     : GestureEvent{event} {}
@@ -69,7 +70,9 @@ void PinchGestureEvent::Update(libinput_event* event) {
   spdlog::debug("dx = {}, dy = {}, sx_ = {}, sy_ = {}, sxy = {}", dx, dy, sx_,
                 sy_, sxy);
 
-  if (sxy < kPinchThreshold) {
+  auto sensitivity =
+    static_cast<int>(SettingsFile::GetSettings().GetPinchSensitivity());
+  if (sxy < sensitivity) {
     return;
   }
 

@@ -7,6 +7,7 @@
 
 #include "gesturesfile.h"
 #include "inputinjector.h"
+#include "settingsfile.h"
 
 SwipeGestureEvent::SwipeGestureEvent(libinput_event* event)
     : GestureEvent{event} {}
@@ -58,7 +59,9 @@ void SwipeGestureEvent::Update(libinput_event* event) {
   auto max = std::max(x_mag, y_mag);
   spdlog::debug("sx_ = {}, sy_ = {}, max = {}", sx_, sy_, max);
 
-  if (max < kThreshold) {
+  auto sensitivity =
+    static_cast<int>(SettingsFile::GetSettings().GetSwipeSensitivity());
+  if (max < sensitivity) {
     return;
   }
 

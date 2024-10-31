@@ -4,6 +4,7 @@
 
 #include "gesturesfile.h"
 #include "inputinjector.h"
+#include "settingsfile.h"
 
 HoldGestureEvent::HoldGestureEvent(libinput_event* event)
     : GestureEvent{event} {}
@@ -24,7 +25,8 @@ void HoldGestureEvent::End(libinput_event* event) { thread_.request_stop(); }
 void HoldGestureEvent::Update(libinput_event* event) {}
 
 void HoldGestureEvent::StartTimer(std::stop_token stoken) {
-  std::this_thread::sleep_for(std::chrono::milliseconds{1500});
+  auto time = SettingsFile::GetSettings().GetHoldTime();
+  std::this_thread::sleep_for(std::chrono::milliseconds{time});
 
   if (!stoken.stop_requested()) {
     auto lock = std::lock_guard<std::mutex>{mtx_};
