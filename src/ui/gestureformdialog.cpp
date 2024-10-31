@@ -24,8 +24,8 @@ GestureFormDialog::GestureFormDialog(wxWindow* parent, const wxString& title,
   auto direction_text = new wxStaticText{panel, wxID_ANY, "Direction"};
 
   direction_choice_ = new wxChoice{panel, wxID_ANY};
-  for (auto direction : Utilities::EnumRange(Gesture::Direction::kNone,
-                                             Gesture::Direction::kOut)) {
+  for (auto direction : Utilities::EnumRange(Gesture::Direction::kUp,
+                                             Gesture::Direction::kHold)) {
     direction_choice_->Append(Utilities::ConvertDirectionToString(direction));
   }
 

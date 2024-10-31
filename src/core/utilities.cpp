@@ -6,8 +6,6 @@
 
 std::string Utilities::ConvertDirectionToString(Gesture::Direction direction) {
   switch (direction) {
-    case Gesture::Direction::kNone:
-      return kHoldText;
     case Gesture::Direction::kUp:
       return kUpText;
     case Gesture::Direction::kRight:
@@ -20,6 +18,9 @@ std::string Utilities::ConvertDirectionToString(Gesture::Direction direction) {
       return kInText;
     case Gesture::Direction::kOut:
       return kOutText;
+    case Gesture::Direction::kHold:
+      return kHoldText;
+    case Gesture::Direction::kNone:
     default:
       return {};
   }
@@ -44,13 +45,13 @@ Gesture::Direction Utilities::ConvertStringToDirection(const std::string& s) {
   // only be called when the user is adding or editing a gesture via the GUI
   // and presses "Save."
   auto direction_map = std::unordered_map<std::string_view, Gesture::Direction>{
-    {kHoldText, Gesture::Direction::kNone},
     {kUpText, Gesture::Direction::kUp},
     {kRightText, Gesture::Direction::kRight},
     {kDownText, Gesture::Direction::kDown},
     {kLeftText, Gesture::Direction::kLeft},
     {kInText, Gesture::Direction::kIn},
-    {kOutText, Gesture::Direction::kOut}};
+    {kOutText, Gesture::Direction::kOut},
+    {kHoldText, Gesture::Direction::kHold}};
 
   auto it = direction_map.find(s);
   return it != direction_map.end() ? it->second : Gesture::Direction::kNone;
