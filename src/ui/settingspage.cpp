@@ -4,6 +4,8 @@
 #include <wx/statline.h>
 
 #include <string>
+#include <tuple>
+#include <vector>
 
 #include "../core/settingsfile.h"
 #include "../core/utilities.h"
@@ -78,13 +80,16 @@ void SettingsPage::SetUpHoldControls(wxWindow* parent, wxBoxSizer* sizer) {
   auto title = new wxStaticText{parent, wxID_ANY, "Hold Time"};
   sizer->Add(title);
 
-  auto labels = std::vector<std::string>{
-    "The amount of time (in milliseconds) that you need to hold in order to "
-    "register.",
-    "Press the Enter key after adjusting the number."};
-  for (const auto& label : labels) {
-    auto description = new wxStaticText{parent, wxID_ANY, label};
-    description->Wrap(description->GetSize().GetWidth() * 0.85);
+  auto infos = std::vector<std::tuple<std::string, bool>>{
+    {"The minimum hold time threshold (in milliseconds) for action initiation.",
+     true},
+    {"Press Enter after typing in a number.", false}};
+  for (const auto& info : infos) {
+    auto description = new wxStaticText{parent, wxID_ANY, std::get<0>(info)};
+    if (auto should_wrap = std::get<1>(info)) {
+      description->Wrap(description->GetSize().GetWidth() * 0.85);
+    }
+
     description->SetForegroundColour(Colors::GetSecondaryTextColor());
     sizer->Add(description);
   }
@@ -103,11 +108,8 @@ void SettingsPage::SetUpPinchControls(wxWindow* parent, wxBoxSizer* sizer) {
   auto title = new wxStaticText{parent, wxID_ANY, "Pinch Sensitivity"};
   sizer->Add(title);
 
-  auto description =
-    new wxStaticText{parent, wxID_ANY,
-                     "A lower sensitivity means that your pinches must move "
-                     "inward more in order to register."};
-  description->Wrap(description->GetSize().GetWidth() * 0.85);
+  auto description = new wxStaticText{
+    parent, wxID_ANY, "A lower sensitivity requires larger pinches."};
   description->SetForegroundColour(Colors::GetSecondaryTextColor());
   sizer->Add(description);
   sizer->AddSpacer(8);
@@ -115,7 +117,7 @@ void SettingsPage::SetUpPinchControls(wxWindow* parent, wxBoxSizer* sizer) {
   auto index = size_t{0};
   auto current_sensitivity = settings_.GetPinchSensitivity();
   for (auto sensitivity : Utilities::EnumRange(
-         Settings::PinchSensitivity::kLow, Settings::PinchSensitivity::kHigh)) {
+         Settings::PinchSensitivity::kHigh, Settings::PinchSensitivity::kLow)) {
     auto label = Utilities::ConvertPinchSensitivityToString(sensitivity);
     if (label.empty()) {
       continue;
@@ -143,11 +145,8 @@ void SettingsPage::SetUpSwipeControls(wxWindow* parent, wxBoxSizer* sizer) {
   auto title = new wxStaticText{parent, wxID_ANY, "Swipe Sensitivity"};
   sizer->Add(title);
 
-  auto description =
-    new wxStaticText{parent, wxID_ANY,
-                     "A lower sensitivity means that your swipes must move "
-                     "farther in order to register."};
-  description->Wrap(description->GetSize().GetWidth() * 0.85);
+  auto description = new wxStaticText{
+    parent, wxID_ANY, "A lower sensitivity requires longer swipes."};
   description->SetForegroundColour(Colors::GetSecondaryTextColor());
   sizer->Add(description);
   sizer->AddSpacer(8);
@@ -155,8 +154,8 @@ void SettingsPage::SetUpSwipeControls(wxWindow* parent, wxBoxSizer* sizer) {
   auto index = size_t{0};
   auto current_sensitivity = settings_.GetSwipeSensitivity();
   for (auto sensitivity :
-       Utilities::EnumRange(Settings::SwipeSensitivity::kVeryLow,
-                            Settings::SwipeSensitivity::kVeryHigh)) {
+       Utilities::EnumRange(Settings::SwipeSensitivity::kVeryHigh,
+                            Settings::SwipeSensitivity::kVeryLow)) {
     auto label = Utilities::ConvertSwipeSensitivityToString(sensitivity);
     if (label.empty()) {
       continue;
