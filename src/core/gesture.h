@@ -9,7 +9,7 @@
 
 class Gesture {
  public:
-  enum class Direction { kNone, kUp, kRight, kDown, kLeft, kIn, kOut };
+  enum class Direction { kNone, kUp, kRight, kDown, kLeft, kIn, kOut, kHold };
 
   Gesture() = default;
   Gesture(Direction direction, int32_t finger_count,
