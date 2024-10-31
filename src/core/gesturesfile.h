@@ -14,7 +14,7 @@ class GesturesFile {
 
   static void AddGesture(const Gesture& gesture);
   static void DeleteGesture(const Gesture& gesture);
-  static std::vector<uint32_t> FindGestureKeyCodes(Gesture::Direction direction,
+  static std::vector<uint32_t> FindGestureKeyCodes(Gesture::Type type,
                                                    int32_t finger_count);
   static std::vector<Gesture> GetGestures();
   static void Initialize(bool ignore_injector);

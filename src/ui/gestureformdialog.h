@@ -26,7 +26,7 @@ class GestureFormDialog final : public wxDialog {
   void OnTextEnter(wxCommandEvent& event);
   void SetKeyCombinationText();
 
-  wxChoice* direction_choice_{nullptr};
+  wxChoice* type_choice_{nullptr};
   int32_t finger_count_{};
   wxBoxSizer* inner_{nullptr};
   bool is_editing_{false};

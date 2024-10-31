@@ -9,18 +9,18 @@
 
 class Gesture {
  public:
-  enum class Direction { kNone, kUp, kRight, kDown, kLeft, kIn, kOut, kHold };
+  enum class Type { kNone, kUp, kRight, kDown, kLeft, kIn, kOut, kHold };
 
   Gesture() = default;
-  Gesture(Direction direction, int32_t finger_count,
+  Gesture(Type type, int32_t finger_count,
           const std::vector<uint32_t>& key_codes);
 
-  Direction GetDirection() const;
   int32_t GetFingerCount() const;
   std::vector<uint32_t> GetKeyCodes() const;
-  void SetDirection(Direction value);
+  Type GetType() const;
   void SetFingerCount(int32_t value);
   void SetKeyCodes(const std::vector<uint32_t>& value);
+  void SetType(Type value);
   std::string ToString() const;
   bool operator==(const Gesture& gesture) const;
 
@@ -28,7 +28,7 @@ class Gesture {
   friend void from_json(const nlohmann::json& j, Gesture& g);
   friend void to_json(nlohmann::json& j, const Gesture& g);
 
-  Direction direction_{};
+  Type type_{};
   int32_t finger_count_{};
   std::vector<uint32_t> key_codes_{};
 };

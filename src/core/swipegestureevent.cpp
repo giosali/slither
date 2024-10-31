@@ -30,15 +30,14 @@ void SwipeGestureEvent::End(libinput_event* event) {
   spdlog::debug("time = {}", time);
 
   auto time_diff = time - time_;
-  if (direction_ == Gesture::Direction::kNone || time_diff > kTimeLimit) {
-    spdlog::info("direction_ or time_diff is invalid");
-    spdlog::debug("direction_ = {}, time_diff = {}",
-                  static_cast<int>(direction_), time_diff);
+  if (type_ == Gesture::Type::kNone || time_diff > kTimeLimit) {
+    spdlog::info("type_ or time_diff is invalid");
+    spdlog::debug("type_ = {}, time_diff = {}", static_cast<int>(type_),
+                  time_diff);
     return;
   }
 
-  if (auto key_codes =
-        GesturesFile::FindGestureKeyCodes(direction_, finger_count_);
+  if (auto key_codes = GesturesFile::FindGestureKeyCodes(type_, finger_count_);
       !key_codes.empty()) {
     InputInjector::Inject(key_codes);
   }
@@ -67,11 +66,10 @@ void SwipeGestureEvent::Update(libinput_event* event) {
 
   time_ = time;
   if (max == x_mag) {
-    direction_ =
-      sx_ < 0 ? Gesture::Direction::kLeft : Gesture::Direction::kRight;
-    spdlog::debug("direction_ = {}", static_cast<int>(direction_));
+    type_ = sx_ < 0 ? Gesture::Type::kLeft : Gesture::Type::kRight;
+    spdlog::debug("type_ = {}", static_cast<int>(type_));
   } else {
-    direction_ = sy_ < 0 ? Gesture::Direction::kUp : Gesture::Direction::kDown;
-    spdlog::debug("direction_ = {}", static_cast<int>(direction_));
+    type_ = sy_ < 0 ? Gesture::Type::kUp : Gesture::Type::kDown;
+    spdlog::debug("type_ = {}", static_cast<int>(type_));
   }
 }

@@ -4,23 +4,23 @@
 
 #include <unordered_map>
 
-std::string Utilities::ConvertDirectionToString(Gesture::Direction direction) {
-  switch (direction) {
-    case Gesture::Direction::kUp:
+std::string Utilities::ConvertGestureTypeToString(Gesture::Type type) {
+  switch (type) {
+    case Gesture::Type::kUp:
       return kUpText;
-    case Gesture::Direction::kRight:
+    case Gesture::Type::kRight:
       return kRightText;
-    case Gesture::Direction::kDown:
+    case Gesture::Type::kDown:
       return kDownText;
-    case Gesture::Direction::kLeft:
+    case Gesture::Type::kLeft:
       return kLeftText;
-    case Gesture::Direction::kIn:
+    case Gesture::Type::kIn:
       return kInText;
-    case Gesture::Direction::kOut:
+    case Gesture::Type::kOut:
       return kOutText;
-    case Gesture::Direction::kHold:
+    case Gesture::Type::kHold:
       return kHoldText;
-    case Gesture::Direction::kNone:
+    case Gesture::Type::kNone:
     default:
       return {};
   }
@@ -40,21 +40,18 @@ std::string Utilities::ConvertPinchSensitivityToString(
   }
 }
 
-Gesture::Direction Utilities::ConvertStringToDirection(const std::string& s) {
+Gesture::Type Utilities::ConvertStringToGestureType(const std::string& s) {
   // This is not a function that needs to be performant. This function will
   // only be called when the user is adding or editing a gesture via the GUI
   // and presses "Save."
-  auto direction_map = std::unordered_map<std::string_view, Gesture::Direction>{
-    {kUpText, Gesture::Direction::kUp},
-    {kRightText, Gesture::Direction::kRight},
-    {kDownText, Gesture::Direction::kDown},
-    {kLeftText, Gesture::Direction::kLeft},
-    {kInText, Gesture::Direction::kIn},
-    {kOutText, Gesture::Direction::kOut},
-    {kHoldText, Gesture::Direction::kHold}};
+  auto type_map = std::unordered_map<std::string_view, Gesture::Type>{
+    {kUpText, Gesture::Type::kUp},     {kRightText, Gesture::Type::kRight},
+    {kDownText, Gesture::Type::kDown}, {kLeftText, Gesture::Type::kLeft},
+    {kInText, Gesture::Type::kIn},     {kOutText, Gesture::Type::kOut},
+    {kHoldText, Gesture::Type::kHold}};
 
-  auto it = direction_map.find(s);
-  return it != direction_map.end() ? it->second : Gesture::Direction::kNone;
+  auto it = type_map.find(s);
+  return it != type_map.end() ? it->second : Gesture::Type::kNone;
 }
 
 std::string Utilities::ConvertSwipeSensitivityToString(

@@ -19,18 +19,18 @@ GestureFormDialog::GestureFormDialog(wxWindow* parent, const wxString& title,
   auto panel = new wxPanel{this, wxID_ANY};
 
   // ==================
-  // Section: DIRECTION
+  // Section: TYPE
   // ==================
-  auto direction_text = new wxStaticText{panel, wxID_ANY, "Direction"};
+  auto type_text = new wxStaticText{panel, wxID_ANY, "Type"};
 
-  direction_choice_ = new wxChoice{panel, wxID_ANY};
-  for (auto direction : Utilities::EnumRange(Gesture::Direction::kUp,
-                                             Gesture::Direction::kHold)) {
-    direction_choice_->Append(Utilities::ConvertDirectionToString(direction));
+  type_choice_ = new wxChoice{panel, wxID_ANY};
+  for (auto type :
+       Utilities::EnumRange(Gesture::Type::kUp, Gesture::Type::kHold)) {
+    type_choice_->Append(Utilities::ConvertGestureTypeToString(type));
   }
 
   // Sets displayed text to first item.
-  direction_choice_->SetSelection(0);
+  type_choice_->SetSelection(0);
 
   // =================
   // Section: KEYCODES
@@ -68,10 +68,10 @@ GestureFormDialog::GestureFormDialog(wxWindow* parent, const wxString& title,
   outer->Add(inner_, 0, wxEXPAND | wxALL, 20);
   panel->SetSizerAndFit(outer);
 
-  // Handles layout for section DIRECTION.
-  inner_->Add(direction_text);
+  // Handles layout for section TYPE.
+  inner_->Add(type_text);
   inner_->AddSpacer(5);  // Must be called in between.
-  inner_->Add(direction_choice_, 0, wxEXPAND | wxRIGHT | wxLEFT);
+  inner_->Add(type_choice_, 0, wxEXPAND | wxRIGHT | wxLEFT);
 
   inner_->AddSpacer(20);
 
@@ -101,12 +101,12 @@ GestureFormDialog::GestureFormDialog(wxWindow* parent, const wxString& title,
   is_editing_ = true;
   previous_gesture_ = gesture;
 
-  // Sets the displayed label for the wxChoice direction widget to the one in
+  // Sets the displayed label for the wxChoice type widget to the one in
   // the gesture instance.
-  auto direction = gesture.GetDirection();
-  auto direction_str = Utilities::ConvertDirectionToString(direction);
-  if (auto n = direction_choice_->FindString(direction_str); n != wxNOT_FOUND) {
-    direction_choice_->SetSelection(n);
+  auto type = gesture.GetType();
+  auto type_str = Utilities::ConvertGestureTypeToString(type);
+  if (auto n = type_choice_->FindString(type_str); n != wxNOT_FOUND) {
+    type_choice_->SetSelection(n);
   }
 
   key_codes_ = gesture.GetKeyCodes();
@@ -352,9 +352,9 @@ void GestureFormDialog::OnClearButtonClick(wxCommandEvent& event) {
 }
 
 void GestureFormDialog::OnSaveButtonClick(wxCommandEvent& event) {
-  auto selection = direction_choice_->GetStringSelection();
-  auto direction = Utilities::ConvertStringToDirection(selection.ToStdString());
-  auto gesture = Gesture{direction, finger_count_, key_codes_};
+  auto selection = type_choice_->GetStringSelection();
+  auto type = Utilities::ConvertStringToGestureType(selection.ToStdString());
+  auto gesture = Gesture{type, finger_count_, key_codes_};
 
   is_editing_ ? GesturesFile::ReplaceGesture(previous_gesture_, gesture)
               : GesturesFile::AddGesture(gesture);

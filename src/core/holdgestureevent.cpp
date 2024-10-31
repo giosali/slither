@@ -31,8 +31,8 @@ void HoldGestureEvent::StartTimer(std::stop_token stoken) {
   if (!stoken.stop_requested()) {
     auto lock = std::lock_guard<std::mutex>{mtx_};
 
-    if (auto key_codes = GesturesFile::FindGestureKeyCodes(
-          Gesture::Direction::kHold, finger_count_);
+    if (auto key_codes = GesturesFile::FindGestureKeyCodes(Gesture::Type::kHold,
+                                                           finger_count_);
         !key_codes.empty()) {
       InputInjector::Inject(key_codes);
     }

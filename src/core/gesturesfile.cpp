@@ -27,18 +27,18 @@ void GesturesFile::DeleteGesture(const Gesture& gesture) {
   }
 }
 
-std::vector<uint32_t> GesturesFile::FindGestureKeyCodes(
-  Gesture::Direction direction, int32_t finger_count) {
+std::vector<uint32_t> GesturesFile::FindGestureKeyCodes(Gesture::Type type,
+                                                        int32_t finger_count) {
   spdlog::debug(
-    "In GesturesFile::FindGestureKeyCodes(Gesture::Direction, int32_t): "
-    "direction = {}, finger_count = {}",
-    static_cast<int>(direction), finger_count);
+    "In GesturesFile::FindGestureKeyCodes(Gesture::Type, int32_t): "
+    "type = {}, finger_count = {}",
+    static_cast<int>(type), finger_count);
 
   auto lock = std::lock_guard(mtx_);
 
   for (size_t i = 0, l = gestures_.size(); i < l; ++i) {
     if (auto g = gestures_[i];
-        g.GetDirection() == direction && g.GetFingerCount() == finger_count) {
+        g.GetType() == type && g.GetFingerCount() == finger_count) {
       return g.GetKeyCodes();
     }
   }

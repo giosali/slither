@@ -29,15 +29,14 @@ void PinchGestureEvent::End(libinput_event* event) {
   spdlog::debug("In time = {}", time);
 
   auto time_diff = time - time_;
-  if (direction_ == Gesture::Direction::kNone || time_diff > kTimeLimit) {
-    spdlog::info("direction_ or time_diff is invalid");
-    spdlog::debug("direction_ = {}, time_diff = {}",
-                  static_cast<int>(direction_), time_diff);
+  if (type_ == Gesture::Type::kNone || time_diff > kTimeLimit) {
+    spdlog::info("type_ or time_diff is invalid");
+    spdlog::debug("type_ = {}, time_diff = {}", static_cast<int>(type_),
+                  time_diff);
     return;
   }
 
-  if (auto key_codes =
-        GesturesFile::FindGestureKeyCodes(direction_, finger_count_);
+  if (auto key_codes = GesturesFile::FindGestureKeyCodes(type_, finger_count_);
       !key_codes.empty()) {
     InputInjector::Inject(key_codes);
   }
@@ -78,6 +77,6 @@ void PinchGestureEvent::Update(libinput_event* event) {
 
   spdlog::info("Pinch threshold met");
   time_ = time;
-  direction_ = sy_ < 0 ? Gesture::Direction::kOut : Gesture::Direction::kIn;
-  spdlog::debug("direction_ = {}", static_cast<int>(direction_));
+  type_ = sy_ < 0 ? Gesture::Type::kOut : Gesture::Type::kIn;
+  spdlog::debug("type_ = {}", static_cast<int>(type_));
 }

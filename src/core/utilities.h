@@ -14,10 +14,10 @@ class Utilities {
  public:
   Utilities() = delete;
 
-  static std::string ConvertDirectionToString(Gesture::Direction direction);
+  static std::string ConvertGestureTypeToString(Gesture::Type type);
   static std::string ConvertPinchSensitivityToString(
     Settings::PinchSensitivity sensitivity);
-  static Gesture::Direction ConvertStringToDirection(const std::string& s);
+  static Gesture::Type ConvertStringToGestureType(const std::string& s);
   static std::string ConvertSwipeSensitivityToString(
     Settings::SwipeSensitivity sensitivity);
   static inline auto EnumRange = [](auto front, auto back) {
