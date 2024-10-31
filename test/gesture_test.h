@@ -16,12 +16,13 @@ boost::ut::suite<"gesture"> inline gesture = [] {
     given("I have a Gesture object") = [] {
       auto gesture = Gesture{};
 
-      when("I set a value via SetDirection") = [&gesture] {
-        auto value = Gesture::Direction::kUp;
-        gesture.SetDirection(value);
+      when("I set a value via SetType") = [&gesture] {
+        auto value = Gesture::Type::kUp;
+        gesture.SetType(value);
 
-        then("I expect to retrieve it through GetDirection") =
-          [&gesture, value] { expect(gesture.GetDirection() == value); };
+        then("I expect to retrieve it through GetType") = [&gesture, value] {
+          expect(gesture.GetType() == value);
+        };
       };
 
       when("I set a value via SetFingerCount") = [&gesture] {
@@ -43,9 +44,9 @@ boost::ut::suite<"gesture"> inline gesture = [] {
   };
 
   "ToString"_test = [] {
-    given("I have a Gesture object with the Up direction") = [] {
+    given("I have a Gesture object with the Up type") = [] {
       auto gesture = Gesture{};
-      gesture.SetDirection(Gesture::Direction::kUp);
+      gesture.SetType(Gesture::Type::kUp);
 
       when("I call SetKeyCodes with a variety of key codes") = [&gesture] {
         then("I expect to receive the correct string representations") =
@@ -67,7 +68,7 @@ boost::ut::suite<"gesture"> inline gesture = [] {
   "from_json"_test = [] {
     given("I have a valid string of JSON") = [] {
       auto json_string =
-        "{\"direction\":1,\"fingerCount\":3,\"keyCodes\":[1,2]}";
+        "{\"type\":1,\"fingerCount\":3,\"keyCodes\":[1,2]}";
 
       when("I convert it to a nlohmann::json object") = [&json_string] {
         auto json = nlohmann::json::parse(json_string);
@@ -75,7 +76,7 @@ boost::ut::suite<"gesture"> inline gesture = [] {
         then("I expect to be able to convert it to its corresponding object") =
           [&json] {
             auto gesture = json.template get<Gesture>();
-            expect(gesture.GetDirection() == Gesture::Direction::kUp);
+            expect(gesture.GetType() == Gesture::Type::kUp);
             expect(gesture.GetFingerCount() == 3);
             expect(gesture.GetKeyCodes() == std::vector<uint32_t>{1, 2});
           };
@@ -84,8 +85,8 @@ boost::ut::suite<"gesture"> inline gesture = [] {
 
     given("I have a valid string of JSON of an array of objects") = [] {
       auto json_string =
-        "[{\"direction\":1,\"fingerCount\":3,\"keyCodes\":[1,2]},{"
-        "\"direction\":1,\"fingerCount\":4,\"keyCodes\":[3,4]}]";
+        "[{\"type\":1,\"fingerCount\":3,\"keyCodes\":[1,2]},{"
+        "\"type\":1,\"fingerCount\":4,\"keyCodes\":[3,4]}]";
 
       when("I convert it to a nlohmann::json object") = [&json_string] {
         auto json = nlohmann::json::parse(json_string);
@@ -105,9 +106,9 @@ boost::ut::suite<"gesture"> inline gesture = [] {
       "I have a valid string of JSON of an object with an array of objects "
       "within") = [] {
       auto json_string =
-        "{\"gestures\":[{\"direction\":1,\"fingerCount\":3,\"keyCodes\":[1,2]},"
+        "{\"gestures\":[{\"type\":1,\"fingerCount\":3,\"keyCodes\":[1,2]},"
         "{"
-        "\"direction\":2,\"fingerCount\":4,\"keyCodes\":[3,4]}]}";
+        "\"type\":2,\"fingerCount\":4,\"keyCodes\":[3,4]}]}";
 
       when("I convert it to a nlohmann::json object") = [&json_string] {
         auto json = nlohmann::json::parse(json_string);
@@ -128,7 +129,7 @@ boost::ut::suite<"gesture"> inline gesture = [] {
   "to_json"_test = [] {
     given("I initialize a valid Gesture object") = [] {
       auto gesture = Gesture{};
-      gesture.SetDirection(Gesture::Direction::kUp);
+      gesture.SetType(Gesture::Type::kUp);
       gesture.SetFingerCount(3);
       gesture.SetKeyCodes({1, 2});
 

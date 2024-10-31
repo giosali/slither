@@ -21,8 +21,8 @@ boost::ut::suite<"gesturesfile"> inline gesturesfile = [] {
 
   "FindGestureKeyCodes"_test = [] {
     given("GesturesFile::Initialized hasn't been called") = [] {
-      auto direction = Gesture::Direction::kNone;
-      auto key_codes = GesturesFile::FindGestureKeyCodes(direction, 0);
+      auto type = Gesture::Type::kNone;
+      auto key_codes = GesturesFile::FindGestureKeyCodes(type, 0);
 
       then("I expect an empty vector to be returned") = [&key_codes] {
         expect(key_codes.empty());
