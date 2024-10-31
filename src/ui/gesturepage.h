@@ -1,6 +1,7 @@
-#ifndef MAINPAGE_H
-#define MAINPAGE_H
+#ifndef GESTUREPAGE_H
+#define GESTUREPAGE_H
 
+#include <wx/notebook.h>
 #include <wx/wx.h>
 
 #include <cstdint>
@@ -9,9 +10,9 @@
 
 #include "../core/gesture.h"
 
-class MainPage final : public wxPanel {
+class GesturePage final : public wxPanel {
  public:
-  explicit MainPage(wxWindow* parent, int32_t finger_count);
+  explicit GesturePage(wxNotebook* parent, int32_t finger_count);
 
   void Append(const Gesture& gesture);
   void Clear();
@@ -25,4 +26,4 @@ class MainPage final : public wxPanel {
   wxListBox* list_box_{nullptr};
 };
 
-#endif  // MAINPAGE_H
+#endif  // GESTUREPAGE_H
