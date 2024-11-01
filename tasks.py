@@ -2,23 +2,25 @@ from invoke import Context, task
 
 NAME = "slither"
 BUILD_DIR = "build"
-TEST_BUILD_DIR = f"{BUILD_DIR}_test"
+TEST_BUILD_DIR = f"{BUILD_DIR}-test"
 
 
-@task
-def build(c: Context):
-    c.run(f"cmake -B {BUILD_DIR} -S . -G Ninja")
-    c.run(f"cmake --build {BUILD_DIR} -j 4")
+@task(help={"config": "The compiler configuration to use"})
+def build(c: Context, config: str):
+    c.run(
+        f"cmake -DCMAKE_BUILD_TYPE={config.capitalize()} -B {BUILD_DIR}-{config} -S . -G Ninja"
+    )
+    c.run(f"cmake --build {BUILD_DIR}-{config} -j 4")
 
 
 @task
 def clean(c: Context):
-    c.run(f"rm -rf ./{{{BUILD_DIR},{TEST_BUILD_DIR}}}")
+    c.run(f"rm -rf ./{{{BUILD_DIR}-debug,{BUILD_DIR}-release,{TEST_BUILD_DIR}}}")
 
 
-@task
-def run(c: Context, gui: bool = False):
-    exe = f"./{BUILD_DIR}/{NAME}"
+@task(help={"config": "The compiler configuration to use"})
+def run(c: Context, config: str, gui: bool = False):
+    exe = f"./{BUILD_DIR}-{config}/{NAME}"
 
     if gui:
         c.run(f"{exe} --gui")
