@@ -15,5 +15,6 @@ Slither is a touchpad utility application designed for Linux (GNOME on Wayland).
 ### Fedora
 
 ```
+sudo dnf copr enable giosali/slither
 sudo dnf install slither
 ```
