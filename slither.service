@@ -1,7 +1,7 @@
 [Unit]
 Description=Slither Gesture Control
 Documentation=https://github.com/giosali/slither
-After=graphical.target
+After=multi-user.target
 
 [Service]
 Type=simple
@@ -9,9 +9,17 @@ ExecStart=/usr/bin/slither
 Restart=on-failure
 RestartSec=5
 
-# Capabilities for accessing input devices
-CapabilityBoundingSet=CAP_DAC_OVERRIDE
+# Run with limited root privileges using capabilities
+User=root
 AmbientCapabilities=CAP_DAC_OVERRIDE
+CapabilityBoundingSet=CAP_DAC_OVERRIDE
+
+# Security hardening
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=read-only
+ReadWritePaths=/dev/input /dev/uinput
 
 [Install]
-WantedBy=default.target
+WantedBy=multi-user.target

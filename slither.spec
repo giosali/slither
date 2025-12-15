@@ -2,7 +2,7 @@
 
 Name:           slither
 Version:        1.0.1
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        An application for Linux that allows you to simulate keyboard shortcuts with touchpad gestures
 
 License:        MIT
@@ -49,23 +49,31 @@ install -Dm644 %{SOURCE1} %{buildroot}%{_userunitdir}/slither.service
 # Install desktop file
 desktop-file-install --dir=%{buildroot}%{_datadir}/applications %{SOURCE2}
 
-# Install icon (assuming you have an icon file)
+# Install icon
 install -Dm644 slither.png %{buildroot}%{_datadir}/pixmaps/slither.png
 
 %post
-# Set capabilities on the installed binary
-setcap cap_dac_override=ep %{_bindir}/slither || :
+%systemd_post slither.service
+
+%preun
+%systemd_preun slither.service
+
+%postun
+%systemd_postun_with_restart slither.service
 
 %files
 %license LICENSE
 %doc README.md
 %{_bindir}/%{name}
-%{_userunitdir}/slither.service
+%{_unitdir}/slither.service
 %{_datadir}/applications/slither.desktop
 %{_datadir}/pixmaps/slither.png
-%caps(cap_dac_override=ep) %{_bindir}/%{name}
 
 %changelog
+* Sun Dec 14 2025 giosali <gio_sali@outlook.com> - 1.0.1-2
+- Switch to system service with proper capability handling
+- Add systemd scriptlets for proper service management
+
 * Sun Dec 14 2025 giosali <gio_sali@outlook.com> - 1.0.1-1
 - Change ExecStart value
 
