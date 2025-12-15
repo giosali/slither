@@ -55,9 +55,6 @@ install -Dm644 slither.png %{buildroot}%{_datadir}/pixmaps/slither.png
 %post
 %systemd_post slither.service
 setcap cap_dac_override=ep %{_bindir}/slither || :
-if [ $1 -eq 1 ]; then
-    systemctl preset slither.service >/dev/null 2>&1 || :
-fi
 
 %preun
 %systemd_preun slither.service
