@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=Slither Gesture Daemon
+Comment=Start Slither gesture control daemon
+Exec=systemctl --user start slither.service
+Hidden=false
+NoDisplay=true
+X-GNOME-Autostart-enabled=true
+X-GNOME-Autostart-Delay=2
