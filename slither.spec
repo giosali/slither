@@ -8,38 +8,70 @@ Summary:        An application for Linux that allows you to simulate keyboard sh
 License:        MIT
 URL:            https://github.com/%{gh_user}/%{name}
 Source0:        %{url}/archive/v%{version}.tar.gz
+Source1:        slither.service
+Source2:        slither.desktop
 
-BuildRequires:  gcc-c++ cmake make libinput-devel libudev-devel libevdev-devel spdlog-devel wxGTK3 wxGTK-devel
+BuildRequires:  gcc-c++
+BuildRequires:  cmake >= 3.28
+BuildRequires:  make
+BuildRequires:  libinput-devel
+BuildRequires:  libudev-devel
+BuildRequires:  libevdev-devel
+BuildRequires:  spdlog-devel
+BuildRequires:  wxGTK3
+BuildRequires:  wxGTK-devel
+BuildRequires:  desktop-file-utils
+BuildRequires:  systemd-rpm-macros
+
+Requires:       libinput
+Requires:       libudev
+Requires:       libevdev
+Requires:       spdlog
+Requires:       wxGTK3
 
 %description
-Slither is a touchpad utility application designed for Linux (GNOME on Wayland). With Slither, you can streamline your workflow by transforming touchpad gestures into keyboard combinations to boost your productivity.
+Slither is a touchpad utility application designed for Linux (GNOME on Wayland). 
+With Slither, you can streamline your workflow by transforming touchpad gestures 
+into keyboard combinations to boost your productivity.
 
 %prep
 %autosetup
 
-
 %build
-%cmake
+%cmake -DCMAKE_BUILD_TYPE=Release
 %cmake_build
-
 
 %install
 %cmake_install
 
-%post
-desktop-file-install --dir=/usr/share/applications %{name}.desktop
-xdg-icon-resource install --novendor %{name}.png
+# Install systemd service file
+install -Dm644 %{SOURCE1} %{buildroot}%{_userunitdir}/slither.service
 
-%postun
-rm /usr/share/applications/%{name}.desktop
-xdg-icon-resource uninstall %{name}
+# Install desktop file
+desktop-file-install --dir=%{buildroot}%{_datadir}/applications %{SOURCE2}
+
+# Install icon (assuming you have an icon file)
+install -Dm644 slither.png %{buildroot}%{_datadir}/pixmaps/slither.png
+
+%post
+# Set capabilities on the installed binary
+setcap cap_dac_override=ep %{_bindir}/slither || :
 
 %files
 %license LICENSE
 %doc README.md
 %{_bindir}/%{name}
-
+%{_userunitdir}/slither.service
+%{_datadir}/applications/slither.desktop
+%{_datadir}/pixmaps/slither.png
+%caps(cap_dac_override=ep) %{_bindir}/%{name}
 
 %changelog
+* Sun Dec 14 2025 giosali <gio_sali@outlook.com> - 1.0.0-1
+- Update for COPR distribution
+- Add systemd user service
+- Add desktop file integration
+- Set required capabilities
+
 * Fri Nov 01 2024 giosali <gio_sali@outlook.com> - 1.0.0
 - Initial release.

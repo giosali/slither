@@ -64,3 +64,10 @@ target_link_libraries(${CMAKE_PROJECT_NAME}
     ${SPDLOG_LIBRARIES}
     ${wxWidgets_LIBRARIES}
 )
+
+include(GNUInstallDirs)
+
+# Install the binary
+install(TARGETS ${CMAKE_PROJECT_NAME}
+    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+)

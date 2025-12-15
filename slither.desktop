@@ -1,10 +1,12 @@
 [Desktop Entry]
-Name=Slither
-Comment=Open Slither GUI
-Exec=slither --gui
-Terminal=false
+Version=1.0
 Type=Application
+Name=Slither
+GenericName=Gesture Control
+Comment=Configure and control touchpad gestures
+Exec=slither --gui
 Icon=slither
+Terminal=false
 Categories=Settings;Utility;
-Keywords=gestures;
-Value=1.0
+Keywords=gestures;touchpad;input;
+StartupNotify=true
