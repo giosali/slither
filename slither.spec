@@ -24,7 +24,6 @@ BuildRequires:  desktop-file-utils
 BuildRequires:  systemd-rpm-macros
 
 Requires:       libinput
-Requires:       libudev
 Requires:       libevdev
 Requires:       spdlog
 Requires:       wxGTK3
@@ -67,6 +66,9 @@ setcap cap_dac_override=ep %{_bindir}/slither || :
 %caps(cap_dac_override=ep) %{_bindir}/%{name}
 
 %changelog
+* Sun Dec 14 2025 giosali <gio_sali@outlook.com> - 1.0.0-2
+- Remove libudev dependency
+
 * Sun Dec 14 2025 giosali <gio_sali@outlook.com> - 1.0.0-1
 - Update for COPR distribution
 - Add systemd user service
