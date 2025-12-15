@@ -1,8 +1,8 @@
 %define gh_user giosali
 
 Name:           slither
-Version:        1.0.0
-Release:        2%{?dist}
+Version:        1.0.1
+Release:        1%{?dist}
 Summary:        An application for Linux that allows you to simulate keyboard shortcuts with touchpad gestures
 
 License:        MIT
@@ -66,6 +66,9 @@ setcap cap_dac_override=ep %{_bindir}/slither || :
 %caps(cap_dac_override=ep) %{_bindir}/%{name}
 
 %changelog
+* Sun Dec 14 2025 giosali <gio_sali@outlook.com> - 1.0.1-1
+- Change ExecStart value
+
 * Sun Dec 14 2025 giosali <gio_sali@outlook.com> - 1.0.0-2
 - Remove libudev dependency
 
@@ -76,4 +79,4 @@ setcap cap_dac_override=ep %{_bindir}/slither || :
 - Set required capabilities
 
 * Fri Nov 01 2024 giosali <gio_sali@outlook.com> - 1.0.0
-- Initial release.
+- Initial release
