@@ -1,0 +1,11 @@
+[Unit]
+Description=Slither
+
+[Service]
+ExecStart=/path/to/your/executable
+# Allow read/write access to /dev/input and /dev/uinput
+CapabilityBoundingSet=CAP_DAC_OVERRIDE
+AmbientCapabilities=CAP_DAC_OVERRIDE
+
+[Install]
+WantedBy=multi-user.target

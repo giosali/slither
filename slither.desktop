@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=Slither
+Comment=Open Slither GUI
+Exec=slither --gui
+Terminal=false
+Type=Application
+Icon=slither
+Categories=Settings;Utility;
+Keywords=gestures;
+Value=1.0
