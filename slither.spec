@@ -43,8 +43,8 @@ into keyboard combinations to boost your productivity.
 %install
 %cmake_install
 
-# Install systemd service file
-install -Dm644 %{SOURCE1} %{buildroot}%{_userunitdir}/slither.service
+# Install systemd service file (SYSTEM service, not user service)
+install -Dm644 %{SOURCE1} %{buildroot}%{_unitdir}/slither.service
 
 # Install desktop file
 desktop-file-install --dir=%{buildroot}%{_datadir}/applications %{SOURCE2}
