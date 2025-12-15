@@ -1,7 +1,7 @@
 [Unit]
 Description=Slither Gesture Control
 Documentation=https://github.com/giosali/slither
-After=multi-user.target
+After=graphical.target
 
 [Service]
 Type=simple
@@ -9,21 +9,11 @@ ExecStart=/usr/bin/slither
 Restart=on-failure
 RestartSec=5
 
-# Run as a system service user
-DynamicUser=yes
-SupplementaryGroups=input
-
-# Set config directory to system location
-Environment="XDG_CONFIG_HOME=/etc/slither"
-StateDirectory=slither
-ConfigurationDirectory=slither
-
 # Security hardening  
 NoNewPrivileges=true
 PrivateTmp=true
 ProtectSystem=strict
-ProtectHome=yes
 ReadWritePaths=/dev/input /dev/uinput
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=default.target
