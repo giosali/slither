@@ -2,7 +2,7 @@
 
 Name:           slither
 Version:        1.0.1
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        An application for Linux that allows you to simulate keyboard shortcuts with touchpad gestures
 
 License:        MIT
