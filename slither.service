@@ -5,7 +5,7 @@ After=graphical.target
 
 [Service]
 Type=simple
-ExecStart=%h/.local/bin/slither
+ExecStart=/usr/bin/slither
 Restart=on-failure
 RestartSec=5
 
