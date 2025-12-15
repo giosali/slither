@@ -44,7 +44,7 @@ into keyboard combinations to boost your productivity.
 %cmake_install
 
 # Install systemd service file (SYSTEM service, not user service)
-install -Dm644 %{SOURCE1} %{buildroot}%{_unitdir}/slither.service
+install -Dm644 %{SOURCE1} %{buildroot}%{_userunitdir}/slither.service
 
 # Install desktop file
 desktop-file-install --dir=%{buildroot}%{_datadir}/applications %{SOURCE2}
@@ -55,8 +55,6 @@ install -Dm644 slither.png %{buildroot}%{_datadir}/pixmaps/slither.png
 %post
 %systemd_post slither.service
 setcap cap_dac_override=ep %{_bindir}/slither || :
-mkdir -p /etc/slither
-chmod 755 /etc/slither
 if [ $1 -eq 1 ]; then
     systemctl preset slither.service >/dev/null 2>&1 || :
 fi
@@ -71,7 +69,7 @@ fi
 %license LICENSE
 %doc README.md
 %{_bindir}/%{name}
-%{_unitdir}/slither.service
+%{_userunitdir}/slither.service
 %{_datadir}/applications/slither.desktop
 %{_datadir}/pixmaps/slither.png
 
