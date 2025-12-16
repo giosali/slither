@@ -65,6 +65,9 @@ setcap cap_dac_override=ep %{_bindir}/slither || :
 %{_datadir}/pixmaps/slither.png
 
 %changelog
+* Tue Dec 16 2025 giosali <gio_sali@outlook.com> - 1.0.1-9
+- Ensure application runs on start up
+
 * Sun Dec 14 2025 giosali <gio_sali@outlook.com> - 1.0.1-2
 - Switch to system service with proper capability handling
 - Add systemd scriptlets for proper service management
