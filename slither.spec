@@ -47,7 +47,8 @@ into keyboard combinations to boost your productivity.
 desktop-file-install --dir=%{buildroot}%{_datadir}/applications %{SOURCE1}
 
 # Install autostart desktop file
-install -Dm644 %{SOURCE2} %{buildroot}%{_sysconfdir}/xdg/autostart/%{SOURCE2}
+mkdir -p %{buildroot}%{_sysconfdir}/xdg/autostart
+install -m 0644 %{SOURCE2} %{buildroot}%{_sysconfdir}/xdg/autostart/slither-autostart.desktop
 
 # Install icon
 install -Dm644 slither.png %{buildroot}%{_datadir}/pixmaps/slither.png
