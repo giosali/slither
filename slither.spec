@@ -60,7 +60,7 @@ setcap cap_dac_override=ep %{_bindir}/slither || :
 %doc README.md
 %{_bindir}/%{name}
 %{_datadir}/applications/slither.desktop
-%{xdg config}/autostart/%{2}
+%{xdg config}/autostart/%{SOURCE2}
 %{_datadir}/pixmaps/slither.png
 
 %changelog
