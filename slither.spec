@@ -2,15 +2,14 @@
 
 Name:           slither
 Version:        1.0.1
-Release:        7%{?dist}
+Release:        8%{?dist}
 Summary:        An application for Linux that allows you to simulate keyboard shortcuts with touchpad gestures
 
 License:        MIT
 URL:            https://github.com/%{gh_user}/%{name}
 Source0:        %{url}/archive/v%{version}.tar.gz
-Source1:        slither.service
-Source2:        slither.desktop
-Source3:        slither-autostart.desktop
+Source1:        slither.desktop
+Source2:        slither-autostart.desktop
 
 BuildRequires:  gcc-c++
 BuildRequires:  cmake >= 3.28
@@ -44,15 +43,11 @@ into keyboard combinations to boost your productivity.
 %install
 %cmake_install
 
-# Install systemd service file (SYSTEM service, not user service)
-install -Dm644 %{SOURCE1} %{buildroot}%{_userunitdir}/slither.service
-
 # Install desktop file
-desktop-file-install --dir=%{buildroot}%{_datadir}/applications %{SOURCE2}
+desktop-file-install --dir=%{buildroot}%{_datadir}/applications %{SOURCE1}
 
 # Install autostart desktop file
-mkdir -p %{buildroot}%{_sysconfdir}/xdg/autostart
-install -m 0644 %{SOURCE3} %{buildroot}%{_sysconfdir}/xdg/autostart/slither-autostart.desktop
+install -Dm644 %{SOURCE2} %{xdg config}/autostart/%{SOURCE2}
 
 # Install icon
 install -Dm644 slither.png %{buildroot}%{_datadir}/pixmaps/slither.png
@@ -64,9 +59,8 @@ setcap cap_dac_override=ep %{_bindir}/slither || :
 %license LICENSE
 %doc README.md
 %{_bindir}/%{name}
-%{_userunitdir}/slither.service
 %{_datadir}/applications/slither.desktop
-%{_sysconfdir}/xdg/autostart/slither-autostart.desktop
+%{xdg config}/autostart/%{`2}
 %{_datadir}/pixmaps/slither.png
 
 %changelog
