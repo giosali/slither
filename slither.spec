@@ -47,7 +47,7 @@ into keyboard combinations to boost your productivity.
 desktop-file-install --dir=%{buildroot}%{_datadir}/applications %{SOURCE1}
 
 # Install autostart desktop file
-install -Dm644 %{SOURCE2} %{xdg config}/autostart/%{SOURCE2}
+install -Dm644 %{SOURCE2} %{echo $HOME}/autostart/%{SOURCE2}
 
 # Install icon
 install -Dm644 slither.png %{buildroot}%{_datadir}/pixmaps/slither.png
@@ -60,7 +60,7 @@ setcap cap_dac_override=ep %{_bindir}/slither || :
 %doc README.md
 %{_bindir}/%{name}
 %{_datadir}/applications/slither.desktop
-%{xdg config}/autostart/%{SOURCE2}
+%{echo $HOME}/autostart/%{SOURCE2}
 %{_datadir}/pixmaps/slither.png
 
 %changelog
