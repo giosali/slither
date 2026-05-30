@@ -1,8 +1,8 @@
 %define gh_user giosali
 
 Name:           slither
-Version:        1.0.1
-Release:        9%{?dist}
+Version:        1.1.0
+Release:        1%{?dist}
 Summary:        An application for Linux that allows you to simulate keyboard shortcuts with touchpad gestures
 
 License:        MIT
@@ -10,6 +10,8 @@ URL:            https://github.com/%{gh_user}/%{name}
 Source0:        %{url}/archive/v%{version}.tar.gz
 Source1:        slither.desktop
 Source2:        slither-autostart.desktop
+Source3:        slither.service
+
 
 BuildRequires:  gcc-c++
 BuildRequires:  cmake >= 3.28
@@ -43,6 +45,9 @@ into keyboard combinations to boost your productivity.
 %install
 %cmake_install
 
+# Install systemd service file (USER service, not SYSTEM service)
+install -Dm644 %{SOURCE3} %{buildroot}%{_userunitdir}/slither.service
+
 # Install desktop file
 desktop-file-install --dir=%{buildroot}%{_datadir}/applications %{SOURCE1}
 
@@ -60,11 +65,15 @@ setcap cap_dac_override=ep %{_bindir}/slither || :
 %license LICENSE
 %doc README.md
 %{_bindir}/%{name}
+%{_userunitdir}/slither.service
 %{_datadir}/applications/slither.desktop
 %{_sysconfdir}/xdg/autostart/slither-autostart.desktop
 %{_datadir}/pixmaps/slither.png
 
 %changelog
+* Sat May 30 2026 giosali <gio_sali@outlook.com> - 1.1.0-1
+- Put back user service file
+
 * Tue Dec 16 2025 giosali <gio_sali@outlook.com> - 1.0.1-9
 - Ensure application runs on start up
 
